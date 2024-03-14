@@ -1,0 +1,21 @@
+<!-- Author: Depinder Kaur, created on: 14-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Confirmation</title>
+</head>
+
+<body>
+
+<h2>Registration successful</h2>
+
+Customer name: <span th:text="${user.firstName + ' ' + user.lastName}" />
+<br>
+Registered email: <span th:text="${user.email}" />
+<br><br>
+
+</body>
+</html>
