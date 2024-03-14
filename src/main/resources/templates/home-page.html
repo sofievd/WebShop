@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <style>
+    h2 {
+      font-size: 50px;
+      font-family: Verdana;
+      align: "center"
+    }
+
+    #foto {
+      width: 100%;
+      text-align: center;
+    }
+
+    .button {
+      background-color: #008CBA;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+
+  </style>
+</head>
+<body>
+<h2 th:align="center">Soft Touch Yarn Co.</h2>
+
+<div id="foto">
+  <img th:src="@{images/wool.jpg}" alt="Beautifully stacked colourful yarns" style="width:900px;height:400px;">
+
+  <br><br>
+  <a class="button" href="http://localhost:8080/showForm"><b>Sign Up</b></a>
+</div>
+
+</body>
+</html>
+
