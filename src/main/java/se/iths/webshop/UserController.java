@@ -25,6 +25,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/homePage")
+    public String showHomePage() {
+        return "home-page";
+    }
+
     @GetMapping("/showForm")
     public String showRegistrationForm (Model model) {
 
@@ -36,7 +41,7 @@ public class UserController {
     public String processForm (@Valid @ModelAttribute("user") User user,
                               BindingResult theBindingResult) {
 
-        if (userService.emailAlreadyExists(user.getEmail())) {
+        if (!theBindingResult.hasErrors() && userService.emailAlreadyExists(user.getEmail())) {
             theBindingResult.rejectValue("email", "error.email", "Email already exists!");
         }
 
