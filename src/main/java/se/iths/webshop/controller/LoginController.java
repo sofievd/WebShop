@@ -11,47 +11,45 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import se.iths.webshop.repository.model.User;
+import se.iths.webshop.controller.model.WebUser;
 import se.iths.webshop.service.UserService;
 
 /**
  * @author Depinder Kaur
  * @version 0.1
- * <h2>UserController</h2>
- * @date 2024-03-14
+ * <h2>LoginController</h2>
+ * @date 2024-03-15
  */
 
 @Controller
-public class UserController {
+public class LoginController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/homePage")
-    public String showHomePage() {
-        return "home-page";
+    @GetMapping("/showLoginForm")
+    public String showLoginForm(Model model) {
+
+        model.addAttribute("webUser", new WebUser());
+        return "login-form";
     }
 
-    @GetMapping("/showRegistrationForm")
-    public String showRegistrationForm (Model model) {
-
-        model.addAttribute("user", new User());
-        return "registration-form";
-    }
-
-    @PostMapping("/processForm")
-    public String processForm (@Valid @ModelAttribute("user") User user,
-                              BindingResult theBindingResult) {
-
-        if (!theBindingResult.hasErrors() && userService.emailAlreadyExists(user.getEmail())) {
-            theBindingResult.rejectValue("email", "error.email", "Email already exists!");
-        }
+    @PostMapping("/processLoginForm")
+    public String processLoginForm (@Valid @ModelAttribute("webUser") WebUser webUser,
+                                    BindingResult theBindingResult) {
 
         if (theBindingResult.hasErrors()) {
-            return "registration-form";
+            return "login-form";
+        }
+
+        if (!userService.emailAlreadyExists(webUser.getEmail())) {
+            theBindingResult.rejectValue("email", "error.email", "User NOT found- Register Now!");
+        }
+
+        if (!theBindingResult.hasErrors() && userService.validateLogin(webUser.getEmail(), webUser.getPassword())) {
+            return "show-products";
         } else {
-            userService.addUser(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
-            return "customer-confirmation";
+            return "login-form";
         }
     }
 
@@ -60,7 +58,6 @@ public class UserController {
     // resolve issue for our validation
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
-
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }

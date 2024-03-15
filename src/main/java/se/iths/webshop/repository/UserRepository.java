@@ -2,7 +2,7 @@ package se.iths.webshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import se.iths.webshop.entity.User;
+import se.iths.webshop.repository.model.User;
 
 /**
  * @author Depinder Kaur

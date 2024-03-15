@@ -1,0 +1,45 @@
+<!-- Author: Depinder Kaur, created on: 15-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<h3>User Login</h3>
+<i>Asterisk (*) means required.</i>
+<br><br>
+
+<form th:action="@{/processLoginForm}" th:object="${webUser}" method="POST">
+
+    Email (*): <input type="email" th:field="*{email}"/>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"
+          class="error"></span>
+
+    <br><br>
+
+    Password (*): <input type="password" th:field="*{password}" />
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"
+          class="error"></span>
+
+    <br><br>
+
+    <input type="submit" value="Login" />
+
+    <br><br>
+
+    <a href="http://localhost:8080/homePage"><b>Back to Home</b></a>
+</form>
+
+</body>
+</html>
