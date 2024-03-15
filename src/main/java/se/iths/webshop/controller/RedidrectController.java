@@ -10,12 +10,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/")
 public class RedidrectController {
 
-    @GetMapping("/processLoginForm")
+   /* @GetMapping("/processLoginForm")
     public RedirectView redirectView(RedirectAttributes attributes) {
         attributes.addFlashAttribute("flashattribute", "redidrectWithRedirectView");
         attributes.addAttribute("attribute", "redidrectWithRedirectView");
         return new RedirectView("/webshop");
-    }
+    }*/
 
  /*   @GetMapping("/processLoginForm")
     public ModelAndView redirectWithUsingForwardPrefix(ModelMap model) {
