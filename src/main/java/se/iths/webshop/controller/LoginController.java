@@ -42,11 +42,15 @@ public class LoginController {
             return "login-form";
         }
 
+        boolean validLogin = userService.validateLogin(webUser.getEmail(), webUser.getPassword());
+
         if (!userService.emailAlreadyExists(webUser.getEmail())) {
             theBindingResult.rejectValue("email", "error.email", "User NOT found- Register Now!");
+        } else if (!validLogin) {
+            theBindingResult.rejectValue("email", "error.email", "Invalid Email/Password: Try again!");
         }
 
-        if (!theBindingResult.hasErrors() && userService.validateLogin(webUser.getEmail(), webUser.getPassword())) {
+        if (!theBindingResult.hasErrors()) {
             return "tempwebshoppage";
         } else {
             return "login-form";
