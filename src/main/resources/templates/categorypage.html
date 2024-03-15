@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${category}"></title>
+</head>
+<body>
+<h1><span th:text = "${category}"></span></h1>
+
+<dl th:each="p: ${productlist}">
+    <dt><span th:text="${p.name}" ></span></dt>
+
+    <dd>brand: <span th:text="${p.brand}" ></span></dd>
+    <dd>description: <span th:text="${p.description}" ></span></dd>
+    <dd> price: <span th:text="${p.price}" ></span> kr</dd>
+
+
+</dl>
+
+</body>
+</html>
