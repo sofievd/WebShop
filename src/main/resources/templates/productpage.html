@@ -2,10 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product</title>
 </head>
 <body>
-<h1><span th:text="${product}" ></span></h1>
+
+<dl>
+    <dt><span th:text="${product.name}" ></span></dt>
+
+    <dd>brand: <span th:text="${product.brand}" ></span></dd>
+    <dd>description: <span th:text="${product.description}" ></span></dd>
+    <dd> price: <span th:text="${product.price}" ></span> kr</dd>
+</dl>
+<br/>
+
+<a href="/webshop"> Go Back</a>
 
 </body>
 </html>

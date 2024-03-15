@@ -35,8 +35,8 @@ public class ProductController {
      public String search(Model m, @RequestParam("search") String searchWord){
           Optional<Product> product = pService.searchProducts(searchWord);
           if(product.isEmpty()){
-               m.addAttribute("product", "No such product found!");
-               return "productpage";
+               m.addAttribute("product", searchWord + " cannot be found!");
+               return "no-product-found";
           }
           else {
                m.addAttribute("product", product.get());
@@ -50,6 +50,12 @@ public class ProductController {
           List<Product> productList = pService.getProductByCategory(categoryString);
           m.addAttribute("productlist", productList);
           return "categorypage";
+     }
+
+     @GetMapping("/all-products")
+    public String ProductList(Model m){
+         m.addAttribute("allproductslist", pService.getProducts());
+         return "show-products";
      }
 
     /* @GetMapping("/categorypage")

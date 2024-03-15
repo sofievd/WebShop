@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Products List</title>
@@ -7,11 +7,14 @@
 <body>
 <h2>Products List</h2>
 
+<dl th:each="p: ${allproductslist}">
+    <dt><span th:text="${p.name}" ></span></dt>
 
+    <dd>brand: <span th:text="${p.brand}" ></span></dd>
+    <dd>description: <span th:text="${p.description}" ></span></dd>
+    <dd> price: <span th:text="${p.price}" ></span> kr</dd>
 
-... <br>
-... <br>
-... <br>
-...
+</dl>
+
 </body>
 </html>

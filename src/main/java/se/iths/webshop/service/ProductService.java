@@ -19,7 +19,6 @@ public class ProductService {
 
     public List<Product> getProducts(){
         return productRepo.findAll();
-
     }
     public List<Product> getProductByCategory(String categoryString){
          Category category = categoryRepo.findByName(categoryString);
