@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Category</title>
+    <title th:text="${category}"></title>
 </head>
 <body>
 <h1><span th:text = "${category}"></span></h1>
@@ -17,9 +17,5 @@
 
 </dl>
 
-<form method="post" action="/addToBasket">
-    <input type="button"
-
-</form>
 </body>
 </html>
