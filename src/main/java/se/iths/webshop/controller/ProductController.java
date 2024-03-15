@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.service.ProductService;
 import se.iths.webshop.entity.Product;
@@ -20,13 +21,15 @@ public class ProductController {
      @Autowired
     private CategoryService cService;
 
-
-
      @GetMapping("/webshop")
      public String CategoryList(Model m){
           m.addAttribute("categorylist", cService.getCataegories());
           return "webshoppage";
      }
+  /*   @RequestMapping("/processLoginForm")
+     public String forwardUrl(){
+         return "forward:/webshop";
+     }*/
 
      @PostMapping("/search")
      public String search(Model m, @RequestParam("search") String searchWord){
