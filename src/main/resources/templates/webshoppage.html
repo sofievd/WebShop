@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Webshop name</h1>
+<p> We sell yarn to keep your imaginaiton alive!</p>
+<p>
+    <input type="search" placeholder="Search Product" >
+    <input type="submit" value="Search">
+</p>
+<ul th:each="p: ${productList}">
+    <li><h2><span th:text="${p.getCategory()}"></span></h2></li>
+</ul>
+
+</body>
+</html>
