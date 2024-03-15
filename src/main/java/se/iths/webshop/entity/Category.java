@@ -1,4 +1,4 @@
-package se.iths.webshop;
+package se.iths.webshop.entity;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,7 @@
-package se.iths.webshop;
+package se.iths.webshop.entity;
 
 import jakarta.persistence.*;
+import se.iths.webshop.entity.Category;
 
 @Entity
 @Table(name="product")

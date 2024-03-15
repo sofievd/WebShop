@@ -1,7 +1,11 @@
-package se.iths.webshop;
+package se.iths.webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.iths.webshop.entity.Category;
+import se.iths.webshop.entity.Product;
+import se.iths.webshop.repository.CategoryRepo;
+import se.iths.webshop.repository.ProductRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +15,7 @@ public class ProductService {
    @Autowired
     private ProductRepo productRepo;
    @Autowired
-    private  CategoryRepo categoryRepo;
+    private CategoryRepo categoryRepo;
 
     public List<Product> getProducts(){
         return productRepo.findAll();

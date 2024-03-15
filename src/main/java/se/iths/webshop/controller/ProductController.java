@@ -1,4 +1,4 @@
-package se.iths.webshop;
+package se.iths.webshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.iths.webshop.service.ProductService;
+import se.iths.webshop.entity.Product;
+import se.iths.webshop.repository.CategoryService;
 
 import java.util.List;
 import java.util.Optional;
