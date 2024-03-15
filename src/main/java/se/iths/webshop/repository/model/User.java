@@ -1,4 +1,4 @@
-package se.iths.webshop.entity;
+package se.iths.webshop.repository.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

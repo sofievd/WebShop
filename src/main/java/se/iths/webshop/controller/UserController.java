@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import se.iths.webshop.entity.User;
+import se.iths.webshop.repository.model.User;
 import se.iths.webshop.service.UserService;
 
 /**
@@ -32,7 +32,7 @@ public class UserController {
         return "home-page";
     }
 
-    @GetMapping("/showForm")
+    @GetMapping("/showRegistrationForm")
     public String showRegistrationForm (Model model) {
 
         model.addAttribute("user", new User());
