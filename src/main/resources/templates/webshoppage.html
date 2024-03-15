@@ -9,8 +9,11 @@
 <h1>Webshop name</h1>
 <p> We sell yarn to keep your imaginaiton alive!</p>
 <p>
-    <input type="search" placeholder="Search Product" name="searchbar" >
+    <form method="post" action="/search">
+    <input type="search" placeholder="Search Product" name="search" >
     <input type="submit" value="Search">
+</form>
+
 </p>
 
 <ul th:each="p: ${categorylist}">

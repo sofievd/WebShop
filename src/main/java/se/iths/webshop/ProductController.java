@@ -25,8 +25,8 @@ public class ProductController {
           return "webshoppage";
      }
 
-     @PostMapping("/webshop")
-     public String search(Model m, @RequestParam("searchbar") String searchWord){
+     @PostMapping("/search")
+     public String search(Model m, @RequestParam("search") String searchWord){
           Optional<Product> product = pService.searchProducts(searchWord);
           if(product.isEmpty()){
                m.addAttribute("product", "No such product found!");

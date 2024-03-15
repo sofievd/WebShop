@@ -7,12 +7,19 @@
 <body>
 <h1><span th:text = "${category}"></span></h1>
 
-<ul th:each="p: ${productlist}" >
-    <li><span th:text="${p.name}"></span> <br/>
-        <span th:text="${p.description}"></span> <br/>
-        <span th:text="${p.brand}"></span> <br/>
-        <span th:text="${p.price}"></span> <br/>
-    </li>
-</ul>
+<dl th:each="p: ${productlist}">
+    <dt><span th:text="${p.name}" ></span></dt>
+
+    <dd>brand: <span th:text="${p.brand}" ></span></dd>
+    <dd>description: <span th:text="${p.description}" ></span></dd>
+    <dd> price: <span th:text="${p.price}" ></span> kr</dd>
+
+
+</dl>
+
+<form method="post" action="/addToBasket">
+    <input type="button"
+
+</form>
 </body>
 </html>
