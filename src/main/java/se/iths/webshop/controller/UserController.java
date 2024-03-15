@@ -1,4 +1,4 @@
-package se.iths.webshop;
+package se.iths.webshop.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import se.iths.webshop.entity.User;
+import se.iths.webshop.service.UserService;
 
 /**
  * @author Depinder Kaur
