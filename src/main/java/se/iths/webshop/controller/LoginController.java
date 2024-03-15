@@ -47,7 +47,7 @@ public class LoginController {
         }
 
         if (!theBindingResult.hasErrors() && userService.validateLogin(webUser.getEmail(), webUser.getPassword())) {
-            return "show-products";
+            return "webshoppage";
         } else {
             return "login-form";
         }
