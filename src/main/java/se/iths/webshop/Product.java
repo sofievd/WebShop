@@ -1,11 +1,9 @@
 package se.iths.webshop;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +11,9 @@ public class Product {
 
     private String name;
     private double price;
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
     private String description;
 
     private String brand;
@@ -21,7 +21,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, double price, String category, String description, String brand) {
+    public Product(String name, double price, Category category, String description, String brand) {
         this.name = name;
         this.price = price;
         this.category = category;
@@ -61,11 +61,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

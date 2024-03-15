@@ -4,27 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
+   @Autowired
     private ProductRepo productRepo;
-    @Autowired
-    public ProductService(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
+   @Autowired
+    private  CategoryRepo categoryRepo;
 
     public List<Product> getProducts(){
         return productRepo.findAll();
 
     }
+    public List<Product> getProductByCategory(String categoryString){
+         Category category = categoryRepo.findByName(categoryString);
+         List<Product> productsList = productRepo.findAllByCategory(category);
+         return productsList;
+    }
 
-    public List<String> getCataegories(){
-        List<Product> productList = productRepo.findAll();
-        List<String> categoryList = null;
-        for(Product p: productList){
-            categoryList.add(p.getCategory());
-        }
-        return categoryList;
+    public Optional<Product> searchProducts(String name){
+        Optional<Product> product = productRepo.findByName(name);
+        return product;
     }
 
 

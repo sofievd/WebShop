@@ -5,24 +5,51 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
      @Autowired
-     ProductService service;
+    private ProductService pService;
+     @Autowired
+    private CategoryService cService;
+
+
 
      @GetMapping("/webshop")
      public String CategoryList(Model m){
-          m.addAttribute("productList", service.getProducts());
+          m.addAttribute("categorylist", cService.getCataegories());
           return "webshoppage";
      }
 
      @PostMapping("/webshop")
-     public String search(Model m){
-          return "";
+     public String search(Model m, @RequestParam("searchbar") String searchWord){
+          Optional<Product> product = pService.searchProducts(searchWord);
+          if(product.isEmpty()){
+               m.addAttribute("product", "No such product found!");
+               return "productpage";
+          }
+          else {
+               m.addAttribute("product", product.get());
+               return "productPage";
+          }
      }
 
+     @PostMapping("/category")
+     public String clickLink(Model m, @RequestParam("category") String categoryString){
+          m.addAttribute("category", categoryString);
+          List<Product> productList = pService.getProductByCategory(categoryString);
+          m.addAttribute("productlist", productList);
+          return "categorypage";
+     }
+
+    /* @GetMapping("/categorypage")
+     public String catecories(Model m){
+          return "categorypage";
+     }
+*/
 
 }
