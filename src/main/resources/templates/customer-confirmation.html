@@ -11,11 +11,17 @@
 <body>
 
 <h2>Registration successful</h2>
+<hr>
 
 Customer name: <span th:text="${user.firstName + ' ' + user.lastName}" />
-<br>
-Registered email: <span th:text="${user.email}" />
 <br><br>
 
+Registered email: <span th:text="${user.email}" />
+
+<br>
+<hr>
+<br>
+
+<a href="http://localhost:8080/homePage"><b>Back to Home</b></a>
 </body>
 </html>
