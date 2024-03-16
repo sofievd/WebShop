@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Products List</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body>
+<body id="background">
 <h2>Products List</h2>
 
 <dl th:each="p: ${allproductslist}">
