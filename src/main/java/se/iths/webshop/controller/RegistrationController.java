@@ -17,12 +17,12 @@ import se.iths.webshop.service.UserService;
 /**
  * @author Depinder Kaur
  * @version 0.1
- * <h2>UserController</h2>
+ * <h2>RegistrationController</h2>
  * @date 2024-03-14
  */
 
 @Controller
-public class UserController {
+public class RegistrationController {
 
     @Autowired
     UserService userService;
