@@ -31,5 +31,9 @@ public class ProductService {
         return product;
     }
 
+    public void saveProduct(Product product) {
+        productRepo.save(product);
+    }
+
 
 }
