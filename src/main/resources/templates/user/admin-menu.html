@@ -6,7 +6,10 @@
 </head>
 <body>
 <h1>Admin Menu</h1>
-Choose one of the following tasks:
+<hr>
+<h3>Choose one of the following tasks:</h3>
+
+<br>
     <form th:action="@{/processAdminChoice}" th:object="${menu}" method="POST">
         <input type="radio" th:field="*{inputChoice}"
                th:each="task : ${adminTasks}"
