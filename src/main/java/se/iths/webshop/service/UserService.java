@@ -37,7 +37,7 @@ public class UserService {
         return userRepo.existsById(email);
     }
 
-    public boolean validateLogin (String email, String password) {
+    public boolean validLogin(String email, String password) {
 
         boolean result = false;
         Optional<User> opUser = userRepo.findById(email);
@@ -48,5 +48,14 @@ public class UserService {
         }
 
         return result;
+    }
+
+    public User findUserByEmailAndPassword(String email, String password) {
+        Optional<User> opUser = userRepo.findById(email);
+
+        if (validLogin(email, password) && opUser.isPresent()) {
+            return userRepo.findById(email).get();
+        }
+        return null;
     }
 }
