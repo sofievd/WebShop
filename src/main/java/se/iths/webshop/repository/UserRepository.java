@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import se.iths.webshop.repository.model.User;
 
+import java.util.Optional;
+
 /**
  * @author Depinder Kaur
  * @version 0.1
