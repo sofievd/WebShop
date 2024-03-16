@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.iths.webshop.controller.model.WebUser;
+import se.iths.webshop.repository.model.User;
 import se.iths.webshop.service.UserService;
 
 /**
@@ -42,7 +43,7 @@ public class LoginController {
             return "login-form";
         }
 
-        boolean validLogin = userService.validateLogin(webUser.getEmail(), webUser.getPassword());
+        boolean validLogin = userService.validLogin(webUser.getEmail(), webUser.getPassword());
 
         if (!userService.emailAlreadyExists(webUser.getEmail())) {
             theBindingResult.rejectValue("email", "error.email", "User NOT found- Register Now!");
@@ -50,10 +51,11 @@ public class LoginController {
             theBindingResult.rejectValue("email", "error.email", "Invalid Email/Password: Try again!");
         }
 
-        if (!theBindingResult.hasErrors()) {
-            return "tempwebshoppage";
+        User user = userService.findUserByEmailAndPassword(webUser.getEmail(), webUser.getPassword());
+        if (user.getRole().equalsIgnoreCase("admin")) {
+            return "redirect:/showAdminMenu";
         } else {
-            return "login-form";
+            return "tempwebshoppage";
         }
     }
 
