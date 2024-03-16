@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Menu</title>
+</head>
+<body>
+<h1>Admin Menu</h1>
+Choose one of the following tasks:
+    <form th:action="@{/processAdminChoice}" th:object="${menu}" method="POST">
+        <input type="radio" th:field="*{inputChoice}"
+               th:each="task : ${adminTasks}"
+               th:value="${task}"
+               th:text="${task}" />
+
+        <br><br>
+        <input type="submit" value="Select">
+    </form>
+
+</body>
+</html>
