@@ -32,7 +32,7 @@ public class LoginController {
     public String showLoginForm(Model model) {
 
         model.addAttribute("webUser", new WebUser());
-        return "login-form";
+        return "user/login-form";
     }
 
     @PostMapping("/processLoginForm")
@@ -40,7 +40,7 @@ public class LoginController {
                                     BindingResult theBindingResult) {
 
         if (theBindingResult.hasErrors()) {
-            return "login-form";
+            return "user/login-form";
         }
 
         boolean validLogin = userService.validLogin(webUser.getEmail(), webUser.getPassword());

@@ -36,7 +36,7 @@ public class RegistrationController {
     public String showRegistrationForm (Model model) {
 
         model.addAttribute("user", new User());
-        return "registration-form";
+        return "user/registration-form";
     }
 
     @PostMapping("/processForm")
@@ -48,10 +48,10 @@ public class RegistrationController {
         }
 
         if (theBindingResult.hasErrors()) {
-            return "registration-form";
+            return "user/registration-form";
         } else {
             userService.addUser(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
-            return "customer-confirmation";
+            return "user/customer-confirmation";
         }
     }
 
