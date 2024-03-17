@@ -11,7 +11,7 @@
 <h2>Search a Product</h2>
 <hr>
 
-<form th:action="@{/findProductToUpdate}" th:object="${searchProduct}" method="POST">
+<form th:action="@{/searchProduct}" th:object="${searchProduct}" method="POST">
 
     Name (*): <input type="text" th:field="*{name}" />
 

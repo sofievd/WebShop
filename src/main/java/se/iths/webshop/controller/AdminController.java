@@ -58,13 +58,10 @@ public class AdminController {
         //System.out.println(menu.getInputChoice());
         switch (menu.getInputChoice()) {
             case "Add a product" -> {
-                return "redirect:/addNewProduct";
+                return "redirect:/addProduct";
             }
             case "Update a product" -> {
-                return "redirect:/getProductToUpdate";
-            }
-            case "Show Categories" -> {
-                return "admin-tasks/all-categories";
+                return "redirect:/searchProduct";
             }
             case "Show Orders" -> {
                 return "admin-tasks/all-orders";
@@ -75,8 +72,8 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/addNewProduct")
-    public String addNewProduct(Model model) {
+    @GetMapping("/addProduct")
+    public String addProduct(Model model) {
         WebProduct webProduct = new WebProduct();
         model.addAttribute("webProduct", webProduct);
         model.addAttribute("categories", categories);
@@ -84,7 +81,7 @@ public class AdminController {
     }
 
     @PostMapping("/processAddProduct")
-    public String productAddedConfirmation(@Valid @ModelAttribute("webProduct") WebProduct webProduct,
+    public String processAddProduct(@Valid @ModelAttribute("webProduct") WebProduct webProduct,
                                            BindingResult theBindingResult, Model model) {
 
         if (theBindingResult.hasErrors()) {
@@ -106,24 +103,28 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/getProductToUpdate")
-    public String getProductToUpdate(Model model) {
+    @GetMapping("/searchProduct")
+    public String searchProduct(Model model) {
         SearchProduct searchProduct = new SearchProduct();
         model.addAttribute("searchProduct", searchProduct);
         model.addAttribute("categories", categories);
-        return "admin-tasks/find-product-to-update";
+        return "admin-tasks/search-product";
     }
 
-    @PostMapping("/findProductToUpdate")
-    public String findProductToUpdate(@Valid @ModelAttribute("searchProduct") SearchProduct searchProduct,
+    @PostMapping("/searchProduct")
+    public String processSearchProduct(@Valid @ModelAttribute("searchProduct") SearchProduct searchProduct,
                                       BindingResult theBindingResult, Model model) {
         if (theBindingResult.hasErrors()) {
             //System.out.println(theBindingResult);
             model.addAttribute("categories", categories);
-            return "admin-tasks/find-product-to-update";
+            return "admin-tasks/search-product";
         } else {
             Category category = cService.getCategoryByName(searchProduct.getCategory());
             List<Product> productList = pService.findByNameAndCategoryAndBrand(searchProduct.getName(), category, searchProduct.getBrand());
+
+            if (productList.isEmpty()) {
+                return "admin-tasks/product-not-found";
+            }
             model.addAttribute("productList", productList);
             return "admin-tasks/choose-product-to-update";
         }
@@ -143,7 +144,7 @@ public class AdminController {
         return "admin-tasks/update-product";
     }
 
-    @PostMapping("/processUpdateProduct")
+    @PostMapping("/updateProduct")
     public String processUpdateProduct(@RequestParam("id") int id, @ModelAttribute("webProduct") WebProduct webProduct,
                                        BindingResult theBindingResult) {
 

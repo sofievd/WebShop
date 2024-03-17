@@ -10,7 +10,7 @@
 <body>
 <h2>Update a Product</h2>
 
-<form th:action="@{/processUpdateProduct}" th:object="${webProduct}" method="POST">
+<form th:action="@{/updateProduct}" th:object="${webProduct}" method="POST">
 
     <input type="hidden" name="id" th:value="${id}" >
 
@@ -67,7 +67,7 @@
     <input type="submit" value="Update" />
     <hr>
     <br>
-    <a href="/showAdminMenu"><b>Go Back</b></a>
+    <a href="/showAdminMenu"><b>Admin Menu</b></a>
 </form>
 </body>
 </html>
