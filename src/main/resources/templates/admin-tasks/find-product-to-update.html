@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update a Product</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>Update a Product</h2>
+<hr>
+
+<form th:action="@{/findProductToUpdate}" th:object="${searchProduct}" method="POST">
+
+    Name (*): <input type="text" th:field="*{name}" />
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"
+          class="error"></span>
+
+    <br><br>
+
+    Category (*):
+    <select name="category" th:field="*{category}">
+        <option th:each="tempCategory : ${categories}"
+                th:value="${tempCategory}"
+                th:text="${tempCategory}"></option>
+    </select>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('category')}"
+          th:errors="*{category}"
+          class="error"></span>
+
+    <br><br>
+
+    Brand (*): <input type="text" th:field="*{brand}"/>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('brand')}"
+          th:errors="*{brand}"
+          class="error"></span>
+
+    <br><br>
+
+    <input type="submit" value="Show possible product(s)" />
+    <hr>
+    <br>
+    <a href="/showAdminMenu"><b>Admin Menu</b></a>
+</form>
+</body>
+</html>
