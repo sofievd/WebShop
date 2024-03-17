@@ -8,8 +8,8 @@
 
 <body>
 <h2>Add a Product</h2>
-
-<form th:action="@{/processNewProduct}" th:object="${webProduct}" method="POST">
+<hr>
+<form th:action="@{/processAddProduct}" th:object="${webProduct}" method="POST">
 
     Name (*): <input type="text" th:field="*{name}" />
 
