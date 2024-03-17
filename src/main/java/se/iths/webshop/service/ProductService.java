@@ -35,5 +35,15 @@ public class ProductService {
         productRepo.save(product);
     }
 
+    public List<Product> findByNameAndCategoryAndBrand(String name, Category category, String brand) {
+        return productRepo.findByNameAndCategoryAndBrand(name, category, brand);
+    }
 
+    public Product findProductById(int id) {
+        Optional<Product> opProduct = productRepo.findById(id);
+        if (opProduct.isPresent()) {
+            return opProduct.get();
+        }
+        return null;
+    }
 }
