@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update a Product</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>Update a Product</h2>
+
+<form th:action="@{/processUpdateProduct}" th:object="${webProduct}" method="POST">
+
+    <input type="hidden" name="id" th:value="${id}" >
+
+    Name (*): <input type="text" th:field="*{name}" th:value="${webProduct.name}"/>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"
+          class="error"></span>
+
+    <br><br>
+
+    Price (*): <input type="text" th:field="*{price}" th:value="${webProduct.price}"/>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('price')}"
+          th:errors="*{price}"
+          class="error"></span>
+
+    <br><br>
+
+    Category (*):
+    <select name="category" th:field="*{category}">
+        <option th:each="tempCategory : ${categories}"
+                th:value="${tempCategory}"
+                th:text="${tempCategory}"></option>
+    </select>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('category')}"
+          th:errors="*{category}"
+          class="error"></span>
+
+    <br><br>
+
+    Description (*): <input type="text" th:field="*{description}" th:value="${webProduct.description}"/>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('description')}"
+          th:errors="*{description}"
+          class="error"></span>
+
+    <br><br>
+
+    Brand (*): <input type="text" th:field="*{brand}" th:value="${webProduct.brand}"/>
+
+    <!-- Add error message (if present) -->
+    <span th:if="${#fields.hasErrors('brand')}"
+          th:errors="*{brand}"
+          class="error"></span>
+
+    <br><br>
+
+    <input type="submit" value="Update" />
+    <hr>
+    <br>
+    <a href="/showAdminMenu"><b>Go Back</b></a>
+</form>
+</body>
+</html>
