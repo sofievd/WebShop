@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotNull;
  */
 public class WebProduct {
 
+    private int id;
+
     @NotNull(message="is required")
     private String name;
 
@@ -38,6 +40,23 @@ public class WebProduct {
         this.category = category;
         this.description = description;
         this.brand = brand;
+    }
+
+    public WebProduct(int id, String name, double price, String category, String description, String brand) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.description = description;
+        this.brand = brand;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -78,5 +97,17 @@ public class WebProduct {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    @Override
+    public String toString() {
+        return "WebProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", brand='" + brand + '\'' +
+                '}';
     }
 }
