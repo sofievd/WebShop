@@ -63,8 +63,8 @@ public class AdminController {
             case "Update a product" -> {
                 return "redirect:/getProductToUpdate";
             }
-            case "Show Products" -> {
-                return "admin-tasks/all-products";
+            case "Show Categories" -> {
+                return "admin-tasks/all-categories";
             }
             case "Show Orders" -> {
                 return "admin-tasks/all-orders";
