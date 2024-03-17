@@ -118,7 +118,7 @@ public class AdminController {
     public String findProductToUpdate(@Valid @ModelAttribute("searchProduct") SearchProduct searchProduct,
                                       BindingResult theBindingResult, Model model) {
         if (theBindingResult.hasErrors()) {
-            System.out.println(theBindingResult);
+            //System.out.println(theBindingResult);
             model.addAttribute("categories", categories);
             return "admin-tasks/find-product-to-update";
         } else {

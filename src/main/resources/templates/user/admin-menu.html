@@ -9,14 +9,16 @@
 <body>
 <h1>Admin Menu</h1>
 <hr>
-<h3>Choose one of the following tasks:</h3>
+<h3>Choose a task from drop-down menu:</h3>
 
 <br>
     <form th:action="@{/processAdminChoice}" th:object="${menu}" method="POST">
-        <input type="radio" th:field="*{inputChoice}"
-               th:each="task : ${adminTasks}"
-               th:value="${task}"
-               th:text="${task}" />
+    Task:
+        <select name="category" th:field="*{inputChoice}">
+            <option th:each="task : ${adminTasks}"
+                    th:value="${task}"
+                    th:text="${task}"></option>
+        </select>
 
         <br><br>
         <input type="submit" value="Select">
