@@ -17,12 +17,12 @@ import se.iths.webshop.service.UserService;
 /**
  * @author Depinder Kaur
  * @version 0.1
- * <h2>UserController</h2>
+ * <h2>RegistrationController</h2>
  * @date 2024-03-14
  */
 
 @Controller
-public class UserController {
+public class RegistrationController {
 
     @Autowired
     UserService userService;
@@ -36,7 +36,7 @@ public class UserController {
     public String showRegistrationForm (Model model) {
 
         model.addAttribute("user", new User());
-        return "registration-form";
+        return "user/registration-form";
     }
 
     @PostMapping("/processForm")
@@ -48,10 +48,10 @@ public class UserController {
         }
 
         if (theBindingResult.hasErrors()) {
-            return "registration-form";
+            return "user/registration-form";
         } else {
             userService.addUser(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
-            return "customer-confirmation";
+            return "user/customer-confirmation";
         }
     }
 
