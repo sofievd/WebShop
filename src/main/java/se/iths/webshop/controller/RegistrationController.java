@@ -27,12 +27,12 @@ public class RegistrationController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/homePage")
+    @GetMapping("/")
     public String showHomePage() {
-        return "home-page";
+        return "user/home-page";
     }
 
-    @GetMapping("/showRegistrationForm")
+    @GetMapping("/registrationForm")
     public String showRegistrationForm (Model model) {
 
         model.addAttribute("user", new User());

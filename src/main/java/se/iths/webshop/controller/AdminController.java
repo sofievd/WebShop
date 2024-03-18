@@ -50,7 +50,7 @@ public class AdminController {
         AdminMenu menu = new AdminMenu();
         model.addAttribute("menu", menu);
         model.addAttribute("adminTasks", adminTasks);
-        return "user/admin-menu";
+        return "admin/admin-menu";
     }
 
     @PostMapping("/processAdminChoice")
@@ -64,10 +64,10 @@ public class AdminController {
                 return "redirect:/searchProduct";
             }
             case "Show Orders" -> {
-                return "admin-tasks/all-orders";
+                return "admin/all-orders";
             }
             default -> {
-                return "user/admin-menu";
+                return "admin/admin-menu";
             }
         }
     }
@@ -77,7 +77,7 @@ public class AdminController {
         WebProduct webProduct = new WebProduct();
         model.addAttribute("webProduct", webProduct);
         model.addAttribute("categories", categories);
-        return "admin-tasks/add-product";
+        return "admin/add-product";
     }
 
     @PostMapping("/processAddProduct")
@@ -86,7 +86,7 @@ public class AdminController {
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("categories", categories);
-            return "admin-tasks/add-product";
+            return "admin/add-product";
         } else {
             Product product = new Product();
             product.setName(webProduct.getName());
@@ -99,7 +99,7 @@ public class AdminController {
             product.setBrand(webProduct.getBrand());
 
             pService.saveProduct(product);
-            return "admin-tasks/added-confirmation";
+            return "admin/added-confirmation";
         }
     }
 
@@ -108,7 +108,7 @@ public class AdminController {
         SearchProduct searchProduct = new SearchProduct();
         model.addAttribute("searchProduct", searchProduct);
         model.addAttribute("categories", categories);
-        return "admin-tasks/search-product";
+        return "admin/search-product";
     }
 
     @PostMapping("/searchProduct")
@@ -117,16 +117,16 @@ public class AdminController {
         if (theBindingResult.hasErrors()) {
             //System.out.println(theBindingResult);
             model.addAttribute("categories", categories);
-            return "admin-tasks/search-product";
+            return "admin/search-product";
         } else {
             Category category = cService.getCategoryByName(searchProduct.getCategory());
             List<Product> productList = pService.findByNameAndCategoryAndBrand(searchProduct.getName(), category, searchProduct.getBrand());
 
             if (productList.isEmpty()) {
-                return "admin-tasks/product-not-found";
+                return "admin/product-not-found";
             }
             model.addAttribute("productList", productList);
-            return "admin-tasks/choose-product-to-update";
+            return "admin/choose-product-to-update";
         }
     }
 
@@ -141,7 +141,7 @@ public class AdminController {
         model.addAttribute("webProduct", webProduct);
         model.addAttribute("categories", categories);
         model.addAttribute("id", id);
-        return "admin-tasks/update-product";
+        return "admin/update-product";
     }
 
     @PostMapping("/updateProduct")
@@ -164,7 +164,7 @@ public class AdminController {
             product.setBrand(webProduct.getBrand());
 
             pService.saveProduct(product);
-            return "admin-tasks/update-confirmation";
+            return "admin/update-confirmation";
         }
     }
 

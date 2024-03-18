@@ -28,7 +28,7 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/showLoginForm")
+    @GetMapping("/loginForm")
     public String showLoginForm(Model model) {
 
         model.addAttribute("webUser", new WebUser());
