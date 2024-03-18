@@ -3,9 +3,14 @@ package se.iths.webshop.repository.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+
+import java.util.Collection;
 
 /**
  * @author Depinder Kaur
@@ -19,24 +24,19 @@ import jakarta.validation.constraints.Pattern;
 public class User {
 
     @Id
-    @NotNull(message="is required")
     private String email;
 
-    @NotNull(message="is required")
-    @Pattern(regexp = "^(?=.*\\d{2,})(?=.*[a-z])(?=.*[A-Z]).{6,}$",
-            message = "must be minimum 6 characters long with at least 1 capital letter, 1 small letter and 2 digits")
     private String password;
 
-    @NotNull(message="is required")
     @Column(name="firstname")
     private String firstName;
 
-    @NotNull(message="is required")
     @Column(name="lastname")
     private String lastName;
 
-    @Column(name="role")
-    private String role;
+    @OneToMany
+    @JoinColumn(name = "role_id")
+    private Collection<Role> roles;
 
     public User() {
     }
@@ -46,15 +46,14 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = "customer";
     }
 
-    public User(String email, String password, String firstName, String lastName, String role) {
+    public User(String email, String password, String firstName, String lastName, Collection<Role> roles) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -89,22 +88,23 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getRole() {
-        return role;
+
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "email='" + getEmail() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                ", firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", role='" + getRole() + '\'' +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

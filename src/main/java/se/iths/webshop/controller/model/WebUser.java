@@ -1,6 +1,8 @@
 package se.iths.webshop.controller.model;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * @author Depinder Kaur
@@ -11,17 +13,25 @@ import jakarta.validation.constraints.NotNull;
 public class WebUser {
 
     @NotNull(message = "is required")
+    @Size(min = 1, message = "is required")
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
 
     @NotNull(message = "is required")
+    @Size(min = 1, message = "is required")
+    @Pattern(regexp = "^(?=.*\\d{2,})(?=.*[a-z])(?=.*[A-Z]).{6,}$",
+            message = "must be minimum 6 characters long with at least 1 capital letter, 1 small letter and 2 digits")
     private String password;
 
-    public WebUser() {
-    }
+    @NotNull(message="is required")
+    @Size(min = 1, message = "is required")
+    private String firstName;
 
-    public WebUser(String email, String password) {
-        this.email = email;
-        this.password = password;
+    @NotNull(message="is required")
+    @Size(min = 1, message = "is required")
+    private String lastName;
+
+    public WebUser() {
     }
 
     public String getEmail() {
@@ -40,4 +50,19 @@ public class WebUser {
         this.password = password;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

@@ -15,23 +15,21 @@
 <i>Asterisk (*) means required.</i>
 <br><br>
 
-<form th:action="@{/processLoginForm}" th:object="${webUser}" method="POST">
+<form th:action="@{/authenticateTheUser}" method="POST">
 
-    Email (*): <input type="email" th:field="*{email}"/>
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('email')}"
-          th:errors="*{email}"
+    <span th:if="${param.error}"
+          th:value="Invalid Username or Password"
           class="error"></span>
+
+    <span th:if="${param.logout}"
+          th:value="You have been logged out"
+          class="error"></span>
+
+    Email (*): <input type="email" name="email"/>
 
     <br><br>
 
-    Password (*): <input type="password" th:field="*{password}" />
-
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('password')}"
-          th:errors="*{password}"
-          class="error"></span>
+    Password (*): <input type="password" name="password" />
 
     <br><br>
 
@@ -40,7 +38,7 @@
     <br>
     <hr>
     <br>
-    <a href="http://localhost:8080/homePage"><b>Back to Home</b></a>
+    <a href="http://localhost:8080/"><b>Back to Home</b></a>
 
 </form>
 

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Registration Form</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{./css/style.css}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
 <i>Fill out the form. Asterisk (*) means required.</i>
 <br><br>
 
-<form th:action="@{/processForm}" th:object="${user}" method="POST">
+<form th:action="@{/processRegistrationForm}" th:object="${webUser}" method="POST">
 
     First name (*): <input type="text" th:field="*{firstName}" />
 
@@ -34,6 +34,13 @@
           class="error"></span>
 
     <br><br>
+
+    <div th:if="${param.registrationError}">
+        <span th:text="${param.registrationError}"
+              class="error"></span>
+    </div>
+
+    <br>
 
     Email (*): <input type="email" th:field="*{email}"/>
 

@@ -29,12 +29,12 @@ public class LoginController {
     UserService userService;
 
     @GetMapping("/loginForm")
-    public String showLoginForm(Model model) {
+    public String showLoginForm() {
 
-        model.addAttribute("webUser", new WebUser());
+        //model.addAttribute("webUser", new WebUser());
         return "user/login-form";
     }
-
+/*
     @PostMapping("/processLoginForm")
     public String processLoginForm (@Valid @ModelAttribute("webUser") WebUser webUser,
                                     BindingResult theBindingResult) {
@@ -58,6 +58,8 @@ public class LoginController {
             return "tempwebshoppage";
         }
     }
+
+ */
 
     // add an InitBinder ... to convert trim input strings
     // remove leading and trailing whitespace
