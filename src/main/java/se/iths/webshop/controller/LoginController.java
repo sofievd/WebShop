@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.iths.webshop.controller.model.WebUser;
+import se.iths.webshop.repository.model.User;
 import se.iths.webshop.service.UserService;
 
 /**
@@ -27,11 +28,11 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/showLoginForm")
+    @GetMapping("/loginForm")
     public String showLoginForm(Model model) {
 
         model.addAttribute("webUser", new WebUser());
-        return "login-form";
+        return "user/login-form";
     }
 
     @PostMapping("/processLoginForm")
@@ -39,17 +40,22 @@ public class LoginController {
                                     BindingResult theBindingResult) {
 
         if (theBindingResult.hasErrors()) {
-            return "login-form";
+            return "user/login-form";
         }
+
+        boolean validLogin = userService.validLogin(webUser.getEmail(), webUser.getPassword());
 
         if (!userService.emailAlreadyExists(webUser.getEmail())) {
             theBindingResult.rejectValue("email", "error.email", "User NOT found- Register Now!");
+        } else if (!validLogin) {
+            theBindingResult.rejectValue("email", "error.email", "Invalid Email/Password: Try again!");
         }
 
-        if (!theBindingResult.hasErrors() && userService.validateLogin(webUser.getEmail(), webUser.getPassword())) {
-            return "tempwebshoppage";
+        User user = userService.findUserByEmailAndPassword(webUser.getEmail(), webUser.getPassword());
+        if (user.getRole().equalsIgnoreCase("admin")) {
+            return "redirect:/showAdminMenu";
         } else {
-            return "login-form";
+            return "tempwebshoppage";
         }
     }
 

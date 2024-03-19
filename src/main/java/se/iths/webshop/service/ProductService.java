@@ -2,10 +2,10 @@ package se.iths.webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.iths.webshop.entity.Category;
-import se.iths.webshop.entity.Product;
 import se.iths.webshop.repository.CategoryRepo;
 import se.iths.webshop.repository.ProductRepo;
+import se.iths.webshop.repository.model.Category;
+import se.iths.webshop.repository.model.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,5 +31,19 @@ public class ProductService {
         return product;
     }
 
+    public void saveProduct(Product product) {
+        productRepo.save(product);
+    }
 
+    public List<Product> findByNameAndCategoryAndBrand(String name, Category category, String brand) {
+        return productRepo.findByNameAndCategoryAndBrand(name, category, brand);
+    }
+
+    public Product findProductById(int id) {
+        Optional<Product> opProduct = productRepo.findById(id);
+        if (opProduct.isPresent()) {
+            return opProduct.get();
+        }
+        return null;
+    }
 }
