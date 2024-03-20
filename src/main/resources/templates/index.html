@@ -1,0 +1,27 @@
+<!-- Author: Depinder Kaur, created on: 19-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Soft Touch Yarn Co.</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+
+<body id="background">
+    <div class="homepage">
+          <h2 id="header" th:align="center">Soft Touch Yarn Co.</h2>
+
+          <div id="foto">
+              <img th:src="@{images/wool.jpg}" alt="Beautifully stacked colourful yarns" style="width:900px;height:400px;">
+
+              <br><br>
+              <a class="bluebutton" th:href="@{/register}">Register</a>
+
+              <br><br>
+              <a class="greenbutton" th:href="@{/login}">Login</a>
+          </div>
+    </div>
+</body>
+
+</html>

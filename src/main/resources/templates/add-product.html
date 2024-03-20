@@ -1,0 +1,80 @@
+<!-- Author: Depinder Kaur, created on: 16-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Product</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+
+<body>
+    <h2>Add a Product</h2>
+    <hr>
+    <form th:action="@{/admin/addProduct/save}" th:object="${productDto}" method="POST">
+
+        <!-- Check for successful adding of product -->
+        <div th:if="${param.success}">
+            <div class="pass">
+                <i><b>!! Product successfully added !!</b></i>
+            </div>
+        </div>
+
+        <br>
+
+        Name (*): <input type="text" th:field="*{name}" />
+
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('name')}"
+            th:errors="*{name}"
+            class="error"></span>
+
+        <br><br>
+
+        Price (*): <input type="text" th:field="*{price}" />
+
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('price')}"
+            th:errors="*{price}"
+            class="error"></span>
+
+        <br><br>
+
+        Category (*):
+        <input type="radio" name="category" th:field="*{category}"
+             th:each="tempCategory : ${categories}"
+             th:value="${tempCategory}"
+             th:text="${tempCategory}" />
+
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('category')}"
+            th:errors="*{category}"
+            class="error"></span>
+
+        <br><br>
+
+        Description (*): <input type="text" th:field="*{description}"/>
+
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}"
+            class="error"></span>
+
+        <br><br>
+
+        Brand (*): <input type="text" th:field="*{brand}"/>
+
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('brand')}"
+            th:errors="*{brand}"
+            class="error"></span>
+
+        <br><br>
+
+        <input type="submit" value="Add" />
+        <hr>
+        <br>
+        <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+    </form>
+</body>
+</html>

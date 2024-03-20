@@ -1,63 +1,74 @@
 package se.iths.webshop.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * @author Depinder Kaur
  * @version 0.1
  * <h2>SecurityConfiguration</h2>
- * @date 2024-03-18
+ * @date 2024-03-20
  */
-
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Bean   // Bcrypt: to encrypt password
-    public BCryptPasswordEncoder passwordEncoder() {
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Bean    // Password Encryption
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean    // Authentication
-    public DaoAuthenticationProvider authenticationProvider(UserService userService) {
-        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService); //set the custom user details service
-        auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
-        return auth;
+    @Autowired    // Authentication
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean     // Authorization
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(configurer ->
-                configurer
+        http.authorizeHttpRequests(
+                        authorize -> authorize
                                 .requestMatchers("/").permitAll()
-                                .requestMatchers("/admin/**").hasRole("admin")
-                                .requestMatchers("/user/**").permitAll()
+                                .requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/index").permitAll()
+                                .requestMatchers("/user/**").hasRole("CUSTOMER")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/usersList").hasRole("ADMIN")
                                 .anyRequest().authenticated()
-        )
-                .formLogin(form ->
-                        form
-                                .loginPage("/loginForm")
+                )
+                .formLogin(
+                        form -> form
+                                .loginPage("/login")
                                 .loginProcessingUrl("/authenticateTheUser")
-                                .successHandler(customAuthenticationSuccessHandler)
+                                .defaultSuccessUrl("/success", true)
                                 .permitAll()
                 )
-                .logout(logout -> logout.permitAll()
+                .logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                                .logoutSuccessUrl("/")
                 )
-                .exceptionHandling(configurer ->
-                        configurer.accessDeniedPage("/access-denied")
+                .exceptionHandling(
+                        configurer -> configurer
+                                .accessDeniedPage("/access-denied")
                 );
 
         return http.build();
     }
-
 
 }

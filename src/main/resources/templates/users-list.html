@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #E5E5FF;
+        }
+
+        tr:nth-child(even) {
+            background-color: #E5E5FF;
+        }
+    </style>
+
+</head>
+<body>
+
+<h2>All Users</h2>
+<hr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${usersList}">
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+<br>
+
+<form th:action="@{/logout}" method="POST">
+
+    <input type="submit" value="Logout" />
+</form>
+
+<br>
+<a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+
+</body>
+</html>

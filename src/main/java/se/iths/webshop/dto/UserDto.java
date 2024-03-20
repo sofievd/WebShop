@@ -1,4 +1,4 @@
-package se.iths.webshop.controller.model;
+package se.iths.webshop.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -7,21 +7,15 @@ import jakarta.validation.constraints.Size;
 /**
  * @author Depinder Kaur
  * @version 0.1
- * <h2>WebUser</h2>
- * @date 2024-03-15
+ * <h2>UserDto</h2>
+ * @date 2024-03-21
  */
-public class WebUser {
+public class UserDto {
 
     @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
     @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
 
-    @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
-    @Pattern(regexp = "^(?=.*\\d{2,})(?=.*[a-z])(?=.*[A-Z]).{6,}$",
-            message = "must be minimum 6 characters long with at least 1 capital letter, 1 small letter and 2 digits")
-    private String password;
 
     @NotNull(message="is required")
     @Size(min = 1, message = "is required")
@@ -31,7 +25,20 @@ public class WebUser {
     @Size(min = 1, message = "is required")
     private String lastName;
 
-    public WebUser() {
+    @NotNull(message = "is required")
+    @Size(min = 1, message = "is required")
+    @Pattern(regexp = "^(?=.*\\d{2,})(?=.*[a-z])(?=.*[A-Z]).{6,}$",
+            message = "must be minimum 6 characters long with at least 1 capital letter, 1 small letter and 2 digits")
+    private String password;
+
+    public UserDto() {
+    }
+
+    public UserDto(String email, String firstName, String lastName, String password) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -40,14 +47,6 @@ public class WebUser {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
@@ -65,4 +64,13 @@ public class WebUser {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
+

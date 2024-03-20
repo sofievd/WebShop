@@ -1,4 +1,4 @@
-package se.iths.webshop.controller.model;
+package se.iths.webshop.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -7,10 +7,10 @@ import jakarta.validation.constraints.NotNull;
 /**
  * @author Depinder Kaur
  * @version 0.1
- * <h2>WebProduct</h2>
+ * <h2>ProductDto</h2>
  * @date 2024-03-16
  */
-public class WebProduct {
+public class ProductDto {
 
     private int id;
 
@@ -31,10 +31,10 @@ public class WebProduct {
     @NotNull(message="is required")
     private String brand;
 
-    public WebProduct() {
+    public ProductDto() {
     }
 
-    public WebProduct(String name, double price, String category, String description, String brand) {
+    public ProductDto(String name, double price, String category, String description, String brand) {
         this.name = name;
         this.price = price;
         this.category = category;
@@ -42,7 +42,7 @@ public class WebProduct {
         this.brand = brand;
     }
 
-    public WebProduct(int id, String name, double price, String category, String description, String brand) {
+    public ProductDto(int id, String name, double price, String category, String description, String brand) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -101,7 +101,7 @@ public class WebProduct {
 
     @Override
     public String toString() {
-        return "WebProduct{" +
+        return "ProductDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +

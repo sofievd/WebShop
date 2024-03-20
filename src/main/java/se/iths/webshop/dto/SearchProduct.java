@@ -1,4 +1,4 @@
-package se.iths.webshop.controller.model;
+package se.iths.webshop.dto;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
  * <h2>SearchProduct</h2>
  * @date 2024-03-17
  */
+
 public class SearchProduct {
 
     @NotNull(message="is required")

@@ -1,0 +1,55 @@
+<!-- Author: Depinder Kaur, created on: 20-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    <style>
+        .error {color:red}
+        .success {color:green}
+    </style>
+</head>
+<body>
+<h2>Sign Up</h2>
+<hr>
+
+<form th:action="@{/authenticateTheUser}" method="POST">
+
+    <!-- Check for login error -->
+    <div th:if="${param.error}">
+        <div class="error">
+            <i>Invalid username or password !!</i>
+        </div>
+    </div>
+
+    <!-- Check for logout -->
+    <div th:if="${param.logout}">
+        <div class="success">
+            <i>You have been logged out</i>
+        </div>
+    </div>
+
+    <!-- user name -->
+    <p>
+        User email: <input type="email" name="username" />
+    </p>
+
+    <!-- password -->
+    <p>
+        Password: <input type="password" name="password" />
+    </p>
+
+    <!-- login button -->
+    <input type="submit" value="Login" />
+
+</form>
+<br>
+<hr>
+<br>
+<span> Not registered ?
+    <a th:href="@{/register}">Register here</a>
+</span>
+
+</body>
+</html>

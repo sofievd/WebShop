@@ -12,7 +12,7 @@
 <h3>Choose a task from drop-down menu:</h3>
 
 <br>
-    <form th:action="@{/processAdminChoice}" th:object="${menu}" method="POST">
+    <form th:action="@{/admin/processAdminChoice}" th:object="${menu}" method="POST">
     Task:
         <select name="category" th:field="*{inputChoice}">
             <option th:each="task : ${adminTasks}"
@@ -22,6 +22,11 @@
 
         <br><br>
         <input type="submit" value="Select">
+    </form>
+    <br>
+    <form th:action="@{/logout}" method="POST">
+
+        <input type="submit" value="Logout" />
     </form>
 
 </body>

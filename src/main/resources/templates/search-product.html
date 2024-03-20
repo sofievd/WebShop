@@ -1,7 +1,7 @@
 <!-- Author: Depinder Kaur, created on: 17-03-2024 -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Search a Product</title>
@@ -11,7 +11,23 @@
 <h2>Search a Product</h2>
 <hr>
 
-<form th:action="@{/searchProduct}" th:object="${searchProduct}" method="POST">
+<form th:action="@{/admin/searchProduct/chooseProduct}" th:object="${searchProduct}" method="POST">
+
+    <!-- Check for Product NOT Found -->
+    <div th:if="${param.notFound}">
+        <div class="error">
+            <i><b>!! Product NOT Found !!</b></i>
+        </div>
+    </div>
+
+    <!-- Check for successful updating of product -->
+    <div th:if="${param.success}">
+        <div class="success">
+            <b> Product Update: SUCCESSFUL </b>
+        </div>
+    </div>
+
+    <br>
 
     Name (*): <input type="text" th:field="*{name}" />
 
@@ -48,7 +64,7 @@
     <input type="submit" value="Show possible product(s)" />
     <hr>
     <br>
-    <a href="/showAdminMenu"><b>Admin Menu</b></a>
+    <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
 </form>
 </body>
 </html>

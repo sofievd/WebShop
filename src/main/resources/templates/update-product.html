@@ -1,7 +1,7 @@
 <!-- Author: Depinder Kaur, created on: 17-03-2024 -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Update a Product</title>
@@ -10,11 +10,11 @@
 <body>
 <h2>Update a Product</h2>
 
-<form th:action="@{/updateProduct}" th:object="${webProduct}" method="POST">
+<form th:action="@{/admin/updateProduct}" th:object="${productDto}" method="POST">
 
     <input type="hidden" name="id" th:value="${id}" >
 
-    Name (*): <input type="text" th:field="*{name}" th:value="${webProduct.name}"/>
+    Name (*): <input type="text" th:field="*{name}" th:value="${productDto.name}"/>
 
     <!-- Add error message (if present) -->
     <span th:if="${#fields.hasErrors('name')}"
@@ -23,7 +23,7 @@
 
     <br><br>
 
-    Price (*): <input type="text" th:field="*{price}" th:value="${webProduct.price}"/>
+    Price (*): <input type="text" th:field="*{price}" th:value="${productDto.price}"/>
 
     <!-- Add error message (if present) -->
     <span th:if="${#fields.hasErrors('price')}"
@@ -46,7 +46,7 @@
 
     <br><br>
 
-    Description (*): <input type="text" th:field="*{description}" th:value="${webProduct.description}"/>
+    Description (*): <input type="text" th:field="*{description}" th:value="${productDto.description}"/>
 
     <!-- Add error message (if present) -->
     <span th:if="${#fields.hasErrors('description')}"
@@ -55,7 +55,7 @@
 
     <br><br>
 
-    Brand (*): <input type="text" th:field="*{brand}" th:value="${webProduct.brand}"/>
+    Brand (*): <input type="text" th:field="*{brand}" th:value="${productDto.brand}"/>
 
     <!-- Add error message (if present) -->
     <span th:if="${#fields.hasErrors('brand')}"
