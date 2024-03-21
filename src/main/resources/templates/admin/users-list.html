@@ -4,34 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>All Users</title>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #E5E5FF;
-        }
-
-        tr:nth-child(even) {
-            background-color: #E5E5FF;
-        }
-    </style>
-
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
 
 <h2>All Users</h2>
 <hr>
-
+<br>
     <table>
         <thead>
             <tr>
@@ -48,16 +27,16 @@
             </tr>
         </tbody>
     </table>
-
 <br>
-
-<form th:action="@{/logout}" method="POST">
-
-    <input type="submit" value="Logout" />
-</form>
-
+<br>
+<hr>
 <br>
 <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+<br>
+<br>
+<form th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout" />
+</form>
 
 </body>
 </html>

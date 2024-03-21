@@ -21,6 +21,14 @@
         <input type="hidden" name="id" th:value="${product.id}" >
         <input type="submit" value="Select">
     </form>
+    <br>
+    <hr>
+    <br>
+    <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 </div>
 </body>
 </html>

@@ -72,9 +72,14 @@
         <br><br>
 
         <input type="submit" value="Add" />
-        <hr>
-        <br>
-        <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+    </form>
+    <br>
+    <hr>
+    <br>
+    <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
     </form>
 </body>
 </html>

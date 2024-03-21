@@ -57,7 +57,7 @@ public class AdminController {
         AdminMenu menu = new AdminMenu();
         model.addAttribute("menu", menu);
         model.addAttribute("adminTasks", adminTasks);
-        return "admin-menu";
+        return "admin/admin-menu";
     }
 
     @PostMapping("/processAdminChoice")
@@ -71,13 +71,13 @@ public class AdminController {
                 return "redirect:/admin/searchProduct";
             }
             case "Show Orders" -> {
-                return "all-orders";
+                return "admin/all-orders";
             }
             case "See All Users" -> {
                 return "redirect:/admin/usersList";
             }
             default -> {
-                return "admin-menu";
+                return "admin/admin-menu";
             }
         }
     }
@@ -87,7 +87,7 @@ public class AdminController {
         ProductDto productDto = new ProductDto();
         model.addAttribute("productDto", productDto);
         model.addAttribute("categories", categories);
-        return "add-product";
+        return "admin/add-product";
     }
 
     @PostMapping("/addProduct/save")
@@ -96,7 +96,7 @@ public class AdminController {
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("categories", categories);
-            return "add-product";
+            return "admin/add-product";
         } else {
             Product product = new Product();
             product.setName(productDto.getName());
@@ -118,7 +118,7 @@ public class AdminController {
         SearchProduct searchProduct = new SearchProduct();
         model.addAttribute("searchProduct", searchProduct);
         model.addAttribute("categories", categories);
-        return "search-product";
+        return "admin/search-product";
     }
 
     @PostMapping("/searchProduct/chooseProduct")
@@ -127,7 +127,7 @@ public class AdminController {
         if (theBindingResult.hasErrors()) {
             //System.out.println(theBindingResult);
             model.addAttribute("categories", categories);
-            return "search-product";
+            return "admin/search-product";
         } else {
             Category category = cService.getCategoryByName(searchProduct.getCategory());
             List<Product> productList = pService.findByNameAndCategoryAndBrand(searchProduct.getName(), category,
@@ -137,7 +137,7 @@ public class AdminController {
                 return "product-not-found";
             }
             model.addAttribute("productList", productList);
-            return "choose-product-to-update";
+            return "admin/choose-product-to-update";
         }
     }
 
@@ -145,33 +145,28 @@ public class AdminController {
     public String selectProductToUpdate(@RequestParam("id") int id, Model model) {
 
         Product desiredProduct = pService.findProductById(id);
-        System.out.println("Desired product: " + desiredProduct);
-
         String category = desiredProduct.getCategory().getName();
         ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(), desiredProduct.getPrice(),
                                                 category, desiredProduct.getDescription(), desiredProduct.getBrand());
 
-        System.out.println("ProductDto: " + productDto);
-
         model.addAttribute("productDto", productDto);
         model.addAttribute("categories", categories);
         model.addAttribute("id", id);
-        return "update-product";
+        return "admin/update-product";
     }
 
     @PostMapping("/updateProduct")
     public String processUpdateProduct(@RequestParam("id") int id, @ModelAttribute("productDto") ProductDto productDto,
-                                       BindingResult theBindingResult) {
-
-        System.out.println("ID: " + id);
+                                       BindingResult theBindingResult, Model model) {
         productDto.setId(id);
 
         if (theBindingResult.hasErrors()) {
-            return "redirect:/desiredProduct";
+            model.addAttribute("productDto", productDto);
+            model.addAttribute("categories", categories);
+            model.addAttribute("id", id);
+            return "redirect:/admin/selectProductToUpdate";
         } else {
             Product product = pService.findProductById(id);
-
-            System.out.println("Product to Update: " + product);
             product.setName(productDto.getName());
             product.setPrice(productDto.getPrice());
 
@@ -190,7 +185,7 @@ public class AdminController {
     public String usersList(Model model) {
         List<UserDto> usersList = userService.findAllUsers();
         model.addAttribute("usersList", usersList);
-        return "users-list";
+        return "admin/users-list";
     }
 
 
