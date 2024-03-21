@@ -43,11 +43,11 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/").permitAll()
+                                .requestMatchers("/css/**").permitAll()
+                                .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
                                 .requestMatchers("/user/**").hasRole("CUSTOMER")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/usersList").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
