@@ -33,8 +33,8 @@ public class LoginController {
         if(role.contains("ROLE_ADMIN")){
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin/showAdminMenu"));
         }
-        else if(role.contains("ROLE_USER")) {
-            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/indexUser"));
+        else if(role.contains("ROLE_CUSTOMER")) {
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/customer/showCustomerMenu"));
         }
     }
 
