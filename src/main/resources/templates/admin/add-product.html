@@ -9,63 +9,77 @@
 </head>
 
 <body>
-<h2>Add a Product</h2>
-<hr>
-<form th:action="@{/processAddProduct}" th:object="${webProduct}" method="POST">
+    <h2>Add a Product</h2>
+    <hr>
+    <form th:action="@{/admin/addProduct/save}" th:object="${productDto}" method="POST">
 
-    Name (*): <input type="text" th:field="*{name}" />
+        <!-- Check for successful adding of product -->
+        <div th:if="${param.success}">
+            <div class="pass">
+                <i><b>!! Product successfully added !!</b></i>
+            </div>
+        </div>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('name')}"
-        th:errors="*{name}"
-        class="error"></span>
+        <br>
 
-    <br><br>
+        Name (*): <input type="text" th:field="*{name}" />
 
-    Price (*): <input type="text" th:field="*{price}" />
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('name')}"
+            th:errors="*{name}"
+            class="error"></span>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('price')}"
-        th:errors="*{price}"
-        class="error"></span>
+        <br><br>
 
-    <br><br>
+        Price (*): <input type="text" th:field="*{price}" />
 
-    Category (*):
-    <input type="radio" name="category" th:field="*{category}"
-         th:each="tempCategory : ${categories}"
-         th:value="${tempCategory}"
-         th:text="${tempCategory}" />
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('price')}"
+            th:errors="*{price}"
+            class="error"></span>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('category')}"
-        th:errors="*{category}"
-        class="error"></span>
+        <br><br>
 
-    <br><br>
+        Category (*):
+        <input type="radio" name="category" th:field="*{category}"
+             th:each="tempCategory : ${categories}"
+             th:value="${tempCategory}"
+             th:text="${tempCategory}" />
 
-    Description (*): <input type="text" th:field="*{description}"/>
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('category')}"
+            th:errors="*{category}"
+            class="error"></span>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('description')}"
-        th:errors="*{description}"
-        class="error"></span>
+        <br><br>
 
-    <br><br>
+        Description (*): <input type="text" th:field="*{description}"/>
 
-    Brand (*): <input type="text" th:field="*{brand}"/>
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}"
+            class="error"></span>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('brand')}"
-        th:errors="*{brand}"
-        class="error"></span>
+        <br><br>
 
-    <br><br>
+        Brand (*): <input type="text" th:field="*{brand}"/>
 
-    <input type="submit" value="Add" />
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('brand')}"
+            th:errors="*{brand}"
+            class="error"></span>
+
+        <br><br>
+
+        <input type="submit" value="Add" />
+    </form>
+    <br>
     <hr>
     <br>
-    <a href="/showAdminMenu"><b>Go Back</b></a>
-</form>
+    <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>

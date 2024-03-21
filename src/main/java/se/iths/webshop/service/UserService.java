@@ -1,61 +1,22 @@
 package se.iths.webshop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import se.iths.webshop.repository.model.User;
-import se.iths.webshop.repository.UserRepository;
-import se.iths.webshop.util.PasswordEncryptor;
+import se.iths.webshop.dto.UserDto;
+import se.iths.webshop.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * @author Depinder Kaur
  * @version 0.1
  * <h2>UserService</h2>
- * @date 2024-03-14
+ * @date 2024-03-20
  */
+public interface UserService {
 
-@Service
-public class UserService {
+    void saveUser(UserDto userDto);
 
-    private UserRepository userRepo;
+    Optional<User> findUserByEmail(String email);
 
-    @Autowired
-    public UserService (UserRepository userRepo) {
-        this.userRepo = userRepo;
-    }
-
-    public User addUser(String email, String password, String firstName, String lastName) {
-        User user = new User(email, password, firstName, lastName);
-        String hashPassword = PasswordEncryptor.hashPassword(password);
-        user.setPassword(hashPassword);
-        userRepo.save(user);
-        return user;
-    }
-
-    public boolean emailAlreadyExists(String email) {
-        return userRepo.existsById(email);
-    }
-
-    public boolean validLogin(String email, String password) {
-
-        boolean result = false;
-        Optional<User> opUser = userRepo.findById(email);
-
-        if (opUser.isPresent()) {
-            String savedPassword = opUser.get().getPassword();
-            return PasswordEncryptor.checkPassword(password, savedPassword);
-        }
-
-        return result;
-    }
-
-    public User findUserByEmailAndPassword(String email, String password) {
-        Optional<User> opUser = userRepo.findById(email);
-
-        if (validLogin(email, password) && opUser.isPresent()) {
-            return userRepo.findById(email).get();
-        }
-        return null;
-    }
+    List<UserDto> findAllUsers();
 }

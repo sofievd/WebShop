@@ -1,4 +1,4 @@
-package se.iths.webshop.repository.model;
+package se.iths.webshop.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

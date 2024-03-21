@@ -2,7 +2,7 @@
 
 .homepage h2 {
     font-size: 50px;
-    font-family: Verdana;
+    font-family: Verdana, serif;
     align: "center"
 }
 
@@ -46,3 +46,25 @@
 }
 
 .error {color:red}
+
+.success {color: #23B50D}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #E5E5FF;
+}
+
+tr:nth-child(even) {
+    background-color: #E5E5FF;
+}

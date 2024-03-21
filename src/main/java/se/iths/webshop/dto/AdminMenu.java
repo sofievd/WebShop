@@ -1,8 +1,9 @@
-package se.iths.webshop.controller.model;
+package se.iths.webshop.dto;
 
 /**
  * @author Depinder Kaur
- * @version <h2></h2>
+ * @version 0.1
+ * <h2>AdminMenu</h2>
  * @date 2024-03-16
  */
 public class AdminMenu {

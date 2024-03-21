@@ -1,7 +1,7 @@
 <!-- Author: Depinder Kaur, created on: 17-03-2024 -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Search a Product</title>
@@ -11,44 +11,65 @@
 <h2>Search a Product</h2>
 <hr>
 
-<form th:action="@{/searchProduct}" th:object="${searchProduct}" method="POST">
+    <form th:action="@{/admin/searchProduct/chooseProduct}" th:object="${searchProduct}" method="POST">
 
-    Name (*): <input type="text" th:field="*{name}" />
+        <!-- Check for Product NOT Found -->
+        <div th:if="${param.notFound}">
+            <div class="error">
+                <i><b>!! Product NOT Found !!</b></i>
+            </div>
+        </div>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('name')}"
-          th:errors="*{name}"
-          class="error"></span>
+        <!-- Check for successful updating of product -->
+        <div th:if="${param.success}">
+            <div class="success">
+                <b> Product Update: SUCCESSFUL </b>
+            </div>
+        </div>
 
-    <br><br>
+        <br>
 
-    Category (*):
-    <select name="category" th:field="*{category}">
-        <option th:each="tempCategory : ${categories}"
-                th:value="${tempCategory}"
-                th:text="${tempCategory}"></option>
-    </select>
+        Name (*): <input type="text" th:field="*{name}" />
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('category')}"
-          th:errors="*{category}"
-          class="error"></span>
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}"
+              class="error"></span>
 
-    <br><br>
+        <br><br>
 
-    Brand (*): <input type="text" th:field="*{brand}"/>
+        Category (*):
+        <select name="category" th:field="*{category}">
+            <option th:each="tempCategory : ${categories}"
+                    th:value="${tempCategory}"
+                    th:text="${tempCategory}"></option>
+        </select>
 
-    <!-- Add error message (if present) -->
-    <span th:if="${#fields.hasErrors('brand')}"
-          th:errors="*{brand}"
-          class="error"></span>
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('category')}"
+              th:errors="*{category}"
+              class="error"></span>
 
-    <br><br>
+        <br><br>
 
-    <input type="submit" value="Show possible product(s)" />
+        Brand (*): <input type="text" th:field="*{brand}"/>
+
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('brand')}"
+              th:errors="*{brand}"
+              class="error"></span>
+
+        <br><br>
+
+        <input type="submit" value="Show possible product(s)" />
+    </form>
+    <br>
     <hr>
     <br>
-    <a href="/showAdminMenu"><b>Admin Menu</b></a>
-</form>
+    <a href="/admin/showAdminMenu"><b>Admin Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>

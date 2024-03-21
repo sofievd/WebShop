@@ -1,7 +1,6 @@
 package se.iths.webshop.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import se.iths.webshop.repository.model.User;
+import se.iths.webshop.dto.UserDto;
+import se.iths.webshop.entity.User;
 import se.iths.webshop.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Depinder Kaur
@@ -24,35 +27,41 @@ import se.iths.webshop.service.UserService;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    UserService userService;
+    private UserService userService;
+
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
-    public String showHomePage() {
-        return "user/home-page";
+    public String showLandingPage() {
+        return "index";
     }
 
-    @GetMapping("/registrationForm")
-    public String showRegistrationForm (Model model) {
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
 
-        model.addAttribute("user", new User());
-        return "user/registration-form";
+        UserDto userDto = new UserDto();
+        model.addAttribute("userDto", userDto);
+        return "registration-form";
     }
 
-    @PostMapping("/processForm")
-    public String processForm (@Valid @ModelAttribute("user") User user,
-                              BindingResult theBindingResult) {
+    @PostMapping("/register/save")
+    public String registration(@Valid @ModelAttribute("userDto") UserDto userDto,
+                               BindingResult theBindingResult) {
 
-        if (!theBindingResult.hasErrors() && userService.emailAlreadyExists(user.getEmail())) {
-            theBindingResult.rejectValue("email", "error.email", "Email already exists!");
+        Optional<User> savedUser = userService.findUserByEmail(userDto.getEmail());
+
+        if(!theBindingResult.hasErrors() && savedUser.isPresent()) {
+            theBindingResult.rejectValue("email", "error.email", " email already exists!");
         }
 
-        if (theBindingResult.hasErrors()) {
-            return "user/registration-form";
-        } else {
-            userService.addUser(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
-            return "user/customer-confirmation";
+        if(theBindingResult.hasErrors()){
+            return "registration-form";
         }
+
+        userService.saveUser(userDto);
+        return "redirect:/register?success";
     }
 
     // add an InitBinder ... to convert trim input strings
@@ -60,7 +69,6 @@ public class RegistrationController {
     // resolve issue for our validation
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
-
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
