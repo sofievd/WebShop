@@ -72,23 +72,4 @@ public class RegistrationController {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
-
-    @GetMapping("/usersList")
-    public String usersList(Model model) {
-        List<UserDto> usersList = userService.findAllUsers();
-        model.addAttribute("usersList", usersList);
-        return "users-list";
-    }
-
-    @GetMapping("/customers")
-    public String showHomePage() {
-        return "index";
-    }
-
-    // add mapping for /admin
-
-    @GetMapping("/admin")
-    public String showAdmin() {
-        return "admin";
-    }
 }
