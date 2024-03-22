@@ -15,26 +15,20 @@
         <input type="submit" value="Search">
     </form>
 </p>
+<h2> View products from the following categories</h2>
 
-<ul th:each="p: ${categoryList}">
-    <li><span th:text="${p.name}"></span>
+<dl th:each="p: ${categoryList}">
+    <dt><h4><span th:text="${p.name}"></span> </h4>
+    </dt>
+    <dd>
         <form th:action="@{/product/chooseCategory}"  method="post">
             <input type="hidden" name="categoryID" th:value="${p.id}">
             <input type="submit" value="Select">
         </form>
-    </li>
-</ul>
+    </dd>
+</dl>
 <br/>
-<!--<form th:action="@{/product/chooseCategory}" th:object="${menu}" method="POST" >-->
-<!--    Category-->
-<!--    <select name="product-category"  th:field="*{inputChoice}">-->
-<!--        <option th:each="c: ${categoryList}"-->
-<!--        th:value="${c}"-->
-<!--        th:text="${c.name}"></option>-->
-<!--    </select>-->
-<!--    <input type="hidden"  name ="categoryID" th:value="${c.id}">-->
-<!--    <input type="submit" value="Select">-->
-<!--</form>-->
+
 <br/>
 
 <a href="/all-products"> Show all the products</a>
