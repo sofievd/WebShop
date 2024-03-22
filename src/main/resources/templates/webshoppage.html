@@ -10,7 +10,6 @@
 <h1>Soft Touch Yarn Co.</h1>
 <p> We sell yarn to keep your imagination alive!</p>
 <p>
-    <form method="post" th:action="@{/search}">
     <form method="post" th:action="@{/product/search}">
 
     <!-- Check for successful adding of product -->
@@ -25,7 +24,7 @@
         <input type="submit" value="Search">
     </form>
 </p>
-<h2> View products from the following categories</h2>
+<h3> View products from the following categories</h3>
 
 <dl th:each="p: ${categoryList}">
     <dt><h4><span th:text="${p.name}"></span> </h4>
