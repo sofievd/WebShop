@@ -7,20 +7,21 @@
     <title>Choose Product to Update</title>
 </head>
 <body>
-<h2>Choose Product to Update</h2>
-<hr>
-<div th:each="product: ${productList}">
-    Name: <span th:text="${product.name}"></span><br>
-    Category: <span th:text="${product.category.getName()}"></span><br>
-    Brand: <span th:text="${product.brand}"></span><br>
-    Price: <span th:text="${product.price}"></span> kr<br>
-    Description: <span th:text="${product.description}"></span>
+    <h2>Choose Product to Update</h2>
+    <hr>
+    <div th:each="product: ${productList}">
+        Name: <span th:text="${product.name}"></span><br>
+        Category: <span th:text="${product.category.getName()}"></span><br>
+        Brand: <span th:text="${product.brand}"></span><br>
+        Price: <span th:text="${product.price}"></span> kr<br>
+        Description: <span th:text="${product.description}"></span>
 
-    <form th:action="@{/admin/selectProductToUpdate}" method="POST">
+        <form th:action="@{/admin/selectProductToUpdate}" method="POST">
 
-        <input type="hidden" name="id" th:value="${product.id}" >
-        <input type="submit" value="Select">
-    </form>
+            <input type="hidden" name="id" th:value="${product.id}" >
+            <input type="submit" value="Select">
+        </form>
+    </div>
     <br>
     <hr>
     <br>
@@ -29,6 +30,5 @@
     <form th:action="@{/logout}" method="POST">
         <input type="submit" value="Logout" />
     </form>
-</div>
 </body>
 </html>
