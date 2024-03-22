@@ -11,21 +11,20 @@
 <p> We sell yarn to keep your imagination alive!</p>
 <p>
     <form method="post" action="/search">
-    <input type="search" placeholder="Search Product" name="search" >
-    <input type="submit" value="Search">
-</form>
-
+        <input type="search" placeholder="Search Product" name="search">
+        <input type="submit" value="Search">
+    </form>
 </p>
 
-<ul th:each="p: ${categories}">
+<ul th:each="p: ${categoryList}">
     <li><span th:text="${p.name}"></span>
     </li>
 </ul>
 <br/>
-<form th:action="@{/choosecategory}" th:object="${menu}" method="POST" >
+<form th:action="@{/product/chooseCategory}" th:object="${menu}" method="POST" >
     Category
     <select name="product-category"  th:field="*{inputChoice}">
-        <option th:each="c: ${categories}"
+        <option th:each="c: ${categoryList}"
         th:value="${c}"
         th:text="${c.name}"></option>
     </select>

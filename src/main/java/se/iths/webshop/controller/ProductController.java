@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.dto.CategoryMenu;
 import se.iths.webshop.service.CategoryService;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/product")
 public class ProductController {
      @Autowired
     private ProductService pService;
@@ -27,11 +29,11 @@ public class ProductController {
     private List<String> categories;
 
 
-     @GetMapping("/webshop")
+     @GetMapping("/webShop")
      public String CategoryList(Model m){
          CategoryMenu menu= new CategoryMenu();
          m.addAttribute("menu", menu);
-          m.addAttribute("categorylist", cService.getCataegories());
+          m.addAttribute("categoryList", cService.getCataegories());
           return "webshoppage";
      }
   /*   @RequestMapping("/processLoginForm")
@@ -48,25 +50,25 @@ public class ProductController {
           }
           else {
                m.addAttribute("product", product.get());
-               return "productPage";
+               return "product-page";
           }
      }
 
-     @PostMapping("/choosecategory")
+     @PostMapping("/chooseCategory")
      public String chooseCategory(@ModelAttribute("menu") CategoryMenu menu){
          switch (menu.getInputChoice()){
              case "lace" -> {                 
-                 return "categorypage";
+                 return "category-page";
              }
          }
-          return "categorypage";
+          return "category-page";
      }
 
      @GetMapping("/category")
      public String category(Model m){
          String chosencategory = null;
          List<Product> productList = pService.getProductByCategory(chosencategory);
-         return "categorypage";
+         return "category-page";
      }
 
      @GetMapping("/all-products")

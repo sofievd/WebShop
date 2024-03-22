@@ -34,7 +34,7 @@ public class LoginController {
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin/showAdminMenu"));
         }
         else if(role.contains("ROLE_CUSTOMER")) {
-            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/customer/showCustomerMenu"));
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/product/webShop"));
         }
     }
 

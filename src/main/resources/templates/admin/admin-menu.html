@@ -7,11 +7,11 @@
     <title>Admin Menu</title>
 </head>
 <body>
-<h1>Admin Menu</h1>
-<hr>
-<h3>Choose a task from drop-down menu:</h3>
+    <h1>Admin Menu</h1>
+    <hr>
+    <h3>Choose a task from drop-down menu:</h3>
 
-<br>
+    <br>
     <form th:action="@{/admin/processAdminChoice}" th:object="${menu}" method="POST">
     Task:
         <select name="category" th:field="*{inputChoice}">
