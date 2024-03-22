@@ -1,8 +1,8 @@
 package se.iths.webshop.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.parameters.P;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.dto.CategoryMenu;
+import se.iths.webshop.entity.Category;
+import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -85,12 +88,11 @@ public class ProductController {
     }
 
      @PostMapping("/chooseCategory")
-     public String chooseCategory(@ModelAttribute("menu") CategoryMenu menu){
-         switch (menu.getInputChoice()){
-             case "lace" -> {                 
-                 return "category-page";
-             }
-         }
+     public String chooseCategory(Model model, @ModelAttribute("menu") CategoryMenu menu, @RequestParam("categoryID") int id){
+         Category category = cService.findById(id);
+         model.addAttribute("category", category);
+         List<Product> productList = pService.getProductByCategory(category.getName());
+         model.addAttribute("productlist", productList);
           return "category-page";
      }
 
