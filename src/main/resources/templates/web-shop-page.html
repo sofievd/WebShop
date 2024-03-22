@@ -57,10 +57,10 @@
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
         <br><br>
-        <form th:action="@{/logout}" method="POST">
-            <input type="submit" value="Logout" />
-        </form>
     </div>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 
 </body>
 </html>
