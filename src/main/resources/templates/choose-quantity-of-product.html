@@ -17,12 +17,7 @@
         Description: <span th:text="${productDto.description}" ></span>
         <br>
 
-        Quantity: <input type="number" th:field="${productDto.quantity}" th:value="${quantity}"/>
-
-        <!-- Add error message (if present) -->
-        <span th:if="${#fields.hasErrors('quantity')}"
-              th:errors="*{quantity}"
-              class="error"></span>
+        Quantity: <input type="number" min="0" name="quantity" th:value="${quantity}"/>
 
         <input type="hidden" th:field="${productDto.id}" th:value="${id}">
 

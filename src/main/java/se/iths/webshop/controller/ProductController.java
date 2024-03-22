@@ -7,6 +7,7 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -88,18 +89,15 @@ public class ProductController {
                                      @Valid @ModelAttribute("quantity") int quantity,
                                      BindingResult theBindingResult, Model model) {
 
-        System.out.println("Id: " + id);
         Product desiredProduct = pService.findProductById(id);
-        System.out.println("Product: " + desiredProduct);
-        System.out.println("Quantity: " + quantity);
-
         DesiredProductDto desiredProductDto = getDesiredProductDtoFromProduct(desiredProduct);
+        desiredProductDto.setQuantity(quantity);
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("productDto", desiredProductDto);
             return "choose-quantity-of-product";
         } else {
-            desiredProductDto.setQuantity(desiredProductDto.getQuantity());
+
             //TODO add desiredProduct with quantity to basket
             return "redirect:/product/webShop?success";
         }
