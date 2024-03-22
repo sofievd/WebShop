@@ -26,9 +26,9 @@ public class ProductService {
          return productsList;
     }
 
-    public Optional<Product> searchProducts(String name){
-        Optional<Product> product = productRepo.findByName(name);
-        return product;
+    public List<Product> searchProducts(String name){
+        List<Product> productsWithSameName = productRepo.findByName(name);
+        return productsWithSameName;
     }
 
     public void saveProduct(Product product) {

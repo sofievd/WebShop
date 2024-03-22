@@ -1,0 +1,34 @@
+<!-- Author: Depinder Kaur, created on: 22-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Choose a Product</title>
+</head>
+<body>
+    <h2>Choose Product</h2>
+    <hr>
+    <div th:each="product: ${productList}">
+        Name: <span th:text="${product.name}"></span><br>
+        Category: <span th:text="${product.category.getName()}"></span><br>
+        Brand: <span th:text="${product.brand}"></span><br>
+        Price: <span th:text="${product.price}"></span> kr<br>
+        Description: <span th:text="${product.description}"></span>
+
+        <form th:action="@{/product/chooseQuantityOfProduct}" method="POST">
+            <input type="hidden" name="id" th:value="${product.id}" >
+            <input type="submit" value="Select">
+        </form>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <a href="/product/webShop"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</body>
+</html>

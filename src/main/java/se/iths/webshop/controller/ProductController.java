@@ -1,21 +1,27 @@
 package se.iths.webshop.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.dto.CategoryMenu;
+import se.iths.webshop.dto.DesiredProductDto;
+import se.iths.webshop.entity.Category;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.ProductService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -43,16 +49,61 @@ public class ProductController {
 
      @PostMapping("/search")
      public String search(Model m, @RequestParam("search") String searchWord){
-          Optional<Product> product = pService.searchProducts(searchWord);
-          if(product.isEmpty()){
-               m.addAttribute("product", searchWord + " cannot be found!");
-               return "no-product-found";
-          }
-          else {
-               m.addAttribute("product", product.get());
-               return "product-page";
+          List<Product> productsWithSameNameList = pService.searchProducts(searchWord);
+          if(!productsWithSameNameList.isEmpty()){
+              m.addAttribute("productList", productsWithSameNameList);
+              m.addAttribute("categoryList", cService.getCataegories());
+              return "choose-product-from-list";
+          } else {
+              m.addAttribute("Product ", searchWord + " cannot be found!");
+              return "no-product-found";
           }
      }
+
+     @PostMapping("/chooseQuantityOfProduct")
+     public String chooseQuantityOfProduct(@RequestParam("id") int id, Model model) {
+
+         Product desiredProduct = pService.findProductById(id);
+         System.out.println("Desired Product: " + desiredProduct);
+         DesiredProductDto desiredProductDto = getDesiredProductDtoFromProduct(desiredProduct);
+         System.out.println("Desired productDto: " + desiredProductDto);
+
+         model.addAttribute("productDto", desiredProductDto);
+         return "choose-quantity-of-product";
+     }
+
+    private static DesiredProductDto getDesiredProductDtoFromProduct(Product product) {
+        int quantity = 0;
+        return new DesiredProductDto(product.getId(),
+                                    product.getName(),
+                                    product.getPrice(),
+                                    product.getCategory(),
+                                    product.getDescription(),
+                                    product.getBrand(),
+                                    quantity);
+    }
+
+    @PostMapping("/addProductToBasket")
+    public String addProductToBasket(@Valid @ModelAttribute("id") int id,
+                                     @Valid @ModelAttribute("quantity") int quantity,
+                                     BindingResult theBindingResult, Model model) {
+
+        System.out.println("Id: " + id);
+        Product desiredProduct = pService.findProductById(id);
+        System.out.println("Product: " + desiredProduct);
+        System.out.println("Quantity: " + quantity);
+
+        DesiredProductDto desiredProductDto = getDesiredProductDtoFromProduct(desiredProduct);
+
+        if (theBindingResult.hasErrors()) {
+            model.addAttribute("productDto", desiredProductDto);
+            return "choose-quantity-of-product";
+        } else {
+            desiredProductDto.setQuantity(desiredProductDto.getQuantity());
+            //TODO add desiredProduct with quantity to basket
+            return "redirect:/product/webShop?success";
+        }
+    }
 
      @PostMapping("/chooseCategory")
      public String chooseCategory(@ModelAttribute("menu") CategoryMenu menu){
@@ -76,6 +127,16 @@ public class ProductController {
          m.addAttribute("allproductslist", pService.getProducts());
          return "show-products";
      }
+
+
+    // add an InitBinder ... to convert trim input strings
+    // remove leading and trailing whitespace
+    // resolve issue for our validation
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
 
     /* @GetMapping("/categorypage")
      public String catecories(Model m){
