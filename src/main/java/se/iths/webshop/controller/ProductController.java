@@ -1,11 +1,14 @@
 package se.iths.webshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.iths.webshop.controller.model.CategoryMenu;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.ProductService;
@@ -20,8 +23,14 @@ public class ProductController {
      @Autowired
     private CategoryService cService;
 
+    @Value("${categories}")
+    private List<String> categories;
+
+
      @GetMapping("/webshop")
      public String CategoryList(Model m){
+         CategoryMenu menu= new CategoryMenu();
+         m.addAttribute("menu", menu);
           m.addAttribute("categorylist", cService.getCataegories());
           return "webshoppage";
      }
@@ -43,12 +52,21 @@ public class ProductController {
           }
      }
 
-     @PostMapping("/category")
-     public String clickLink(Model m, @RequestParam("category") String categoryString){
-          m.addAttribute("category", categoryString);
-          List<Product> productList = pService.getProductByCategory(categoryString);
-          m.addAttribute("productlist", productList);
+     @PostMapping("/choosecategory")
+     public String chooseCategory(@ModelAttribute("menu") CategoryMenu menu){
+         switch (menu.getInputChoice()){
+             case "lace" -> {                 
+                 return "categorypage";
+             }
+         }
           return "categorypage";
+     }
+
+     @GetMapping("/category")
+     public String category(Model m){
+         String chosencategory = null;
+         List<Product> productList = pService.getProductByCategory(chosencategory);
+         return "categorypage";
      }
 
      @GetMapping("/all-products")

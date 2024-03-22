@@ -17,14 +17,20 @@
 
 </p>
 
-<ul th:each="p: ${categorylist}">
+<ul th:each="p: ${categories}">
     <li><span th:text="${p.name}"></span>
     </li>
 </ul>
 <br/>
-<form method="post" action="/category">
-    <span> choose category</span> <input type="text" name="category" size="8"></input>
-    <input type="submit" value="Go to">
+<form th:action="@{/choosecategory}" th:object="${menu}" method="POST" >
+    Category
+    <select name="product-category"  th:field="*{inputChoice}">
+        <option th:each="c: ${categories}"
+        th:value="${c}"
+        th:text="${c.name}"></option>
+    </select>
+
+    <input type="submit" value="Select">
 </form>
 <br/>
 

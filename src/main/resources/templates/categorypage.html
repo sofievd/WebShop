@@ -5,7 +5,7 @@
     <title th:text="${category}"></title>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body i="background">
+<body id="background">
 <h1><span th:text = "${category}"></span></h1>
 
 <dl th:each="p: ${productlist}">
@@ -17,6 +17,11 @@
 
 </dl>
 <br/>
+<p>
+    <span>
+        <a href= > </a>
+    </span>
+</p>
 <a href="/webshop"> Go Back</a>
 
 </body>

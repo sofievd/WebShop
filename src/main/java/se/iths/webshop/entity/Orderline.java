@@ -1,6 +1,8 @@
 package se.iths.webshop.repository.model;
 
 import jakarta.persistence.*;
+import se.iths.webshop.entity.Order;
+import se.iths.webshop.entity.Product;
 
 @Entity
 @Table(name = "orderline")
