@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import se.iths.webshop.controller.model.CategoryMenu;
+import se.iths.webshop.dto.CategoryMenu;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.ProductService;

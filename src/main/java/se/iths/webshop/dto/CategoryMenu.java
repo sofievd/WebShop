@@ -1,4 +1,4 @@
-package se.iths.webshop.controller.model;
+package se.iths.webshop.dto;
 
 public class CategoryMenu {
     // change inputChoice to an Enum since we do not want to update the categories
