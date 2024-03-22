@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.dto.AdminMenu;
 import se.iths.webshop.dto.ProductDto;
-import se.iths.webshop.dto.SearchProduct;
 import se.iths.webshop.dto.UserDto;
 import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
@@ -68,7 +67,7 @@ public class AdminController {
                 return "redirect:/admin/addProduct";
             }
             case "Update a product" -> {
-                return "redirect:/admin/searchProduct";
+                return "redirect:/product/webShop";
             }
             case "Show Orders" -> {
                 return "admin/all-orders";
@@ -113,38 +112,11 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/searchProduct")
-    public String searchProduct(Model model) {
-        SearchProduct searchProduct = new SearchProduct();
-        model.addAttribute("searchProduct", searchProduct);
-        model.addAttribute("categories", categories);
-        return "admin/search-product";
-    }
-
-    @PostMapping("/searchProduct/chooseProduct")
-    public String processSearchProduct(@Valid @ModelAttribute("searchProduct") SearchProduct searchProduct,
-                                      BindingResult theBindingResult, Model model) {
-        if (theBindingResult.hasErrors()) {
-            //System.out.println(theBindingResult);
-            model.addAttribute("categories", categories);
-            return "admin/search-product";
-        } else {
-            Category category = cService.getCategoryByName(searchProduct.getCategory());
-            List<Product> productList = pService.findByNameAndCategoryAndBrand(searchProduct.getName(), category,
-                                                                                searchProduct.getBrand());
-
-            if (productList.isEmpty()) {
-                return "product-not-found";
-            }
-            model.addAttribute("productList", productList);
-            return "admin/choose-product-to-update";
-        }
-    }
-
     @PostMapping("/selectProductToUpdate")
     public String selectProductToUpdate(@RequestParam("id") int id, Model model) {
 
         Product desiredProduct = pService.findProductById(id);
+
         String category = desiredProduct.getCategory().getName();
         ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(), desiredProduct.getPrice(),
                                                 category, desiredProduct.getDescription(), desiredProduct.getBrand());
@@ -156,7 +128,7 @@ public class AdminController {
     }
 
     @PostMapping("/updateProduct")
-    public String processUpdateProduct(@RequestParam("id") int id, @ModelAttribute("productDto") ProductDto productDto,
+    public String processUpdateProduct(@RequestParam("id") int id, @Valid @ModelAttribute("productDto") ProductDto productDto,
                                        BindingResult theBindingResult, Model model) {
         productDto.setId(id);
 
@@ -164,7 +136,7 @@ public class AdminController {
             model.addAttribute("productDto", productDto);
             model.addAttribute("categories", categories);
             model.addAttribute("id", id);
-            return "redirect:/admin/selectProductToUpdate";
+            return "admin/update-product";
         } else {
             Product product = pService.findProductById(id);
             product.setName(productDto.getName());
@@ -177,7 +149,7 @@ public class AdminController {
             product.setBrand(productDto.getBrand());
 
             pService.saveProduct(product);
-            return "redirect:/admin/searchProduct?success";
+            return "redirect:/product/webShop?success";
         }
     }
 
