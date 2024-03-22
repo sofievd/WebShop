@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `webshop` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `webshop`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: webshop
@@ -108,8 +110,9 @@ CREATE TABLE `product` (
   `description` mediumtext NOT NULL,
   `brand` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `category_id` FOREIGN KEY (`id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `category_id_idx` (`category_id`),
+  CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +121,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Catona',35.20,2,'2,5-3,5 mm. 50 g. gauche 26 st on 32 rows','Scheepjes'),(2,'Catania',29.50,2,'2,5-3,5. 50 g gauche 27 st on 30 rows','Schachenmayr'),(3,'test product',11.67,2,'desc1','test brand'),(4,'test product',25.38,2,'desc','test brand'),(5,'test product',30.50,7,'desc','test brand'),(6,'Whirl',156.90,3,'3 mm hook size','Scheepjes'),(7,'test product',54.37,2,'test desc','test brand'),(8,'test product',41.70,2,'test desc','test brand');
+INSERT INTO `product` VALUES (1,'Catona',35.20,2,'2,5-3,5 mm. 50 g. gauche 26 st on 32 rows','Scheepjes'),(2,'Catania',29.50,2,'2,5-3,5. 50 g gauche 27 st on 30 rows','Schachenmayr'),(3,'test product',11.67,2,'desc1','test brand'),(4,'test product',100.99,2,'desciption','test brand'),(5,'test product',30.50,7,'desc','test brand'),(6,'Whirl',156.90,3,'3 mm hook size','Scheepjes'),(7,'test product',51.49,2,'test desc','test brand'),(8,'test product',41.70,2,'test desc','test brand'),(11,'test product 2',38.99,5,'some boring description','some unknown brand');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-22  9:54:24
+-- Dump completed on 2024-03-22 22:24:19
