@@ -7,7 +7,6 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.dto.CategoryMenu;
-import se.iths.webshop.dto.DesiredProductDto;
-import se.iths.webshop.entity.Category;
-import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
+import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
 
 import java.util.List;
@@ -65,24 +62,10 @@ public class ProductController {
      public String chooseQuantityOfProduct(@RequestParam("id") int id, Model model) {
 
          Product desiredProduct = pService.findProductById(id);
-         System.out.println("Desired Product: " + desiredProduct);
-         DesiredProductDto desiredProductDto = getDesiredProductDtoFromProduct(desiredProduct);
-         System.out.println("Desired productDto: " + desiredProductDto);
+         model.addAttribute("product", desiredProduct);
 
-         model.addAttribute("productDto", desiredProductDto);
          return "choose-quantity-of-product";
      }
-
-    private static DesiredProductDto getDesiredProductDtoFromProduct(Product product) {
-        int quantity = 0;
-        return new DesiredProductDto(product.getId(),
-                                    product.getName(),
-                                    product.getPrice(),
-                                    product.getCategory(),
-                                    product.getDescription(),
-                                    product.getBrand(),
-                                    quantity);
-    }
 
     @PostMapping("/addProductToBasket")
     public String addProductToBasket(@Valid @ModelAttribute("id") int id,
@@ -90,11 +73,9 @@ public class ProductController {
                                      BindingResult theBindingResult, Model model) {
 
         Product desiredProduct = pService.findProductById(id);
-        DesiredProductDto desiredProductDto = getDesiredProductDtoFromProduct(desiredProduct);
-        desiredProductDto.setQuantity(quantity);
 
         if (theBindingResult.hasErrors()) {
-            model.addAttribute("productDto", desiredProductDto);
+            model.addAttribute("productDto", desiredProduct);
             return "choose-quantity-of-product";
         } else {
 
