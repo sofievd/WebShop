@@ -7,7 +7,7 @@
 }
 
 #background {
-    background-color: #FDD9F1;
+    background-color: #FFE9FC;
 }
 
 #foto {
@@ -47,7 +47,7 @@
 
 .error {color:red}
 
-.success {color: #23B50D}
+.success {color: #1EA238}
 
 table {
     font-family: arial, sans-serif;
