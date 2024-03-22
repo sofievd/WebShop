@@ -10,7 +10,7 @@
 <h1>Soft Touch Yarn Co.</h1>
 <p> We sell yarn to keep your imagination alive!</p>
 <p>
-    <form method="post" action="/search">
+    <form method="post" th:action="@{/search}">
         <input type="search" placeholder="Search Product" name="search">
         <input type="submit" value="Search">
     </form>
@@ -18,19 +18,23 @@
 
 <ul th:each="p: ${categoryList}">
     <li><span th:text="${p.name}"></span>
+        <form th:action="@{/product/chooseCategory}"  method="post">
+            <input type="hidden" name="categoryID" th:value="${p.id}">
+            <input type="submit" value="Select">
+        </form>
     </li>
 </ul>
 <br/>
-<form th:action="@{/product/chooseCategory}" th:object="${menu}" method="POST" >
-    Category
-    <select name="product-category"  th:field="*{inputChoice}">
-        <option th:each="c: ${categoryList}"
-        th:value="${c}"
-        th:text="${c.name}"></option>
-    </select>
-
-    <input type="submit" value="Select">
-</form>
+<!--<form th:action="@{/product/chooseCategory}" th:object="${menu}" method="POST" >-->
+<!--    Category-->
+<!--    <select name="product-category"  th:field="*{inputChoice}">-->
+<!--        <option th:each="c: ${categoryList}"-->
+<!--        th:value="${c}"-->
+<!--        th:text="${c.name}"></option>-->
+<!--    </select>-->
+<!--    <input type="hidden"  name ="categoryID" th:value="${c.id}">-->
+<!--    <input type="submit" value="Select">-->
+<!--</form>-->
 <br/>
 
 <a href="/all-products"> Show all the products</a>

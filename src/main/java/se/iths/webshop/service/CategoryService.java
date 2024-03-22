@@ -19,4 +19,9 @@ public class CategoryService {
     public Category getCategoryByName(String name) {
         return categoryRepo.findByName(name);
     }
+
+    public Category findById(int id){
+        return categoryRepo.findById(id).get();
+    }
 }
+

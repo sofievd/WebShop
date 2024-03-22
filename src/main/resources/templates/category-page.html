@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${category}"></title>
+    <title th:text="${category.name}"></title>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body id="background">
-<h1><span th:text = "${category}"></span></h1>
+<h1><span th:text = "${category.name}"></span></h1>
 
 <dl th:each="p: ${productlist}">
     <dt><span th:text="${p.name}" ></span></dt>
@@ -22,7 +22,7 @@
         <a href= > </a>
     </span>
 </p>
-<a href="/webshop"> Go Back</a>
+<a href="/product/webShop"> Go Back</a>
 
 </body>
 </html>
