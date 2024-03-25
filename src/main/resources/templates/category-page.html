@@ -13,7 +13,7 @@
 
     <dd>brand: <span th:text="${p.brand}" ></span></dd>
     <dd>description: <span th:text="${p.description}" ></span></dd>
-    <dd> price: <span th:text="${p.price}" ></span> kr</dd>
+    <dd> price: <span th:text="${p.price}" ></span> kr</dd> <br/>
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <form th:action="@{/admin/selectProductToUpdate}" method="POST">

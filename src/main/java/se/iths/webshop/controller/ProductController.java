@@ -1,5 +1,6 @@
 package se.iths.webshop.controller;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +20,11 @@ import se.iths.webshop.entity.Category;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.ProductService;
+import se.iths.webshop.shoppingcart.ShoppingCartService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
@@ -29,6 +33,8 @@ public class ProductController {
     private ProductService pService;
      @Autowired
     private CategoryService cService;
+     @Autowired
+     private ShoppingCartService shoppingCart;
 
     @Value("${categories}")
     private List<String> categories;
@@ -81,6 +87,12 @@ public class ProductController {
         } else {
 
             //TODO add desiredProduct with quantity to basket
+            shoppingCart.addToCart(desiredProduct, quantity);
+            System.out.println("shopping cart: ");
+            for(Map.Entry<Product, Integer> entry:shoppingCart.getShoppingCart().entrySet() ){
+                System.out.println(entry.getKey().getName()+" : " +entry.getValue());
+            }
+
             return "redirect:/product/webShop?success";
         }
     }
@@ -105,6 +117,20 @@ public class ProductController {
      public String ProductList(Model m){
          m.addAttribute("allproductslist", pService.getProducts());
          return "show-products";
+     }
+
+     @GetMapping("/shopping-cart")
+     public String showShoppingCart(Model model){
+         List<Product> productList = new ArrayList<>();
+         List<Integer> quantityList = new ArrayList<>();
+         for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().entrySet()) {
+             productList.add(entry.getKey());
+             quantityList.add(entry.getValue());
+         }
+         model.addAttribute("product", productList);
+         model.addAttribute("quantity", quantityList);
+         model.addAttribute("cart", shoppingCart);
+     return "shoppingBasket";
      }
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Shopping Cart</title>
@@ -8,6 +8,7 @@
 <body id="background">
 <h1>Shopping Cart
 </h1>
+
 <table>
     <thead>
     <tr>
@@ -16,10 +17,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="product ${products}"></tr>
-    <td th:text="${product.name}"></td>
+    <tr th:each="item : ${cart.getShoppingCart()}" >
+        <td th:text="${item.key.name}"></td>
+        <td th:text="${item.value}"></td>
+    </tr>
     </tbody>
 </table>
+<div sec:authorize="hasRole('ROLE_CUSTOMER')">
+    <a th:href="@{/product/webShop}" > Continue shopping</a>
+</div>
+
 
 </body>
 </html>

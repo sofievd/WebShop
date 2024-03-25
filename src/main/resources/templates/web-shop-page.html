@@ -50,9 +50,11 @@
 
     <br/>
 
-    <a href="/all-products"><b>Show all the products</b></a>
+    <a th:href="@{/product/all-products}"><b>Show all the products</b></a>
 
     <br><br>
+
+    <a th:href="@{/product/shopping-cart}"> see shopping cart</a>
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
