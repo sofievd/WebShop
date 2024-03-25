@@ -1,6 +1,5 @@
 package se.iths.webshop.controller;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.dto.CategoryMenu;
 import se.iths.webshop.entity.Category;
-import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.entity.Product;
+import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
 import se.iths.webshop.shoppingcart.ShoppingCartService;
 
@@ -29,50 +28,45 @@ import java.util.Map;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
-     @Autowired
+    @Autowired
     private ProductService pService;
-     @Autowired
+    @Autowired
     private CategoryService cService;
-     @Autowired
-     private ShoppingCartService shoppingCart;
+    @Autowired
+    private ShoppingCartService shoppingCart;
 
     @Value("${categories}")
     private List<String> categories;
 
+    @GetMapping("/webShop")
+    public String CategoryList(Model m) {
+        CategoryMenu menu = new CategoryMenu();
+        m.addAttribute("menu", menu);
+        m.addAttribute("categoryList", cService.getCataegories());
+        return "web-shop-page";
+    }
 
-     @GetMapping("/webShop")
-     public String CategoryList(Model m){
-         CategoryMenu menu= new CategoryMenu();
-         m.addAttribute("menu", menu);
-          m.addAttribute("categoryList", cService.getCataegories());
-          return "web-shop-page";
-     }
-  /*   @RequestMapping("/processLoginForm")
-     public String forwardUrl(){
-         return "forward:/webshop";
-     }*/
+    @PostMapping("/search")
+    public String search(Model m, @RequestParam("search") String searchWord) {
+        List<Product> productsWithSameNameList = pService.searchProducts(searchWord);
+        if (!productsWithSameNameList.isEmpty()) {
+            m.addAttribute("productList", productsWithSameNameList);
+            m.addAttribute("categoryList", cService.getCataegories());
+            return "choose-product-from-list";
+        } else {
+            m.addAttribute("Product ", searchWord + " cannot be found!");
+            return "no-product-found";
+        }
+    }
 
-     @PostMapping("/search")
-     public String search(Model m, @RequestParam("search") String searchWord){
-          List<Product> productsWithSameNameList = pService.searchProducts(searchWord);
-          if(!productsWithSameNameList.isEmpty()){
-              m.addAttribute("productList", productsWithSameNameList);
-              m.addAttribute("categoryList", cService.getCataegories());
-              return "choose-product-from-list";
-          } else {
-              m.addAttribute("Product ", searchWord + " cannot be found!");
-              return "no-product-found";
-          }
-     }
+    @PostMapping("/chooseQuantityOfProduct")
+    public String chooseQuantityOfProduct(@RequestParam("id") int id, Model model) {
 
-     @PostMapping("/chooseQuantityOfProduct")
-     public String chooseQuantityOfProduct(@RequestParam("id") int id, Model model) {
+        Product desiredProduct = pService.findProductById(id);
+        model.addAttribute("product", desiredProduct);
 
-         Product desiredProduct = pService.findProductById(id);
-         model.addAttribute("product", desiredProduct);
-
-         return "choose-quantity-of-product";
-     }
+        return "choose-quantity-of-product";
+    }
 
     @PostMapping("/addProductToBasket")
     public String addProductToBasket(@Valid @ModelAttribute("id") int id,
@@ -89,50 +83,49 @@ public class ProductController {
             //TODO add desiredProduct with quantity to basket
             shoppingCart.addToCart(desiredProduct, quantity);
             System.out.println("shopping cart: ");
-            for(Map.Entry<Product, Integer> entry:shoppingCart.getShoppingCart().entrySet() ){
-                System.out.println(entry.getKey().getName()+" : " +entry.getValue());
+            for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
+                System.out.println(entry.getKey().getName() + " : " + entry.getValue());
             }
 
             return "redirect:/product/webShop?success";
         }
     }
 
-     @PostMapping("/chooseCategory")
-     public String chooseCategory(Model model, @ModelAttribute("menu") CategoryMenu menu, @RequestParam("categoryID") int id){
-         Category category = cService.findById(id);
-         model.addAttribute("category", category);
-         List<Product> productList = pService.getProductByCategory(category.getName());
-         model.addAttribute("productlist", productList);
-         return "category-page";
-     }
+    @PostMapping("/chooseCategory")
+    public String chooseCategory(Model model, @ModelAttribute("menu") CategoryMenu menu, @RequestParam("categoryID") int id) {
+        Category category = cService.findById(id);
+        model.addAttribute("category", category);
+        List<Product> productList = pService.getProductByCategory(category.getName());
+        model.addAttribute("productlist", productList);
+        return "category-page";
+    }
 
-     @GetMapping("/category")
-     public String category(Model m){
-         String chosencategory = null;
-         List<Product> productList = pService.getProductByCategory(chosencategory);
-         return "category-page";
-     }
+    @GetMapping("/category")
+    public String category(Model m) {
+        String chosencategory = null;
+        List<Product> productList = pService.getProductByCategory(chosencategory);
+        return "category-page";
+    }
 
-     @GetMapping("/all-products")
-     public String ProductList(Model m){
-         m.addAttribute("allproductslist", pService.getProducts());
-         return "show-products";
-     }
+    @GetMapping("/all-products")
+    public String ProductList(Model m) {
+        m.addAttribute("allproductslist", pService.getProducts());
+        return "show-products";
+    }
 
-     @GetMapping("/shopping-cart")
-     public String showShoppingCart(Model model){
-         List<Product> productList = new ArrayList<>();
-         List<Integer> quantityList = new ArrayList<>();
-         for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().entrySet()) {
-             productList.add(entry.getKey());
-             quantityList.add(entry.getValue());
-         }
-         model.addAttribute("product", productList);
-         model.addAttribute("quantity", quantityList);
-         model.addAttribute("cart", shoppingCart);
-     return "shoppingBasket";
-     }
-
+    @GetMapping("/shopping-cart")
+    public String showShoppingCart(Model model) {
+        List<Product> productList = new ArrayList<>();
+        List<Integer> quantityList = new ArrayList<>();
+        for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
+            productList.add(entry.getKey());
+            quantityList.add(entry.getValue());
+        }
+        model.addAttribute("product", productList);
+        model.addAttribute("quantity", quantityList);
+        model.addAttribute("cart", shoppingCart);
+        return "shoppingBasket";
+    }
 
     // add an InitBinder ... to convert trim input strings
     // remove leading and trailing whitespace
@@ -142,11 +135,4 @@ public class ProductController {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
-
-    /* @GetMapping("/categorypage")
-     public String catecories(Model m){
-          return "categorypage";
-     }
-*/
-
 }

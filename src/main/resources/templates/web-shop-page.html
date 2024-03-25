@@ -54,7 +54,9 @@
 
     <br><br>
 
-    <a th:href="@{/product/shopping-cart}"> see shopping cart</a>
+    <a th:href="@{/product/shopping-cart}"><b>See shopping cart</b></a>
+
+    <br><br>
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
