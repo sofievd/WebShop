@@ -1,4 +1,4 @@
-package se.iths.webshop.shoppingcart;
+package se.iths.webshop.service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.criteria.CriteriaBuilder;
