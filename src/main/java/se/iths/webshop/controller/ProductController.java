@@ -19,7 +19,7 @@ import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
-import se.iths.webshop.shoppingcart.ShoppingCartService;
+import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.ArrayList;
 import java.util.List;
