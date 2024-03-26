@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class ProductController {
     private ProductService pService;
     @Autowired
     private CategoryService cService;
+
     @Autowired
     private ShoppingCartService shoppingCart;
 
@@ -78,17 +81,51 @@ public class ProductController {
         if (theBindingResult.hasErrors()) {
             model.addAttribute("productDto", desiredProduct);
             return "choose-quantity-of-product";
-        } else {
+        }  else {
 
             //TODO add desiredProduct with quantity to basket
             shoppingCart.addToCart(desiredProduct, quantity);
             System.out.println("shopping cart: ");
-            for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
-                System.out.println(entry.getKey().getName() + " : " + entry.getValue());
-            }
+            for(int i = 0; i<shoppingCart.getShoppingCart().getBasket().size(); i++){
 
+                Product product = pService.findProductById(shoppingCart.getShoppingCart().getBasket().get(i)[0]);
+                System.out.println(product.getName() +" : " + shoppingCart.getShoppingCart().getBasket().get(i)[1]);
+            }
             return "redirect:/product/webShop?success";
         }
+    }
+
+    @PostMapping("/updateQuantityOfProduct")
+    public String updateQuantityOfProduct(@RequestParam("id") int id, Model model) {
+
+        Product desiredProduct = pService.findProductById(id);
+        model.addAttribute("product", desiredProduct);
+
+        return "choose-quantity-of-product-update-basket";
+    }
+
+    @PostMapping("/update-basket")
+    public String updateBasket(@Valid @ModelAttribute("id") int id,
+                               @Valid @ModelAttribute("quantity") int quantity,
+                               BindingResult theBindingResult, Model model){
+        Product desiredProduct = pService.findProductById(id);
+
+        if (theBindingResult.hasErrors()) {
+            model.addAttribute("productDto", desiredProduct);
+            return "choose-quantity-of-product-update-basket";
+        }
+        else {
+
+            shoppingCart.updateShoppingCart(desiredProduct, quantity);
+            System.out.println("update: ");
+
+            for(int i = 0; i<shoppingCart.getShoppingCart().getBasket().size(); i++){
+                System.out.println(shoppingCart.getShoppingCart().getBasket());
+                Product product = pService.findProductById(shoppingCart.getShoppingCart().getBasket().get(i)[0]);
+                System.out.println(product.getName() +" : " + shoppingCart.getShoppingCart().getBasket().get(i)[1]);
+            }
+        }
+        return "redirect:/product/webShop?success";
     }
 
     @PostMapping("/chooseCategory")
@@ -115,15 +152,13 @@ public class ProductController {
 
     @GetMapping("/shopping-cart")
     public String showShoppingCart(Model model) {
-        List<Product> productList = new ArrayList<>();
-        List<Integer> quantityList = new ArrayList<>();
-        for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
-            productList.add(entry.getKey());
-            quantityList.add(entry.getValue());
+        Map<Product, Integer> cart = new HashMap<>();
+        for (int i =0; i< shoppingCart.getShoppingCart().getBasket().size(); i++){
+            Product product = pService.findProductById(shoppingCart.getShoppingCart().getBasket().get(i)[0]);
+            int quantity = shoppingCart.getShoppingCart().getBasket().get(i)[1];
+            cart.put(product, quantity);
         }
-        model.addAttribute("product", productList);
-        model.addAttribute("quantity", quantityList);
-        model.addAttribute("cart", shoppingCart);
+        model.addAttribute("cart", cart);
         return "shoppingBasket";
     }
 
