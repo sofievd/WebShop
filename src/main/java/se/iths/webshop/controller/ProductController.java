@@ -80,7 +80,6 @@ public class ProductController {
             return "choose-quantity-of-product";
         } else {
 
-            //TODO add desiredProduct with quantity to basket
             shoppingCart.addToCart(desiredProduct, quantity);
             System.out.println("shopping cart: ");
             for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
@@ -111,20 +110,6 @@ public class ProductController {
     public String ProductList(Model m) {
         m.addAttribute("allproductslist", pService.getProducts());
         return "show-products";
-    }
-
-    @GetMapping("/shopping-cart")
-    public String showShoppingCart(Model model) {
-        List<Product> productList = new ArrayList<>();
-        List<Integer> quantityList = new ArrayList<>();
-        for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
-            productList.add(entry.getKey());
-            quantityList.add(entry.getValue());
-        }
-        model.addAttribute("product", productList);
-        model.addAttribute("quantity", quantityList);
-        model.addAttribute("cart", shoppingCart);
-        return "shoppingBasket";
     }
 
     // add an InitBinder ... to convert trim input strings

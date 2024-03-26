@@ -9,6 +9,7 @@ import se.iths.webshop.entity.Product;
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @SessionScope
@@ -24,16 +25,14 @@ public class ShoppingCartService {
     public ShoppingCartService() {
     }
 
-    public void addToCart(Product product, Integer quantaty){
-        shoppingCart.put(product,quantaty);
+    public void addToCart(Product product, Integer quantity){
+        shoppingCart.put(product,quantity);
     }
+
     public HashMap<Product, Integer> getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingcart(HashMap<Product, Integer> shoppingcart) {
-        this.shoppingCart = shoppingcart;
-    }
     public double calculatePrice(){
         double totalPrice = 0;
         for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){

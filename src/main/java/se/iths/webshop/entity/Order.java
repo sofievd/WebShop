@@ -7,27 +7,43 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="order")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
     @JoinColumn(name="customer_email")
     private User user;
 
-    private Date date;
+    @Column(name="date")
+    private LocalDateTime date;
 
     @Column(name="total_amount")
     private double totalAmount;
 
     public Order() {
+    }
+
+    public Order(User user, LocalDateTime date, double totalAmount) {
+        this.user = user;
+        this.date = date;
+        this.totalAmount = totalAmount;
+    }
+
+    public Order(int id, User user, LocalDateTime date, double totalAmount) {
+        this.id = id;
+        this.user = user;
+        this.date = date;
+        this.totalAmount = totalAmount;
     }
 
     public int getId() {
@@ -46,11 +62,11 @@ public class Order {
         this.user = user;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

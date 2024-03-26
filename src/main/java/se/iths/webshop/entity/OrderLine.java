@@ -11,9 +11,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orderline")
-public class Orderline {
+public class OrderLine {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "product_id")
