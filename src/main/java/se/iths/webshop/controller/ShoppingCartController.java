@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
+import se.iths.webshop.entity.User;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
 import se.iths.webshop.service.UserServiceImpl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,21 +59,29 @@ public class ShoppingCartController {
         model.addAttribute("cartDetails", cartDetails);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
-//        model.addAttribute("product", productList);
-//        model.addAttribute("quantity", quantityList);
-//        model.addAttribute("cart", cartService);
         return "checkout";
     }
 
     @PostMapping("/payment")
-    public String orderConfirmation(@RequestParam("totalPrice") double totalPrice) {
+    public String orderConfirmation(@RequestParam("totalPrice") double totalPrice, Model model) {
 
-        System.out.println("TOTAL PRICE: " + totalPrice);
         Map<Product, List<Double>> cartDetails = cartService.getCartDetails();
         Map<Product, Integer> shoppingCart = cartService.getShoppingCart();
 
-        System.out.println("Shopping cart: " + shoppingCart);
-        orderService.createOrder(shoppingCart, totalPrice);
+        Order savedOrder = orderService.createOrder(shoppingCart, totalPrice);
+
+        User currentUser = savedOrder.getUser();
+        LocalDateTime date = savedOrder.getDate();
+        String dateOnly = date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
+        String timeOnly = date.getHour() + ":" + date.getMinute() + ":" + date.getSecond();
+
+        model.addAttribute("dateOnly", dateOnly);
+        model.addAttribute("timeOnly", timeOnly);
+        model.addAttribute("user", currentUser);
+        model.addAttribute("order", savedOrder);
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
         return "order-confirmation";
     }
 }

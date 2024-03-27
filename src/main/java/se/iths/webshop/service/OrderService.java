@@ -34,10 +34,11 @@ public class OrderService {
     private OrderLineService orderLineService;
 
     @Transactional
-    public void createOrder(Map<Product, Integer> shoppingCart, double totalPrice) {
+    public Order createOrder(Map<Product, Integer> shoppingCart, double totalPrice) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserEmail = authentication.getName();
 
+        Order order = new Order();
         Optional<User> optionalUser = userService.findUserByEmail(loggedInUserEmail);
         if (optionalUser.isPresent()) {
             User loggedInUser = optionalUser.get();
@@ -47,7 +48,7 @@ public class OrderService {
             System.out.println("total price: " + totalPrice);
             System.out.println("Logged-in user: " + loggedInUser);
 
-            Order order = new Order(loggedInUser, LocalDateTime.now(), totalPrice);
+            //Order order = new Order(loggedInUser, LocalDateTime.now(), totalPrice);
             order.setUser(loggedInUser);
             order.setDate(LocalDateTime.now());
             order.setTotalAmount(totalPrice);
@@ -62,5 +63,6 @@ public class OrderService {
                 orderLineService.createOrderLine(orderline);
             }
         }
+        return order;
     }
 }
