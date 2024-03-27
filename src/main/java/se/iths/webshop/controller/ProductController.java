@@ -86,7 +86,11 @@ public class ProductController {
             //TODO add desiredProduct with quantity to basket
             shoppingCart.addToCart(desiredProduct, quantity);
             System.out.println("shopping cart: ");
-           for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().getShoppingCart().entrySet()){
+            /*for(int i = 0; i< shoppingCart.getShoppingCart().size(); i++){
+                Product product = pService.findProductById(shoppingCart.getShoppingCart().get(i)[0]);
+                System.out.println(product.getName()+ " : "+ shoppingCart.getShoppingCart().get(i)[1]);
+            }*/
+           for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().entrySet()){
                 System.out.println(entry.getKey().getName() +" : " + entry.getValue());
             }
             return "redirect:/product/webShop?success";
@@ -116,8 +120,12 @@ public class ProductController {
 
             shoppingCart.updateShoppingCart(desiredProduct, quantity);
             System.out.println("update: ");
+           /* for(int i = 0; i< shoppingCart.getShoppingCart().size(); i++){
+                Product product = pService.findProductById(shoppingCart.getShoppingCart().get(i)[0]);
+                System.out.println(product.getName()+ " : "+ shoppingCart.getShoppingCart().get(i)[1]);
+            }*/
 
-            for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().getShoppingCart().entrySet()){
+            for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().entrySet()){
                 System.out.println(entry.getKey().getName() +" : " + entry.getValue());
             }
         }
@@ -148,14 +156,14 @@ public class ProductController {
 
     @GetMapping("/shopping-cart")
     public String showShoppingCart(Model model) {
-//        Map<Product, Integer> cart = new HashMap<>();
-//        for (int i =0; i< shoppingCart.getShoppingCart().getBasket().size(); i++){
-//            Product product = pService.findProductById(shoppingCart.getShoppingCart().getBasket().get(i)[0]);
-//            int quantity = shoppingCart.getShoppingCart().getBasket().get(i)[1];
-//            cart.put(product, quantity);
-//        }
+     /*  Map<Product, Integer> cart = new HashMap<>();
+        for (int i =0; i< shoppingCart.getShoppingCart().size(); i++){
+            Product product = pService.findProductById(shoppingCart.getShoppingCart().get(i)[0]);
+            int quantity = shoppingCart.getShoppingCart().get(i)[1];
+            cart.put(product, quantity);
+        }*/
 
-        model.addAttribute("cart", shoppingCart.getShoppingCart());
+        model.addAttribute("cart", shoppingCart);
         return "shoppingBasket";
     }
 
