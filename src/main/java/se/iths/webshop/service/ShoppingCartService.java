@@ -3,13 +3,13 @@ package se.iths.webshop.service;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
+import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Product;
+import se.iths.webshop.util.DecimalFormatter;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -32,19 +32,17 @@ public class ShoppingCartService {
         shoppingCart.put(product,quantity);
     }
 
-    public void addToCartDetails(Product product, int quantity) {
-        double priceOfProduct = product.getPrice();
-        List<Double> quantityAndPriceList = new ArrayList<>(2);
-        quantityAndPriceList.add((double) quantity);
-
-        NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-        formatter.setMaximumFractionDigits(2);
-        formatter.setMinimumFractionDigits(2);
-
-        double priceOfDesiredAmount = Double.parseDouble(formatter.format(priceOfProduct * quantity));
-
-        quantityAndPriceList.add(priceOfDesiredAmount);
-        cartDetails.put(product, quantityAndPriceList);
+    public List<CartItem> getCartItemsForCheckout() {
+        List<CartItem> cartItemList = new ArrayList<>();
+        for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            double price = DecimalFormatter.formatToTwoDecimalPlaces(product.getPrice());
+            double totalPrice = DecimalFormatter.formatToTwoDecimalPlaces(quantity * price);
+            CartItem cartItem = new CartItem(product.getName(), price, quantity, totalPrice);
+            cartItemList.add(cartItem);
+        }
+        return cartItemList;
     }
 
     public HashMap<Product, Integer> getShoppingCart() {
@@ -60,7 +58,7 @@ public class ShoppingCartService {
         for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
             totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
-        return totalPrice;
+        return DecimalFormatter.formatToTwoDecimalPlaces(totalPrice);
     }
 
     public int getTotalItems(){

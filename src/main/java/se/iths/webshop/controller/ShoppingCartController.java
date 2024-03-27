@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
@@ -50,11 +51,11 @@ public class ShoppingCartController {
 
     @GetMapping("/checkout")
     public String processShoppingCart(Model model) {
-        Map<Product, List<Double>> cartDetails = cartService.getCartDetails();
+        List<CartItem> cartItemList = cartService.getCartItemsForCheckout();
 
         double totalPrice = cartService.calculatePrice();
 
-        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("cartItemList", cartItemList);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
         return "checkout";
