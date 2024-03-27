@@ -76,11 +76,12 @@ public class ProductController {
         Product desiredProduct = pService.findProductById(id);
 
         if (theBindingResult.hasErrors()) {
-            model.addAttribute("productDto", desiredProduct);
+            model.addAttribute("product", desiredProduct);
             return "choose-quantity-of-product";
         } else {
 
             shoppingCart.addToCart(desiredProduct, quantity);
+            shoppingCart.addToCartDetails(desiredProduct, quantity);
             System.out.println("shopping cart: ");
             for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
                 System.out.println(entry.getKey().getName() + " : " + entry.getValue());

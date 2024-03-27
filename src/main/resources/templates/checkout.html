@@ -15,9 +15,7 @@
 </div>
 
 <table>
-
     <thead>
-
     <tr>
         <th>Product</th>
         <th>Quantity</th>
@@ -25,10 +23,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="item : ${shoppingCart}">
-        <td th:text="${item.key.name}"></td>
-        <td th:text="${item.value}"></td>
-        <td th:text="${item.key.price} * ${item.value}"></td>
+    <tr th:each="mapEntry : ${cartDetails}">
+        <td th:text="${mapEntry.key.name}"></td>
+        <td th:text="${mapEntry.value.get(0)}"></td>
+        <td th:text="${mapEntry.value.get(1)}"></td>
     </tr>
 
     <tr>
@@ -40,9 +38,9 @@
 </table>
 <br><br>
 <div sec:authorize="hasRole('ROLE_CUSTOMER')">
-    <form th:action="@{/cart/payment}" th:object="${shoppingCart}" method="POST">
+    <form th:action="@{/cart/payment}" th:object="${cartDetails}" method="POST">
         <input type="hidden" name="totalPrice" th:value="${totalPrice}">
-        <input type="hidden" name="shoppingCart" th:value="${shoppingCart}">
+        <input type="hidden" name="cartDetails" th:value="${cartDetails}">
         <input type="submit" value="Pay">
     </form>
 </div>

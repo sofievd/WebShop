@@ -13,6 +13,7 @@ import se.iths.webshop.service.ShoppingCartService;
 import se.iths.webshop.service.UserServiceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,18 +49,11 @@ public class ShoppingCartController {
 
     @GetMapping("/checkout")
     public String processShoppingCart(Model model) {
-        List<Product> productList = new ArrayList<>();
-        List<Integer> quantityList = new ArrayList<>();
-
-        Map<Product, Integer> shoppingCart = cartService.getShoppingCart();
-        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
-            productList.add(entry.getKey());
-            quantityList.add(entry.getValue());
-        }
+        Map<Product, List<Double>> cartDetails = cartService.getCartDetails();
 
         double totalPrice = cartService.calculatePrice();
 
-        model.addAttribute("shoppingCart", shoppingCart);
+        model.addAttribute("cartDetails", cartDetails);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
 //        model.addAttribute("product", productList);
@@ -71,10 +65,12 @@ public class ShoppingCartController {
     @PostMapping("/payment")
     public String orderConfirmation(@RequestParam("totalPrice") double totalPrice) {
 
+        System.out.println("TOTAL PRICE: " + totalPrice);
+        Map<Product, List<Double>> cartDetails = cartService.getCartDetails();
         Map<Product, Integer> shoppingCart = cartService.getShoppingCart();
 
         System.out.println("Shopping cart: " + shoppingCart);
         orderService.createOrder(shoppingCart, totalPrice);
-        return "redirect:/cart/checkout?success";
+        return "order-confirmation";
     }
 }
