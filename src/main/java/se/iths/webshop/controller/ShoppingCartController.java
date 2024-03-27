@@ -12,11 +12,9 @@ import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
-import se.iths.webshop.service.UserServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

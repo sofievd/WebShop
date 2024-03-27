@@ -12,7 +12,6 @@ import se.iths.webshop.entity.User;
 import se.iths.webshop.repository.OrderRepo;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,12 +42,6 @@ public class OrderService {
         if (optionalUser.isPresent()) {
             User loggedInUser = optionalUser.get();
 
-            System.out.println("User email: " + loggedInUserEmail);
-            System.out.println("Date: " + LocalDateTime.now());
-            System.out.println("total price: " + totalPrice);
-            System.out.println("Logged-in user: " + loggedInUser);
-
-            //Order order = new Order(loggedInUser, LocalDateTime.now(), totalPrice);
             order.setUser(loggedInUser);
             order.setDate(LocalDateTime.now());
             order.setTotalAmount(totalPrice);

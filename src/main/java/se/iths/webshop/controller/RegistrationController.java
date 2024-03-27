@@ -14,7 +14,6 @@ import se.iths.webshop.dto.UserDto;
 import se.iths.webshop.entity.User;
 import se.iths.webshop.service.UserService;
 
-import java.util.List;
 import java.util.Optional;
 
 /**

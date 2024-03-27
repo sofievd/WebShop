@@ -21,7 +21,6 @@ import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
