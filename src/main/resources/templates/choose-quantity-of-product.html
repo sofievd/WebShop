@@ -19,7 +19,7 @@
         Description: <span th:text="${product.description}" ></span>
         <br>
 
-        Quantity: <input type="number" min="0" name="quantity" th:value="${quantity}"/>
+        Quantity: <input type="number" min="1" name="quantity" th:value="${quantity}"/>
 
         <input type="hidden" th:field="${product.id}" th:value="${id}">
 

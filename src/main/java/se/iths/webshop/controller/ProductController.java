@@ -63,13 +63,14 @@ public class ProductController {
 
         Product desiredProduct = pService.findProductById(id);
         model.addAttribute("product", desiredProduct);
+        model.addAttribute("quantity", "1");
 
         return "choose-quantity-of-product";
     }
 
     @PostMapping("/addProductToBasket")
     public String addProductToBasket(@Valid @ModelAttribute("id") int id,
-                                     @Valid @ModelAttribute("quantity") int quantity,
+                                     @RequestParam("quantity") String quantity,
                                      BindingResult theBindingResult, Model model) {
 
         Product desiredProduct = pService.findProductById(id);
@@ -78,16 +79,8 @@ public class ProductController {
             model.addAttribute("product", desiredProduct);
             return "choose-quantity-of-product";
         } else {
-
-            shoppingCart.addToCart(desiredProduct, quantity);
-            shoppingCart.addToCartDetails(desiredProduct, quantity);
-            /*
-            for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
-                System.out.println(entry.getKey().getName() + " : " + entry.getValue());
-            }
-
-             */
-
+            int quantityInt = Integer.parseInt(quantity);
+            shoppingCart.addToCart(desiredProduct, quantityInt);
             return "redirect:/product/webShop?success";
         }
     }
