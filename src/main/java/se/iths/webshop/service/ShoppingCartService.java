@@ -4,17 +4,17 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.webshop.ShoppingCart;
+import se.iths.webshop.ShoppingCartMap;
 import se.iths.webshop.entity.Product;
 
 
 @Service
-
 public class ShoppingCartService {
-    ShoppingCart shoppingCart;
+    ShoppingCartMap shoppingCart;
 
     @PostConstruct
     public void createBasket() {
-        shoppingCart = new ShoppingCart();
+        shoppingCart = new ShoppingCartMap();
     }
 
     public ShoppingCartService() {
@@ -25,11 +25,11 @@ public class ShoppingCartService {
         shoppingCart.add(product,quantity);
     }
 
-    public ShoppingCart getShoppingCart() {
+    public ShoppingCartMap getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingcart(ShoppingCart shoppingcart) {
+    public void setShoppingcart(ShoppingCartMap shoppingcart) {
         this.shoppingCart = shoppingcart;
     }
 

@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="item : ${cart}" >
+    <tr th:each="item : ${cart.getShoppingCart()}" >
         <td th:text="${item.key.name}"></td>
         <td th:text="${item.value}">
         </td>
