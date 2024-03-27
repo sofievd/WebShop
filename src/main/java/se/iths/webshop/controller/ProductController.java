@@ -120,7 +120,6 @@ public class ProductController {
             System.out.println("update: ");
 
             for(int i = 0; i<shoppingCart.getShoppingCart().getBasket().size(); i++){
-                System.out.println(shoppingCart.getShoppingCart().getBasket());
                 Product product = pService.findProductById(shoppingCart.getShoppingCart().getBasket().get(i)[0]);
                 System.out.println(product.getName() +" : " + shoppingCart.getShoppingCart().getBasket().get(i)[1]);
             }
