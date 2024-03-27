@@ -81,10 +81,12 @@ public class ProductController {
 
             shoppingCart.addToCart(desiredProduct, quantity);
             shoppingCart.addToCartDetails(desiredProduct, quantity);
-            System.out.println("shopping cart: ");
+            /*
             for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
                 System.out.println(entry.getKey().getName() + " : " + entry.getValue());
             }
+
+             */
 
             return "redirect:/product/webShop?success";
         }
