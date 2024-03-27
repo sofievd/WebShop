@@ -21,7 +21,6 @@ import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,12 +75,12 @@ public class ProductController {
         Product desiredProduct = pService.findProductById(id);
 
         if (theBindingResult.hasErrors()) {
-            model.addAttribute("productDto", desiredProduct);
+            model.addAttribute("product", desiredProduct);
             return "choose-quantity-of-product";
         } else {
 
-            //TODO add desiredProduct with quantity to basket
             shoppingCart.addToCart(desiredProduct, quantity);
+            shoppingCart.addToCartDetails(desiredProduct, quantity);
             System.out.println("shopping cart: ");
             for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
                 System.out.println(entry.getKey().getName() + " : " + entry.getValue());
@@ -111,20 +110,6 @@ public class ProductController {
     public String ProductList(Model m) {
         m.addAttribute("allproductslist", pService.getProducts());
         return "show-products";
-    }
-
-    @GetMapping("/shopping-cart")
-    public String showShoppingCart(Model model) {
-        List<Product> productList = new ArrayList<>();
-        List<Integer> quantityList = new ArrayList<>();
-        for (Map.Entry<Product, Integer> entry : shoppingCart.getShoppingCart().entrySet()) {
-            productList.add(entry.getKey());
-            quantityList.add(entry.getValue());
-        }
-        model.addAttribute("product", productList);
-        model.addAttribute("quantity", quantityList);
-        model.addAttribute("cart", shoppingCart);
-        return "shoppingBasket";
     }
 
     // add an InitBinder ... to convert trim input strings

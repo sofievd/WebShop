@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+    <h2>Order Confirmation</h2>
+    <p>
+        Order id: <span th:text="${order.id}"/><br>
+        Customer: <span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/> <br>
+        Email: <span th:text="${user.email}"/><br>
+        Date: <span th:text="${dateOnly}"/>
+        <span th:text="${timeOnly}" />
+    </p>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th><b>Product</b></th>
+            <th><b>Quantity</b></th>
+            <th><b>Price (in kr)</b></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="mapEntry : ${cartDetails}">
+                <td th:text="${mapEntry.key.name}"></td>
+                <td th:text="${mapEntry.value.get(0)}"></td>
+                <td th:text="${mapEntry.value.get(1)}"></td>
+            </tr>
+            <tr>
+                <td><b>Total</b></td>
+                <td><b th:text="${totalNumOfArticles}"></b></td>
+                <td><b th:text="${totalPrice}"></b></td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+    <h2>Checkout</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price (in kr)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="mapEntry : ${cartDetails}">
+            <td th:text="${mapEntry.key.name}"></td>
+            <td th:text="${mapEntry.value.get(0)}"></td>
+            <td th:text="${mapEntry.value.get(1)}"></td>
+        </tr>
+
+        <tr>
+            <td><b>Total</b></td>
+            <td><b th:text="${totalNumOfArticles}"></b></td>
+            <td><b th:text="${totalPrice}"></b></td>
+        </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <form th:action="@{/cart/payment}" th:object="${cartDetails}" method="POST">
+            <input type="hidden" name="totalPrice" th:value="${totalPrice}">
+            <input type="hidden" name="cartDetails" th:value="${cartDetails}">
+            <input type="submit" value="Pay">
+        </form>
+    </div>
+
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+
+</body>
+</html>

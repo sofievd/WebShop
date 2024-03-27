@@ -6,4 +6,6 @@ import se.iths.webshop.entity.Order;
 
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Integer> {
+
+    Order save(Order order);
 }

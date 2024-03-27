@@ -42,31 +42,6 @@ INSERT INTO `category` VALUES (1,'Lace'),(2,'Super Fine'),(3,'Fine Weight'),(4,'
 UNLOCK TABLES;
 
 --
--- Table structure for table `order`
---
-
-DROP TABLE IF EXISTS `order`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `customer_email` varchar(45) NOT NULL,
-  `date` datetime NOT NULL,
-  `total_amount` decimal(7,2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order`
---
-
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `orderline`
 --
 
@@ -81,7 +56,7 @@ CREATE TABLE `orderline` (
   PRIMARY KEY (`id`),
   KEY `order_id_idx` (`order_id`),
   KEY `product_id_idx` (`product_id`),
-  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`),
+  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,6 +68,34 @@ CREATE TABLE `orderline` (
 LOCK TABLES `orderline` WRITE;
 /*!40000 ALTER TABLE `orderline` DISABLE KEYS */;
 /*!40000 ALTER TABLE `orderline` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `date` datetime NOT NULL,
+  `total_amount` decimal(7,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `customer_email_idx` (`customer_email`),
+  CONSTRAINT `customer_email` FOREIGN KEY (`customer_email`) REFERENCES `user` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'bella@test.com','2024-03-27 09:34:51',29.50),(2,'bella@test.com','2024-03-27 09:35:03',29.50);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -112,7 +115,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `category_id_idx` (`category_id`),
   CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +124,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Catona',35.20,2,'2,5-3,5 mm. 50 g. gauche 26 st on 32 rows','Scheepjes'),(2,'Catania',29.50,2,'2,5-3,5. 50 g gauche 27 st on 30 rows','Schachenmayr'),(3,'test product',11.67,2,'desc1','test brand'),(4,'test product',100.99,2,'desciption','test brand'),(5,'test product',30.50,7,'desc','test brand'),(6,'Whirl',156.90,3,'3 mm hook size','Scheepjes'),(7,'test product',51.49,2,'test desc','test brand'),(8,'test product',41.70,2,'test desc','test brand'),(11,'test product 2',38.99,5,'some boring description','some unknown brand');
+INSERT INTO `product` VALUES (1,'Catona',35.20,2,'2,5-3,5 mm. 50 g. gauche 26 st on 32 rows','Scheepjes'),(2,'Catania',29.50,2,'2,5-3,5. 50 g gauche 27 st on 30 rows','Schachenmayr'),(3,'test product',11.67,2,'desc1','test brand'),(4,'test product',100.99,2,'desciption','test brand'),(5,'test product',30.50,7,'desc','test brand'),(6,'Whirl',156.90,3,'3 mm hook size','Scheepjes'),(7,'test product',51.49,2,'test desc','test brand'),(8,'test product',41.70,2,'test desc','test brand'),(11,'test product 2',38.99,5,'some boring description','some unknown brand'),(12,'test product 3',55.55,6,'desc','brand');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,4 +215,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-22 22:24:19
+-- Dump completed on 2024-03-27  9:36:50
