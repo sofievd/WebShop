@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +13,7 @@ import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
-import se.iths.webshop.util.DateTimeFormatter;
+import se.iths.webshop.util.CustomDateFormatter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -73,11 +72,9 @@ public class ShoppingCartController {
 
         User currentUser = savedOrder.getUser();
         LocalDateTime dateTime = savedOrder.getDate();
-        String dateOnly = DateTimeFormatter.getDateFromLocalDateTime(dateTime);
-        String timeOnly = DateTimeFormatter.getTimeFromLocalDateTime(dateTime);
+        String formattedDateTime = CustomDateFormatter.getFormattedDateTime(dateTime);
 
-        model.addAttribute("dateOnly", dateOnly);
-        model.addAttribute("timeOnly", timeOnly);
+        model.addAttribute("formattedDateTime", formattedDateTime);
         model.addAttribute("user", currentUser);
         model.addAttribute("order", savedOrder);
         model.addAttribute("cartItemList", cartItemList);

@@ -13,8 +13,7 @@
         Order id: <span th:text="${order.id}"/><br>
         Customer: <span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/> <br>
         Email: <span th:text="${user.email}"/><br>
-        Date: <span th:text="${dateOnly}"/>
-        <span th:text="${timeOnly}" />
+        Date: <span th:text="${formattedDateTime}"/>
     </p>
     <br><br>
     <table>
