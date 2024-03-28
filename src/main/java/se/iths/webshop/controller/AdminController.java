@@ -61,7 +61,7 @@ public class AdminController {
 
     @PostMapping("/processAdminChoice")
     public String processAdminChoice(@ModelAttribute("menu") AdminMenu menu) {
-        //System.out.println(menu.getInputChoice());
+
         switch (menu.getInputChoice()) {
             case "Add a product" -> {
                 return "redirect:/admin/addProduct";
@@ -97,16 +97,7 @@ public class AdminController {
             model.addAttribute("categories", categories);
             return "admin/add-product";
         } else {
-            Product product = new Product();
-            product.setName(productDto.getName());
-            product.setPrice(productDto.getPrice());
-
-            Category category = cService.getCategoryByName(productDto.getCategory());
-            product.setCategory(category);
-
-            product.setDescription(productDto.getDescription());
-            product.setBrand(productDto.getBrand());
-
+            Product product = getProductFromProductDto(productDto, new Product());
             pService.saveProduct(product);
             return "redirect:/admin/addProduct?success";
         }
@@ -139,18 +130,23 @@ public class AdminController {
             return "admin/update-product";
         } else {
             Product product = pService.findProductById(id);
-            product.setName(productDto.getName());
-            product.setPrice(productDto.getPrice());
+            Product updatedProduct = getProductFromProductDto(productDto, product);
 
-            Category category = cService.getCategoryByName(productDto.getCategory());
-            product.setCategory(category);
-
-            product.setDescription(productDto.getDescription());
-            product.setBrand(productDto.getBrand());
-
-            pService.saveProduct(product);
+            pService.saveProduct(updatedProduct);
             return "redirect:/product/webShop?success";
         }
+    }
+
+    private Product getProductFromProductDto(ProductDto productDto, Product product) {
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+
+        Category category = cService.getCategoryByName(productDto.getCategory());
+        product.setCategory(category);
+
+        product.setDescription(productDto.getDescription());
+        product.setBrand(productDto.getBrand());
+        return product;
     }
 
     @GetMapping("/usersList")
