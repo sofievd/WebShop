@@ -47,10 +47,6 @@ public class AdminController {
     @Value("${admin-tasks}")
     private List<String> adminTasks;
 
-    @Value("${categories}")
-    private List<String> categories;
-
-
     @GetMapping("/showAdminMenu")
     public String showAdminMenu(Model model) {
         AdminMenu menu = new AdminMenu();
@@ -85,7 +81,7 @@ public class AdminController {
     public String addProduct(Model model) {
         ProductDto productDto = new ProductDto();
         model.addAttribute("productDto", productDto);
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", cService.getCataegories());
         return "admin/add-product";
     }
 
@@ -94,7 +90,7 @@ public class AdminController {
                                            BindingResult theBindingResult, Model model) {
 
         if (theBindingResult.hasErrors()) {
-            model.addAttribute("categories", categories);
+            model.addAttribute("categories", cService.getCataegories());
             return "admin/add-product";
         } else {
             Product product = getProductFromProductDto(productDto, new Product());
@@ -107,13 +103,12 @@ public class AdminController {
     public String selectProductToUpdate(@RequestParam("id") int id, Model model) {
 
         Product desiredProduct = pService.findProductById(id);
-
         String category = desiredProduct.getCategory().getName();
         ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(), desiredProduct.getPrice(),
                                                 category, desiredProduct.getDescription(), desiredProduct.getBrand());
 
         model.addAttribute("productDto", productDto);
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", cService.getCataegories());
         model.addAttribute("id", id);
         return "admin/update-product";
     }
@@ -125,13 +120,12 @@ public class AdminController {
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("productDto", productDto);
-            model.addAttribute("categories", categories);
+            model.addAttribute("categories", cService.getCataegories());
             model.addAttribute("id", id);
             return "admin/update-product";
         } else {
             Product product = pService.findProductById(id);
             Product updatedProduct = getProductFromProductDto(productDto, product);
-
             pService.saveProduct(updatedProduct);
             return "redirect:/product/webShop?success";
         }
@@ -156,7 +150,6 @@ public class AdminController {
         return "admin/users-list";
     }
 
-
     // add an InitBinder ... to convert trim input strings
     // remove leading and trailing whitespace
     // resolve issue for our validation
@@ -165,5 +158,4 @@ public class AdminController {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
-
 }

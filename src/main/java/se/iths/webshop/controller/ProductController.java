@@ -2,7 +2,6 @@ package se.iths.webshop.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +31,6 @@ public class ProductController {
     private CategoryService cService;
     @Autowired
     private ShoppingCartService shoppingCart;
-
-    @Value("${categories}")
-    private List<String> categories;
 
     @GetMapping("/webShop")
     public String CategoryList(Model m) {
