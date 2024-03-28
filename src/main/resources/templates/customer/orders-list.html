@@ -1,0 +1,42 @@
+<!-- Author: Depinder Kaur, created on: 28-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Orders</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+    <h2>All Orders</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th><b>Order Id</b></th>
+            <th><b>Date</b></th>
+            <th><b>Total Amount (in kr)</b></th>
+            <th><b>View Order</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${ordersList}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.date}"></td>
+            <td th:text="${item.totalAmount}"></td>
+            <td>
+                <a th:href="@{/orders/{id}(id=${item.id})}">Link</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <hr>
+    <br>
+    <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</body>
+</html>
