@@ -14,6 +14,7 @@ import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
+import se.iths.webshop.util.DateTimeFormatter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,9 +73,9 @@ public class ShoppingCartController {
         Order savedOrder = orderService.createOrder(shoppingCart, totalPrice);
 
         User currentUser = savedOrder.getUser();
-        LocalDateTime date = savedOrder.getDate();
-        String dateOnly = date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
-        String timeOnly = date.getHour() + ":" + date.getMinute() + ":" + date.getSecond();
+        LocalDateTime dateTime = savedOrder.getDate();
+        String dateOnly = DateTimeFormatter.getDateFromLocalDateTime(dateTime);
+        String timeOnly = DateTimeFormatter.getTimeFromLocalDateTime(dateTime);
 
         model.addAttribute("dateOnly", dateOnly);
         model.addAttribute("timeOnly", timeOnly);

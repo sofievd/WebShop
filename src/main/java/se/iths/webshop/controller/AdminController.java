@@ -21,6 +21,7 @@ import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.CategoryService;
+import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.UserService;
 
@@ -45,6 +46,9 @@ public class AdminController {
     @Autowired
     private CategoryService cService;
 
+    @Autowired
+    private OrderService orderService;
+
     @Value("${admin-tasks}")
     private List<String> adminTasks;
 
@@ -66,8 +70,8 @@ public class AdminController {
             case "Update a product" -> {
                 return "redirect:/product/webShop";
             }
-            case "Show Orders" -> {
-                return "redirect:/admin/all-orders";
+            case "See All Orders" -> {
+                return "redirect:/admin/allOrders";
             }
             case "See All Users" -> {
                 return "redirect:/admin/usersList";
@@ -149,6 +153,13 @@ public class AdminController {
         List<UserDto> usersList = userService.findAllUsers();
         model.addAttribute("usersList", usersList);
         return "admin/users-list";
+    }
+
+    @GetMapping("/allOrders")
+    public String allOrders(Model model) {
+        List<Order> allOrdersList = orderService.getAllOrders();
+        model.addAttribute("ordersList", allOrdersList);
+        return "admin/all-orders";
     }
 
     // add an InitBinder ... to convert trim input strings

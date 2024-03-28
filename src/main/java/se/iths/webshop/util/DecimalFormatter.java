@@ -5,7 +5,8 @@ import java.util.Locale;
 
 /**
  * @author Depinder Kaur
- * @version <h2></h2>
+ * @version 0.1
+ * <h2>DecimalFormatter</h2>
  * @date 2024-03-27
  */
 public class DecimalFormatter {

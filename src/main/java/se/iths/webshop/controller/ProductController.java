@@ -66,7 +66,8 @@ public class ProductController {
     @PostMapping("/addProductToBasket")
     public String addProductToBasket(@Valid @ModelAttribute("id") int id,
                                      @RequestParam("quantity") String quantity,
-                                     BindingResult theBindingResult, Model model) {
+                                     BindingResult theBindingResult,
+                                     Model model) {
 
         Product desiredProduct = pService.findProductById(id);
 
@@ -81,7 +82,9 @@ public class ProductController {
     }
 
     @PostMapping("/chooseCategory")
-    public String chooseCategory(Model model, @ModelAttribute("menu") CategoryMenu menu, @RequestParam("categoryID") int id) {
+    public String chooseCategory(@ModelAttribute("menu") CategoryMenu menu,
+                                 @RequestParam("categoryID") int id,
+                                 Model model) {
         Category category = cService.findById(id);
         model.addAttribute("category", category);
         List<Product> productList = pService.getProductByCategory(category.getName());
