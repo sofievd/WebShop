@@ -21,15 +21,17 @@
         <thead>
         <tr>
             <th><b>Product</b></th>
-            <th><b>Quantity</b></th>
             <th><b>Price (in kr)</b></th>
+            <th><b>Quantity</b></th>
+            <th><b>Total Price (in kr)</b></th>
         </tr>
         </thead>
         <tbody>
-            <tr th:each="mapEntry : ${cartDetails}">
-                <td th:text="${mapEntry.key.name}"></td>
-                <td th:text="${mapEntry.value.get(0)}"></td>
-                <td th:text="${mapEntry.value.get(1)}"></td>
+            <tr th:each="item : ${cartItemList}">
+                <td th:text="${item.productName}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.totalPrice}"></td>
             </tr>
             <tr>
                 <td><b>Total</b></td>
