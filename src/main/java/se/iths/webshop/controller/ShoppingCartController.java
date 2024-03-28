@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +47,7 @@ public class ShoppingCartController {
         model.addAttribute("product", productList);
         model.addAttribute("quantity", quantityList);
         model.addAttribute("cart", cartService);
-        return "shoppingBasket";
+        return "customer/shoppingBasket";
     }
 
     @GetMapping("/checkout")
@@ -58,13 +59,14 @@ public class ShoppingCartController {
         model.addAttribute("cartItemList", cartItemList);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
-        return "checkout";
+        return "customer/checkout";
     }
 
     @PostMapping("/payment")
-    public String orderConfirmation(@RequestParam("totalPrice") double totalPrice, Model model) {
+    public String orderConfirmation(@RequestParam("totalPrice") double totalPrice,
+                                    @ModelAttribute("cartItemList") List<CartItem> cartItemList,
+                                    Model model) {
 
-        Map<Product, List<Double>> cartDetails = cartService.getCartDetails();
         Map<Product, Integer> shoppingCart = cartService.getShoppingCart();
 
         Order savedOrder = orderService.createOrder(shoppingCart, totalPrice);
@@ -78,9 +80,9 @@ public class ShoppingCartController {
         model.addAttribute("timeOnly", timeOnly);
         model.addAttribute("user", currentUser);
         model.addAttribute("order", savedOrder);
-        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("cartItemList", cartItemList);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
-        return "order-confirmation";
+        return "customer/order-confirmation";
     }
 }

@@ -17,12 +17,10 @@ import java.util.Map;
 public class ShoppingCartService {
 
     private HashMap<Product, Integer> shoppingCart;
-    private Map<Product, List<Double>> cartDetails;
 
     @PostConstruct
     public void createShoppingCart(){
         shoppingCart = new HashMap<>();
-        cartDetails = new HashMap<>();
     }
 
     public ShoppingCartService() {
@@ -47,10 +45,6 @@ public class ShoppingCartService {
 
     public HashMap<Product, Integer> getShoppingCart() {
         return shoppingCart;
-    }
-
-    public Map<Product, List<Double>> getCartDetails() {
-        return cartDetails;
     }
 
     public double calculatePrice(){
