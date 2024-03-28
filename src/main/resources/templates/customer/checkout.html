@@ -28,7 +28,7 @@
         </tr>
 
         <tr>
-            <td colspan="2"><b>Total Amount</b></td>
+            <td colspan="2"><b>Total</b></td>
             <td><b th:text="${totalNumOfArticles}"></b></td>
             <td><b th:text="${totalPrice}"></b></td>
         </tr>
@@ -36,9 +36,8 @@
     </table>
     <br><br>
     <div sec:authorize="hasRole('ROLE_CUSTOMER')">
-        <form th:action="@{/cart/payment}" th:object="${cartDetails}" method="POST">
+        <form th:action="@{/cart/payment}" method="POST">
             <input type="hidden" name="totalPrice" th:value="${totalPrice}">
-            <input type="hidden" name="cartDetails" th:value="${cartDetails}">
             <input type="submit" value="Pay">
         </form>
     </div>

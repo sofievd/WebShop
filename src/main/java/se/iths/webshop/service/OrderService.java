@@ -67,4 +67,8 @@ public class OrderService {
     public Optional<Order> findOrderById(int id) {
         return orderRepo.findById(id);
     }
+
+    public List<Order> getAllOrdersOfUser(String userEmail) {
+        return orderRepo.findByUserEmail(userEmail);
+    }
 }

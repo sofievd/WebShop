@@ -1,50 +1,57 @@
 <!-- Author: Depinder Kaur, created on: 28-03-2024 -->
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body id="background">
-<h2>Order Details</h2>
-<p>
-    Order id: <span th:text="${desiredOrder.id}"/><br>
-    Customer: <span th:text="${desiredOrder.user.firstName}"/> <span th:text="${desiredOrder.user.lastName}"/> <br>
-    Email: <span th:text="${desiredOrder.user.email}"/><br>
-    Date: <span th:text="${dateOnly}"/>
-    <span th:text="${timeOnly}" />
-</p>
-<br><br>
-<table>
-    <thead>
-    <tr>
-        <th><b>Product</b></th>
-        <th><b>Price (in kr)</b></th>
-        <th><b>Quantity</b></th>
-        <th><b>Total Price (in kr)</b></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${cartItemsList}">
-        <td th:text="${item.productName}"></td>
-        <td th:text="${item.price}"></td>
-        <td th:text="${item.quantity}"></td>
-        <td th:text="${item.totalPrice}"></td>
-    </tr>
-    <tr>
-        <td colspan="2"><b>Total</b></td>
-        <td><b th:text="${totalNumOfArticles}"></b></td>
-        <td><b th:text="${totalCartPrice}"></b></td>
-    </tr>
-    </tbody>
-</table>
-<br><br>
-<a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
-<br><br>
-<form th:action="@{/logout}" method="POST">
-    <input type="submit" value="Logout" />
-</form>
+    <h2>Order Details</h2>
+    <p>
+        Order id: <span th:text="${desiredOrder.id}"/><br>
+        Customer: <span th:text="${desiredOrder.user.firstName}"/> <span th:text="${desiredOrder.user.lastName}"/> <br>
+        Email: <span th:text="${desiredOrder.user.email}"/><br>
+        Date: <span th:text="${formattedDateTime}"/>
+    </p>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th><b>Product</b></th>
+            <th><b>Price (in kr)</b></th>
+            <th><b>Quantity</b></th>
+            <th><b>Total Price (in kr)</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cartItemsList}">
+            <td th:text="${item.productName}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.totalPrice}"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>Total</b></td>
+            <td><b th:text="${totalNumOfArticles}"></b></td>
+            <td><b th:text="${totalCartPrice}"></b></td>
+        </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <hr>
+    <br>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    </div>
+
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>

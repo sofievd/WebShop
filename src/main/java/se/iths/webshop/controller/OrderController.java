@@ -12,7 +12,7 @@ import se.iths.webshop.entity.OrderLine;
 import se.iths.webshop.service.CartItemService;
 import se.iths.webshop.service.OrderLineService;
 import se.iths.webshop.service.OrderService;
-import se.iths.webshop.util.DateTimeFormatter;
+import se.iths.webshop.util.CustomDateFormatter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 
 @Controller
-@RequestMapping("/admin/orders")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired
@@ -45,8 +45,7 @@ public class OrderController {
             Order desiredOrder = optionalOrder.get();
             double totalCartPrice = desiredOrder.getTotalAmount();
             LocalDateTime dateTime = desiredOrder.getDate();
-            String dateOnly = DateTimeFormatter.getDateFromLocalDateTime(dateTime);
-            String timeOnly = DateTimeFormatter.getTimeFromLocalDateTime(dateTime);
+            String formattedDateTime = CustomDateFormatter.getFormattedDateTime(dateTime);
             
             List<OrderLine> orderlineList = orderLineService.getOrderLinesByOrder(desiredOrder);
             List<CartItem> cartItemsList = cartItemService.getCartItemsList(orderlineList);
@@ -54,8 +53,7 @@ public class OrderController {
             
             model.addAttribute("cartItemsList", cartItemsList);
             model.addAttribute("desiredOrder", desiredOrder);
-            model.addAttribute("dateOnly", dateOnly);
-            model.addAttribute("timeOnly", timeOnly);
+            model.addAttribute("formattedDateTime", formattedDateTime);
             model.addAttribute("totalCartPrice", totalCartPrice);
             model.addAttribute("totalNumOfArticles", totalNumOfArticles);
             return "admin/order-details";

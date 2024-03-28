@@ -43,7 +43,6 @@
         <h3> View products from one of the following categories:</h3>
     </div>
 
-
     <dl th:each="p: ${categoryList}">
         <dt><h4><span th:text="${p.name}"></span></h4></dt>
         <dd>
@@ -61,12 +60,16 @@
 
     <br><br>
 
-    <a th:href="@{/cart/shopping-cart}"><b>View basket</b></a>
+    <a th:href="@{/cart/shoppingCart}"><b>View basket</b></a>
 
     <br><br>
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
+        <br><br>
+    </div>
+    <div sec:authorize="hasRole('CUSTOMER')">
+        <a th:href="@{/customer/allOrders}"><b>Order History</b></a>
         <br><br>
     </div>
     <form th:action="@{/logout}" method="POST">
