@@ -19,6 +19,7 @@
             <th><b>Email</b></th>
             <th><b>Date</b></th>
             <th><b>Total Amount (in kr)</b></th>
+            <th><b>View Order</b></th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +30,10 @@
             <td th:text="${item.user.email}"></td>
             <td th:text="${item.date}"></td>
             <td th:text="${item.totalAmount}"></td>
+            <td>
+                <a th:href="@{/admin/orders/{id}(id=${item.id})}">Link</a>
+            </td>
+
         </tr>
         </tbody>
     </table>

@@ -18,7 +18,8 @@ import java.util.Optional;
 
 /**
  * @author Depinder Kaur
- * @version <h2></h2>
+ * @version 0.1
+ * <h2>OrderService</h2>
  * @date 2024-03-26
  */
 
@@ -61,5 +62,9 @@ public class OrderService {
 
     public List<Order> getAllOrders() {
         return orderRepo.findAll();
+    }
+
+    public Optional<Order> findOrderById(int id) {
+        return orderRepo.findById(id);
     }
 }
