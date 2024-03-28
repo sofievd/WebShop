@@ -21,14 +21,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "login-form";
+        return "registration/login-form";
     }
 
     @GetMapping("/success")
     public void loginPageRedirect(HttpServletRequest request, HttpServletResponse response, Authentication authResult) throws IOException, ServletException {
 
         String role =  authResult.getAuthorities().toString();
-        // System.out.println("Role: " + role);
 
         if(role.contains("ROLE_ADMIN")){
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin/showAdminMenu"));
@@ -39,9 +38,8 @@ public class LoginController {
     }
 
     // add mapping for /access-denied
-
     @GetMapping("/access-denied")
     public String showAccessDenied() {
-        return "access-denied";
+        return "registration/access-denied";
     }
 }

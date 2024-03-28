@@ -22,7 +22,6 @@ import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
@@ -42,7 +41,7 @@ public class ProductController {
         CategoryMenu menu = new CategoryMenu();
         m.addAttribute("menu", menu);
         m.addAttribute("categoryList", cService.getCataegories());
-        return "web-shop-page";
+        return "customer/web-shop-page";
     }
 
     @PostMapping("/search")
@@ -51,10 +50,10 @@ public class ProductController {
         if (!productsWithSameNameList.isEmpty()) {
             m.addAttribute("productList", productsWithSameNameList);
             m.addAttribute("categoryList", cService.getCataegories());
-            return "choose-product-from-list";
+            return "customer/choose-product-from-list";
         } else {
             m.addAttribute("Product ", searchWord + " cannot be found!");
-            return "no-product-found";
+            return "customer/product-not-found";
         }
     }
 
@@ -65,7 +64,7 @@ public class ProductController {
         model.addAttribute("product", desiredProduct);
         model.addAttribute("quantity", "1");
 
-        return "choose-quantity-of-product";
+        return "customer/choose-quantity-of-product";
     }
 
     @PostMapping("/addProductToBasket")
@@ -77,7 +76,7 @@ public class ProductController {
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("product", desiredProduct);
-            return "choose-quantity-of-product";
+            return "customer/choose-quantity-of-product";
         } else {
             int quantityInt = Integer.parseInt(quantity);
             shoppingCart.addToCart(desiredProduct, quantityInt);
@@ -91,20 +90,20 @@ public class ProductController {
         model.addAttribute("category", category);
         List<Product> productList = pService.getProductByCategory(category.getName());
         model.addAttribute("productlist", productList);
-        return "category-page";
+        return "customer/category-page";
     }
 
     @GetMapping("/category")
     public String category(Model m) {
         String chosencategory = null;
         List<Product> productList = pService.getProductByCategory(chosencategory);
-        return "category-page";
+        return "customer/category-page";
     }
 
     @GetMapping("/all-products")
     public String ProductList(Model m) {
         m.addAttribute("allproductslist", pService.getProducts());
-        return "show-products";
+        return "customer/show-products";
     }
 
     // add an InitBinder ... to convert trim input strings

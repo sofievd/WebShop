@@ -42,7 +42,7 @@ public class RegistrationController {
 
         UserDto userDto = new UserDto();
         model.addAttribute("userDto", userDto);
-        return "registration-form";
+        return "registration/registration-form";
     }
 
     @PostMapping("/register/save")
@@ -56,7 +56,7 @@ public class RegistrationController {
         }
 
         if(theBindingResult.hasErrors()){
-            return "registration-form";
+            return "registration/registration-form";
         }
 
         userService.saveUser(userDto);
