@@ -35,7 +35,14 @@
             <input type="submit" value="Search">
         </form>
     </p>
-    <h3> View products from one of the following categories:</h3>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <h3>Update a product from one of the following categories</h3>
+    </div>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <h3> View products from one of the following categories:</h3>
+    </div>
+
 
     <dl th:each="p: ${categoryList}">
         <dt><h4><span th:text="${p.name}"></span></h4></dt>
