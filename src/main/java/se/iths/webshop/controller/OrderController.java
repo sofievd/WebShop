@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 
 @Controller
-@RequestMapping("/admin/orders")
+@RequestMapping("/orders")
 public class OrderController {
 
     @Autowired

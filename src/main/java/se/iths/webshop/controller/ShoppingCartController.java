@@ -37,7 +37,7 @@ public class ShoppingCartController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/shopping-cart")
+    @GetMapping("/shoppingCart")
     public String showShoppingCart(Model model) {
         List<Product> productList = new ArrayList<>();
         List<Integer> quantityList = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ShoppingCartController {
         model.addAttribute("product", productList);
         model.addAttribute("quantity", quantityList);
         model.addAttribute("cart", cartService);
-        return "customer/shoppingBasket";
+        return "customer/shopping-basket";
     }
 
     @GetMapping("/checkout")
@@ -65,11 +65,10 @@ public class ShoppingCartController {
 
     @PostMapping("/payment")
     public String orderConfirmation(@RequestParam("totalPrice") double totalPrice,
-                                    @ModelAttribute("cartItemList") List<CartItem> cartItemList,
                                     Model model) {
 
         Map<Product, Integer> shoppingCart = cartService.getShoppingCart();
-
+        List<CartItem> cartItemList = cartService.getCartItemsForCheckout();
         Order savedOrder = orderService.createOrder(shoppingCart, totalPrice);
 
         User currentUser = savedOrder.getUser();

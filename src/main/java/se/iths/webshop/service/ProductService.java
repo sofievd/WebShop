@@ -27,16 +27,11 @@ public class ProductService {
     }
 
     public List<Product> searchProducts(String name){
-        List<Product> productsWithSameName = productRepo.findByName(name);
-        return productsWithSameName;
+        return productRepo.findByName(name);
     }
 
     public void saveProduct(Product product) {
         productRepo.save(product);
-    }
-
-    public List<Product> findByNameAndCategoryAndBrand(String name, Category category, String brand) {
-        return productRepo.findByNameAndCategoryAndBrand(name, category, brand);
     }
 
     public Product findProductById(int id) {
