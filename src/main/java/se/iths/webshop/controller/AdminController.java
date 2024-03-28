@@ -92,7 +92,7 @@ public class AdminController {
 
     @PostMapping("/addProduct/save")
     public String processAddProduct(@Valid @ModelAttribute("productDto") ProductDto productDto,
-                                           BindingResult theBindingResult, Model model) {
+                                    BindingResult theBindingResult, Model model) {
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("categories", cService.getCataegories());
@@ -109,8 +109,9 @@ public class AdminController {
 
         Product desiredProduct = pService.findProductById(id);
         String category = desiredProduct.getCategory().getName();
-        ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(), desiredProduct.getPrice(),
-                                                category, desiredProduct.getDescription(), desiredProduct.getBrand());
+        ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(),
+                                                desiredProduct.getPrice(), category,
+                                                desiredProduct.getDescription(), desiredProduct.getBrand());
 
         model.addAttribute("productDto", productDto);
         model.addAttribute("categories", cService.getCataegories());
@@ -119,8 +120,10 @@ public class AdminController {
     }
 
     @PostMapping("/updateProduct")
-    public String processUpdateProduct(@RequestParam("id") int id, @Valid @ModelAttribute("productDto") ProductDto productDto,
-                                       BindingResult theBindingResult, Model model) {
+    public String processUpdateProduct(@RequestParam("id") int id,
+                                       @Valid @ModelAttribute("productDto") ProductDto productDto,
+                                       BindingResult theBindingResult,
+                                       Model model) {
         productDto.setId(id);
 
         if (theBindingResult.hasErrors()) {
