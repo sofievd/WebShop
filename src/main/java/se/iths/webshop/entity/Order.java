@@ -80,7 +80,8 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", user=" + user +
+                ", user=" + user.getFirstName() + " " + user.getLastName() +
+                ", email=" + user.getEmail() +
                 ", date=" + date +
                 ", totalAmount=" + totalAmount +
                 '}';

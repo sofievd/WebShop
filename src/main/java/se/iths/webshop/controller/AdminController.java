@@ -18,6 +18,7 @@ import se.iths.webshop.dto.AdminMenu;
 import se.iths.webshop.dto.ProductDto;
 import se.iths.webshop.dto.UserDto;
 import se.iths.webshop.entity.Category;
+import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
@@ -66,7 +67,7 @@ public class AdminController {
                 return "redirect:/product/webShop";
             }
             case "Show Orders" -> {
-                return "admin/all-orders";
+                return "redirect:/admin/all-orders";
             }
             case "See All Users" -> {
                 return "redirect:/admin/usersList";

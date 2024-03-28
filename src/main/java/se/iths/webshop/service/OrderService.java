@@ -12,6 +12,7 @@ import se.iths.webshop.entity.User;
 import se.iths.webshop.repository.OrderRepo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -46,7 +47,6 @@ public class OrderService {
             order.setDate(LocalDateTime.now());
             order.setTotalAmount(totalPrice);
             orderRepo.save(order);
-            System.out.println("Order: " + order);
 
             for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
                 OrderLine orderline = new OrderLine();
@@ -57,5 +57,9 @@ public class OrderService {
             }
         }
         return order;
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepo.findAll();
     }
 }
