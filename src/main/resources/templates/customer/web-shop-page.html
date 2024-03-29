@@ -22,11 +22,16 @@
         <div th:if="${param.success}">
             <div class="success">
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
-                    <b>!! Product successfully updated !!</b>
+                    <h3><i>!! Product successfully updated !!</i></h3>
                 </div>
                 <div sec:authorize="hasRole('ROLE_CUSTOMER')">
-                    <b>!! Product successfully added to basket !!</b>
+                    <h3><i>!! Product successfully added to basket !!</i></h3>
                 </div>
+            </div>
+        </div>
+        <div th:if="${param.error}">
+            <div class="error">
+                <h3><i>!!  Basket is EMPTY  !!</i></h3>
             </div>
         </div>
 
