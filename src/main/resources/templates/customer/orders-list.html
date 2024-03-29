@@ -8,7 +8,7 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body id="background">
-    <h2>All Orders</h2>
+    <h2>Order History</h2>
 
     <table>
         <thead>
@@ -22,7 +22,7 @@
         <tbody>
         <tr th:each="item : ${ordersList}">
             <td th:text="${item.id}"></td>
-            <td th:text="${item.date}"></td>
+            <td th:text="${item.date.year} + '-' + ${item.date.monthValue} + '-' + ${item.date.dayOfMonth}"></td>
             <td th:text="${item.totalAmount}"></td>
             <td>
                 <a th:href="@{/orders/{id}(id=${item.id})}">View</a>
