@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
+import se.iths.webshop.service.CartItemService;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
 import se.iths.webshop.util.CustomDateFormatter;
@@ -36,6 +38,9 @@ public class ShoppingCartController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private CartItemService cartItemService;
+
     @GetMapping("/shoppingCart")
     public String showShoppingCart(Model model) {
         List<Product> productList = new ArrayList<>();
@@ -52,6 +57,15 @@ public class ShoppingCartController {
         model.addAttribute("quantity", quantityList);
         model.addAttribute("cart", cartService);
         return "customer/shopping-basket";
+    }
+
+    @GetMapping("/remove/{productName}")
+    public String showUpdatedCart(@PathVariable("productName") String productName) {
+        CartItem desiredCartItem = cartItemService.getCartItemByName(productName, cartItemService.getCartItemsList());
+        cartItemService.getCartItemsList().remove(desiredCartItem);
+        Product desiredProduct = cartService.getProductByName(productName);
+        cartService.getShoppingCart().remove(desiredProduct);
+        return "redirect:/cart/shoppingCart";
     }
 
     @GetMapping("/checkout")
