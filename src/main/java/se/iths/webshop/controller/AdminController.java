@@ -52,6 +52,9 @@ public class AdminController {
     @Value("${admin-tasks}")
     private List<String> adminTasks;
 
+    @Value("${categories}")
+    private List<String> categories;
+
     @GetMapping("/showAdminMenu")
     public String showAdminMenu(Model model) {
         AdminMenu menu = new AdminMenu();
@@ -114,7 +117,7 @@ public class AdminController {
                                                 desiredProduct.getDescription(), desiredProduct.getBrand());
 
         model.addAttribute("productDto", productDto);
-        model.addAttribute("categories", cService.getCataegories());
+        model.addAttribute("categories", categories);
         model.addAttribute("id", id);
         return "admin/update-product";
     }
@@ -128,7 +131,7 @@ public class AdminController {
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("productDto", productDto);
-            model.addAttribute("categories", cService.getCataegories());
+            model.addAttribute("categories", categories);
             model.addAttribute("id", id);
             return "admin/update-product";
         } else {

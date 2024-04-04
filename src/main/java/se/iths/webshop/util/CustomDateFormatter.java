@@ -16,7 +16,4 @@ public class CustomDateFormatter {
     public static String getFormattedDateTime(LocalDateTime dateTime) {
         return FORMATTER.format(dateTime);
     }
-
-    public static String getTimeFromLocalDateTime(LocalDateTime dateTime) {
-        return dateTime.getHour() + ":" + dateTime.getMinute() + ":" + dateTime.getSecond();    }
 }

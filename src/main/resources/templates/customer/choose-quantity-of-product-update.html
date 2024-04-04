@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Product in Basket</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body>
+<body id="background">
 <h2>Update Product in Basket</h2>
 <hr>
 <form th:action="@{/product/update-basket}" th:object="${product}"  method="POST">
