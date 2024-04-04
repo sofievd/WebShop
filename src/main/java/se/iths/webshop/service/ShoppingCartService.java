@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.webshop.ShoppingCart;
-import se.iths.webshop.ShoppingCartMap;
 import se.iths.webshop.entity.Product;
 
 import java.util.ArrayList;
@@ -114,7 +113,7 @@ public class ShoppingCartService {
 
 
         shoppingCart.add(updatedItemPair); */
-        Product productToUpdate = null;
+        Product productToUpdate = product;
         for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             if (entry.getKey().getId() == product.getId()) {
                 System.out.println("YAY!");
