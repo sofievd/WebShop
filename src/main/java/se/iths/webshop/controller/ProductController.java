@@ -101,17 +101,7 @@ public class ProductController {
             return "customer/choose-quantity-of-product-update";
         }
         else {
-
             shoppingCart.updateShoppingCart(desiredProduct, quantity);
-            System.out.println("update: ");
-           /* for(int i = 0; i< shoppingCart.getShoppingCart().size(); i++){
-                Product product = pService.findProductById(shoppingCart.getShoppingCart().get(i)[0]);
-                System.out.println(product.getName()+ " : "+ shoppingCart.getShoppingCart().get(i)[1]);
-            }*/
-
-            for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().entrySet()){
-                System.out.println(entry.getKey().getName() +" : " + entry.getValue());
-            }
         }
         return "redirect:/product/webShop?success";
     }
