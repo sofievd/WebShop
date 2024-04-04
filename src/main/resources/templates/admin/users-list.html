@@ -6,11 +6,10 @@
     <title>All Users</title>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body>
-
-<h2>All Users</h2>
-<hr>
-<br>
+<body id="background">
+    <h2>All Users</h2>
+    <hr>
+    <br>
     <table>
         <thead>
             <tr>
@@ -27,16 +26,15 @@
             </tr>
         </tbody>
     </table>
-<br>
-<br>
-<hr>
-<br>
-<a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
-<br>
-<br>
-<form th:action="@{/logout}" method="POST">
-    <input type="submit" value="Logout" />
-</form>
-
+    <br>
+    <br>
+    <hr>
+    <br>
+    <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
+    <br>
+    <br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>
