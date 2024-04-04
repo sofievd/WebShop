@@ -16,8 +16,13 @@ import java.util.List;
 @Service
 public class CartItemService {
 
+    static final List<CartItem> cartItemsList = new ArrayList<>();
+
+    public List<CartItem> getCartItemsList() {
+        return cartItemsList;
+    }
+
     public List<CartItem> getCartItemsList(List<OrderLine> orderLineList) {
-        List<CartItem> cartItemsList = new ArrayList<>();
 
         for (OrderLine orderLine: orderLineList) {
             CartItem cartItem = new CartItem();
@@ -36,5 +41,15 @@ public class CartItemService {
             totalItemsInCart = totalItemsInCart + item.getQuantity();
         }
         return totalItemsInCart;
+    }
+
+    public CartItem getCartItemByName(String name, List<CartItem> listOfCartItems) {
+        CartItem desiredItem = null;
+        for (CartItem item : listOfCartItems) {
+            if (item.getProductName().equalsIgnoreCase(name)) {
+                desiredItem = item;
+            }
+        }
+        return desiredItem;
     }
 }

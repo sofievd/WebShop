@@ -63,6 +63,16 @@ public class ShoppingCartService {
         return totalItems;
     }
 
+    public Product getProductByName(String name) {
+        Product desiredProduct = null;
+        for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()) {
+            if (entry.getKey().getName().equalsIgnoreCase(name)) {
+                desiredProduct = entry.getKey();
+            }
+        }
+        return desiredProduct;
+    }
+
     public void updateShoppingCart(Product product, Integer quantity){
         shoppingCart.replace(product, quantity);
     }

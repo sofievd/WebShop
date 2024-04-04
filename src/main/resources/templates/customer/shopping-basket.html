@@ -6,30 +6,36 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body id="background">
-<h2>Shopping Cart</h2>
-
-<table>
-    <thead>
-    <tr>
-        <th> Product</th>
-        <th> Quantity</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${cart.getShoppingCart()}" >
-        <td th:text="${item.key.name}"></td>
-        <td th:text="${item.value}"></td>
-    </tr>
-    </tbody>
-</table>
-<br><br>
-<div sec:authorize="hasRole('ROLE_CUSTOMER')">
-    <a th:href="@{/cart/checkout}">Checkout</a>
-</div>
-<br><br>
-<form th:action="@{/logout}" method="POST">
-    <input type="submit" value="Logout" />
-</form>
-
+    <h2>Shopping Cart</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Remove item</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${cart.getShoppingCart()}" >
+                <td th:text="${item.key.name}"></td>
+                <td th:text="${item.value}"></td>
+                <td>
+                    <a th:href="@{/cart/remove/{productName}(productName=${item.key.name})}"><i>Remove</i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <a th:href="@{/cart/checkout}"><b>Checkout</b></a>
+    </div>
+    <br><br>
+    <hr>
+    <br>
+    <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>
