@@ -13,6 +13,7 @@
     <tr>
         <th> Product</th>
         <th> Quantity</th>
+        <th> Update quantity</th>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +22,7 @@
         <td th:text="${item.value}"></td>
         <td> <form th:action="@{/product/updateQuantityOfProduct}" method="POST">
             <input type="hidden" name="id" th:value="${item.key.id}">
-            <input type="submit" value="update amount">
+            <input type="submit" value="update">
         </form></td>
     </tr>
     </tbody>
