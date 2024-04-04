@@ -12,6 +12,7 @@
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
+                <th> Update quantity</th>
                 <th>Remove item</th>
             </tr>
         </thead>
@@ -19,6 +20,10 @@
             <tr th:each="item : ${cart.getShoppingCart()}" >
                 <td th:text="${item.key.name}"></td>
                 <td th:text="${item.value}"></td>
+                <td> <form th:action="@{/product/updateQuantityOfProduct}" method="POST">
+                    <input type="hidden" name="id" th:value="${item.key.id}">
+                    <input type="submit" value="update">
+                </form></td>
                 <td>
                     <a th:href="@{/cart/remove/{productName}(productName=${item.key.name})}"><i>Remove</i></a>
                 </td>
@@ -37,5 +42,6 @@
     <form th:action="@{/logout}" method="POST">
         <input type="submit" value="Logout" />
     </form>
+
 </body>
 </html>

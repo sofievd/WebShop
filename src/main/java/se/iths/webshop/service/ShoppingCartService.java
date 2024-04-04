@@ -1,7 +1,13 @@
 package se.iths.webshop.service;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Product;
@@ -27,7 +33,20 @@ public class ShoppingCartService {
     }
 
     public void addToCart(Product product, int quantity){
+        if(!shoppingCart.isEmpty()){
+            for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
+                if(entry.getKey().getId() == product.getId()){
+                    int newQuantity = quantity+ entry.getValue();
+                    updateShoppingCart(product, newQuantity);
+                    break;
+                } else {
+                    shoppingCart.put(product, quantity);
+                    break;
+                }
+            }
+        }else{
         shoppingCart.put(product,quantity);
+        }
     }
 
     public List<CartItem> getCartItemsForCheckout() {
@@ -74,7 +93,13 @@ public class ShoppingCartService {
     }
 
     public void updateShoppingCart(Product product, Integer quantity){
-        shoppingCart.replace(product, quantity);
+        Product productToUpdate = product;
+        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
+            if(entry.getKey().getId() == product.getId()){
+                productToUpdate = entry.getKey();
+            }
+        }
+        shoppingCart.replace(productToUpdate, quantity);
     }
 }
 
