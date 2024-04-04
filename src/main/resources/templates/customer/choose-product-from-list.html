@@ -6,8 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Choose a Product</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body>
+<body id="background">
     <h2>Choose Product</h2>
     <hr>
     <div th:each="product: ${productList}">
