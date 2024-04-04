@@ -21,6 +21,7 @@ import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
@@ -79,6 +80,40 @@ public class ProductController {
             shoppingCart.addToCart(desiredProduct, quantityInt);
             return "redirect:/product/webShop?success";
         }
+    }
+    @PostMapping("/updateQuantityOfProduct")
+    public String updateQuantityOfProduct(@RequestParam("id") int id, Model model) {
+
+        Product desiredProduct = pService.findProductById(id);
+        model.addAttribute("product", desiredProduct);
+        model.addAttribute("quantity", "1");
+
+        return "customer/choose-quantity-of-product-update";
+    }
+    @PostMapping("/update-basket")
+    public String updateBasket(@Valid @ModelAttribute("id") int id,
+                               @Valid @ModelAttribute("quantity") int quantity,
+                               BindingResult theBindingResult, Model model){
+        Product desiredProduct = pService.findProductById(id);
+
+        if (theBindingResult.hasErrors()) {
+            model.addAttribute("product", desiredProduct);
+            return "customer/choose-quantity-of-product-update";
+        }
+        else {
+
+            shoppingCart.updateShoppingCart(desiredProduct, quantity);
+            System.out.println("update: ");
+           /* for(int i = 0; i< shoppingCart.getShoppingCart().size(); i++){
+                Product product = pService.findProductById(shoppingCart.getShoppingCart().get(i)[0]);
+                System.out.println(product.getName()+ " : "+ shoppingCart.getShoppingCart().get(i)[1]);
+            }*/
+
+            for (Map.Entry<Product, Integer> entry: shoppingCart.getShoppingCart().entrySet()){
+                System.out.println(entry.getKey().getName() +" : " + entry.getValue());
+            }
+        }
+        return "redirect:/product/webShop?success";
     }
 
     @PostMapping("/chooseCategory")
