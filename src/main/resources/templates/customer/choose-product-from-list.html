@@ -16,7 +16,7 @@
         Category: <span th:text="${product.category.getName()}"></span><br>
         Brand: <span th:text="${product.brand}"></span><br>
         Price: <span th:text="${product.price}"></span> kr<br>
-        Description: <span th:text="${product.description}"></span>
+        Description: <span th:text="${product.description}"></span><br>
 
 
         <div sec:authorize="hasRole('ROLE_ADMIN')">
@@ -25,13 +25,13 @@
                 <input type="hidden" name="id" th:value="${product.id}" >
                 <input type="submit" value="Select">
             </form>
-        </div>
+        </div> <br>
         <div sec:authorize="hasRole('ROLE_CUSTOMER')">
             <form th:action="@{/product/chooseQuantityOfProduct}" method="POST">
                 <input type="hidden" name="id" th:value="${product.id}" >
                 <input type="submit" value="Select">
             </form>
-        </div>
+        </div> <br>
     </div>
     <br>
     <hr>
