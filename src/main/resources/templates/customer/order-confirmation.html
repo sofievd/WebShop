@@ -9,6 +9,7 @@
 </head>
 <body id="background">
     <h2>Order Confirmation</h2>
+    <hr>
     <p>
         Order id: <span th:text="${order.id}"/><br>
         Customer: <span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/> <br>
@@ -39,7 +40,9 @@
             </tr>
         </tbody>
     </table>
-    <br><br>
+    <br>
+    <hr>
+    <br>
     <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
     <br><br>
     <form th:action="@{/logout}" method="POST">

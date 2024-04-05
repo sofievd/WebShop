@@ -1,20 +1,14 @@
 <!-- Author: Depinder Kaur, created on: 19-03-2024 -->
 
 <!DOCTYPE html>
-<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>Customer Registration</title>
-    <style>
-        .error {
-            font-style:italic;
-            color:red;
-        }
-        .pass {color:green}
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
-<body>
+<body id="background">
 <h2>Customer Registration</h2>
     <hr>
 
@@ -23,7 +17,7 @@
 
         <!-- Check for successful registration -->
         <div th:if="${param.success}">
-            <div class="pass">
+            <div class="success">
                 <i><b>!! Registration successful !!</b></i>
             </div>
         </div>

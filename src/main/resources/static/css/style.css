@@ -45,7 +45,10 @@
     width: 80px;
 }
 
-.error {color:red}
+.error {
+    font-style:italic;
+    color:red;
+}
 
 .success {color: #15CD08}
 

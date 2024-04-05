@@ -9,6 +9,8 @@
 </head>
 <body id="background">
     <h2>Checkout</h2>
+    <hr>
+    <br>
     <table>
         <thead>
         <tr>
@@ -38,7 +40,9 @@
             <input type="hidden" name="totalCartPrice" th:value="${totalCartPrice}">
             <input type="submit" value="Pay">
         </form>
-        <br><br>
+        <br>
+        <hr>
+        <br>
         <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
     </div>
     <br><br>

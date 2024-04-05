@@ -7,6 +7,8 @@
 </head>
 <body id="background">
     <h2>Shopping Cart</h2>
+    <hr>
+    <br>
     <table>
         <thead>
             <tr>
@@ -40,7 +42,7 @@
     <div sec:authorize="hasRole('ROLE_CUSTOMER')">
         <a th:href="@{/cart/checkout}"><b>Checkout</b></a>
     </div>
-    <br><br>
+    <br>
     <hr>
     <br>
     <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
@@ -48,6 +50,5 @@
     <form th:action="@{/logout}" method="POST">
         <input type="submit" value="Logout" />
     </form>
-
 </body>
 </html>
