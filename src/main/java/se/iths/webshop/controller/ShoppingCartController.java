@@ -12,7 +12,6 @@ import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
-import se.iths.webshop.service.CartItemService;
 import se.iths.webshop.service.EmailService;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
@@ -20,7 +19,6 @@ import se.iths.webshop.util.CustomDateFormatter;
 import se.iths.webshop.util.DecimalFormatter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,31 +39,22 @@ public class ShoppingCartController {
     private OrderService orderService;
 
     @Autowired
-    private CartItemService cartItemService;
-
-    @Autowired
     private EmailService emailService;
 
     @GetMapping("/shoppingCart")
     public String showShoppingCart(Model model) {
-        List<Product> productList = new ArrayList<>();
-        List<Integer> quantityList = new ArrayList<>();
 
         double totalPrice = 0;
         for (Map.Entry<Product, Integer> entry : cartService.getShoppingCart().entrySet()) {
-            productList.add(entry.getKey());
-            quantityList.add(entry.getValue());
             double productPrice = entry.getKey().getPrice() * entry.getValue();
             totalPrice = totalPrice + productPrice;
         }
         totalPrice = DecimalFormatter.formatToTwoDecimalPlaces(totalPrice);
 
-        if (productList.isEmpty()) {
+        if (cartService.getShoppingCart().isEmpty()) {
             return "redirect:/product/webShop?error";
         }
 
-        model.addAttribute("product", productList);
-        model.addAttribute("quantity", quantityList);
         model.addAttribute("cart", cartService);
         model.addAttribute("totalPrice", totalPrice);
         return "customer/shopping-basket";
