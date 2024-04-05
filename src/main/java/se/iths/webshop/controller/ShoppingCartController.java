@@ -14,6 +14,7 @@ import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
 import se.iths.webshop.service.CartItemService;
+import se.iths.webshop.service.EmailService;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
 import se.iths.webshop.util.CustomDateFormatter;
@@ -41,6 +42,9 @@ public class ShoppingCartController {
 
     @Autowired
     private CartItemService cartItemService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/shoppingCart")
     public String showShoppingCart(Model model) {
@@ -90,6 +94,9 @@ public class ShoppingCartController {
         Order savedOrder = orderService.createOrder(shoppingCart, totalCartPrice);
 
         User currentUser = savedOrder.getUser();
+
+        emailService.sendOrderConfirmation(currentUser, cartItemList, savedOrder);
+
         LocalDateTime dateTime = savedOrder.getDate();
         String formattedDateTime = CustomDateFormatter.getFormattedDateTime(dateTime);
 
