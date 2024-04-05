@@ -49,14 +49,14 @@ public class RegistrationController {
     public String registration(@Valid @ModelAttribute("userDto") UserDto userDto,
                                BindingResult theBindingResult) {
 
+        if(theBindingResult.hasErrors()){
+            return "registration/registration-form";
+        }
+
         Optional<User> savedUser = userService.findUserByEmail(userDto.getEmail());
 
         if(!theBindingResult.hasErrors() && savedUser.isPresent()) {
             theBindingResult.rejectValue("email", "error.email", " email already exists!");
-        }
-
-        if(theBindingResult.hasErrors()){
-            return "registration/registration-form";
         }
 
         userService.saveUser(userDto);

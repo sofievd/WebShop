@@ -14,23 +14,20 @@ import jakarta.validation.constraints.Size;
 public class UserDto {
 
     @NotNull(message = "is required")
-    @NotBlank(message = "email can not be empty")
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+             message = "must be a valid email")
     private String email;
 
 
     @NotNull(message="is required")
-    @NotBlank(message = "first name can not be empty")
     @Size(min = 1, message = "is required")
     private String firstName;
 
     @NotNull(message="is required")
-    @NotBlank(message = "last name can not be empty")
     @Size(min = 1, message = "is required")
     private String lastName;
 
     @NotNull(message = "is required")
-    @NotBlank(message = "password can not be empty")
     @Size(min = 1, message = "is required")
     @Pattern(regexp = "^(?=.*\\d{2,})(?=.*[a-z])(?=.*[A-Z]).{6,}$",
             message = "must be minimum 6 characters long with at least 1 capital letter, 1 small letter and 2 digits")
