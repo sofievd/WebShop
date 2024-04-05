@@ -24,18 +24,21 @@ public class EmailService {
 
     public void sendOrderConfirmation(User user, List<CartItem> listOfCartItems, Order order) {
         StringBuilder emailMessage = new StringBuilder();
-        emailMessage.append("########## Order Details ##########");
+        emailMessage.append("\n----------- Order Details -----------");
+
+        emailMessage.append("Product" + "\t\t\t" + "Price (kr/pc)" + "\t\t\t" + "Quantity" + "\t\t\t" + "TotalPrice (kr)");
 
         for(CartItem item : listOfCartItems){
-            emailMessage.append("\n");
-            emailMessage.append(item.getProductName() + "\t\t" + item.getQuantity() + "\t\t" + item.getTotalPrice() + " kr");
+            emailMessage.append("\n\n");
+            emailMessage.append(item.getProductName() + "\t\t\t" + item.getPrice() + "\t\t\t" +
+                                    item.getQuantity() + "\t\t\t" + item.getTotalPrice());
         }
-        emailMessage.append("\nTotal price: " + order.getTotalAmount() + " kr");
+        emailMessage.append("\n\nTotal price: " + order.getTotalAmount() + " kr");
 
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
-        message.setSubject("Order Confirmation, Order No.: " + order.getId());
+        message.setSubject("Order Confirmation for Order #" + order.getId());
         message.setText(emailMessage.toString());
         emailSender.send(message);
     }
