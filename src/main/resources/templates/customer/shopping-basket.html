@@ -32,7 +32,11 @@
             </tr>
         </tbody>
     </table>
-    <br><br>
+    <br>
+    <h3>
+    Total Price (in kr): <span th:text="${totalPrice}"></span>
+    </h3>
+    <br>
     <div sec:authorize="hasRole('ROLE_CUSTOMER')">
         <a th:href="@{/cart/checkout}"><b>Checkout</b></a>
     </div>

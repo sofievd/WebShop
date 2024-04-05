@@ -1,6 +1,5 @@
 package se.iths.webshop.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import se.iths.webshop.service.EmailService;
 import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ShoppingCartService;
 import se.iths.webshop.util.CustomDateFormatter;
+import se.iths.webshop.util.DecimalFormatter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -50,17 +50,24 @@ public class ShoppingCartController {
     public String showShoppingCart(Model model) {
         List<Product> productList = new ArrayList<>();
         List<Integer> quantityList = new ArrayList<>();
+
+        double totalPrice = 0;
         for (Map.Entry<Product, Integer> entry : cartService.getShoppingCart().entrySet()) {
             productList.add(entry.getKey());
             quantityList.add(entry.getValue());
+            double productPrice = entry.getKey().getPrice() * entry.getValue();
+            totalPrice = totalPrice + productPrice;
         }
+        totalPrice = DecimalFormatter.formatToTwoDecimalPlaces(totalPrice);
 
         if (productList.isEmpty()) {
             return "redirect:/product/webShop?error";
         }
+
         model.addAttribute("product", productList);
         model.addAttribute("quantity", quantityList);
         model.addAttribute("cart", cartService);
+        model.addAttribute("totalPrice", totalPrice);
         return "customer/shopping-basket";
     }
 
