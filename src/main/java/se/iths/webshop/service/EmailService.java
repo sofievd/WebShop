@@ -12,7 +12,8 @@ import java.util.List;
 
 /**
  * @author Depinder Kaur
- * @version <h2></h2>
+ * @version 0.1
+ * <h2>EmailService</h2>
  * @date 2024-04-04
  */
 
@@ -24,14 +25,14 @@ public class EmailService {
 
     public void sendOrderConfirmation(User user, List<CartItem> listOfCartItems, Order order) {
         StringBuilder emailMessage = new StringBuilder();
-        emailMessage.append("\n----------- Order Details -----------");
+        emailMessage.append("\n-------------------------------------- Order Details ---------------------------------------");
 
-        emailMessage.append("Product" + "\t\t\t" + "Price (kr/pc)" + "\t\t\t" + "Quantity" + "\t\t\t" + "TotalPrice (kr)");
+        emailMessage.append("\n\nProduct" + "\t\t\t" + "Price (kr/pc)" + "\t\t\t" + "Quantity" + "\t\t\t" + "TotalPrice (kr)");
 
         for(CartItem item : listOfCartItems){
             emailMessage.append("\n\n");
-            emailMessage.append(item.getProductName() + "\t\t\t" + item.getPrice() + "\t\t\t" +
-                                    item.getQuantity() + "\t\t\t" + item.getTotalPrice());
+            emailMessage.append(item.getProductName() + "\t\t\t\t" + item.getPrice() + "\t\t\t\t" +
+                                    item.getQuantity() + "\t\t\t\t\t" + item.getTotalPrice());
         }
         emailMessage.append("\n\nTotal price: " + order.getTotalAmount() + " kr");
 
