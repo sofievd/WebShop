@@ -11,14 +11,16 @@
         <thead>
             <tr>
                 <th>Product</th>
+                <th>Price (kr/pc)</th>
                 <th>Quantity</th>
-                <th> Update quantity</th>
+                <th>Update quantity</th>
                 <th>Remove item</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="item : ${cart.getShoppingCart()}" >
                 <td th:text="${item.key.name}"></td>
+                <td th:text="${item.key.price}"></td>
                 <td th:text="${item.value}"></td>
                 <td> <form th:action="@{/product/updateQuantityOfProduct}" method="POST">
                     <input type="hidden" name="id" th:value="${item.key.id}">
