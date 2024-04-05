@@ -166,8 +166,8 @@ public class AdminController {
         return "admin/all-orders";
     }
 
-    @RequestMapping("/updateOrderStatus")
-    public String updateOrderStatus(Model model, @RequestParam("orderId") int id){
+    @PostMapping("/updateOrderStatus")
+    public String updateOrderStatus(@RequestParam("orderId") int id){
         orderService.updateOrder(id, "Shipped");
         return "redirect:/admin/allOrders";
     }

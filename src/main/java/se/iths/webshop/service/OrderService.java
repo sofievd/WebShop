@@ -72,6 +72,7 @@ public class OrderService {
     public List<Order> getAllOrdersOfUser(String userEmail) {
         return orderRepo.findByUserEmail(userEmail);
     }
+
     public void updateOrder(int id, String status){
         Optional<Order> order = findOrderById(id);
         if(order.isPresent()){

@@ -18,8 +18,8 @@
         <th><b>Email</b></th>
         <th><b>Date</b></th>
         <th><b>Total Amount (in kr)</b></th>
-        <th> Status</th>
-        <th> Change status</th>
+        <th><b>Status</b></th>
+        <th><b>Change status</b></th>
         <th><b>Order Details</b></th>
     </tr>
     </thead>
@@ -32,9 +32,9 @@
         <td th:text="${item.totalAmount}"></td>
         <td th:text="${item.status}"></td>
         <td>
-            <form th:action="@{/admin/updateOrderStatus}">
+            <form th:action="@{/admin/updateOrderStatus}" method="POST">
                 <input type="hidden" name="orderId" th:value="${item.id}">
-                <input type="submit" value="Shipping">
+                <input type="submit" value="Shipped">
             </form>
         </td>
         <td>
