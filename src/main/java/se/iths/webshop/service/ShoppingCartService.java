@@ -1,13 +1,7 @@
 package se.iths.webshop.service;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.validation.Valid;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Product;
@@ -82,14 +76,14 @@ public class ShoppingCartService {
         return totalItems;
     }
 
-    public Product getProductByName(String name) {
-        Product desiredProduct = null;
-        for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()) {
-            if (entry.getKey().getName().equalsIgnoreCase(name)) {
-                desiredProduct = entry.getKey();
+    public void removeItemFromShoppingCart(String productName){
+        Product productToBeRemoved = null;
+        for(Map.Entry<Product, Integer> entry: shoppingCart.entrySet()){
+            if (entry.getKey().getName().equalsIgnoreCase(productName)) {
+                productToBeRemoved = entry.getKey();
             }
         }
-        return desiredProduct;
+        shoppingCart.remove(productToBeRemoved);
     }
 
     public void updateShoppingCart(Product product, Integer quantity){
