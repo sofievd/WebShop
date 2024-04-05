@@ -28,20 +28,25 @@ public class Order {
     @Column(name="total_amount")
     private double totalAmount;
 
+    @Column(name = "status")
+    private String status;
+
     public Order() {
     }
 
-    public Order(User user, LocalDateTime date, double totalAmount) {
+    public Order(User user, LocalDateTime date, double totalAmount, String status) {
         this.user = user;
         this.date = date;
         this.totalAmount = totalAmount;
+        this.status = status;
     }
 
-    public Order(int id, User user, LocalDateTime date, double totalAmount) {
+    public Order(int id, User user, LocalDateTime date, double totalAmount, String status) {
         this.id = id;
         this.user = user;
         this.date = date;
         this.totalAmount = totalAmount;
+        this.status = status;
     }
 
     public int getId() {
@@ -74,6 +79,14 @@ public class Order {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Products List</title>
@@ -13,7 +13,14 @@
 
     <dd>brand: <span th:text="${p.brand}" ></span></dd>
     <dd>description: <span th:text="${p.description}" ></span></dd>
-    <dd> price: <span th:text="${p.price}" ></span> kr</dd>
+    <dd> price: <span th:text="${p.price}" ></span> kr</dd> <br/>
+
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <form th:action="@{/product/chooseQuantityOfProduct}" method="POST">
+            <input type="hidden" name="id" th:value="${p.id}" >
+            <input type="submit" value="Select">
+        </form>
+    </div>
 
 </dl>
 

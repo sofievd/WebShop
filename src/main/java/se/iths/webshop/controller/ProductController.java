@@ -7,12 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import se.iths.webshop.dto.CategoryMenu;
 import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
@@ -21,7 +16,6 @@ import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
@@ -81,6 +75,7 @@ public class ProductController {
             return "redirect:/product/webShop?success";
         }
     }
+
     @PostMapping("/updateQuantityOfProduct")
     public String updateQuantityOfProduct(@RequestParam("id") int id, Model model) {
 
@@ -90,25 +85,24 @@ public class ProductController {
 
         return "customer/choose-quantity-of-product-update";
     }
+
     @PostMapping("/update-basket")
     public String updateBasket(@Valid @ModelAttribute("id") int id,
                                @Valid @ModelAttribute("quantity") int quantity,
-                               BindingResult theBindingResult, Model model){
+                               BindingResult theBindingResult, Model model) {
         Product desiredProduct = pService.findProductById(id);
 
         if (theBindingResult.hasErrors()) {
             model.addAttribute("product", desiredProduct);
             return "customer/choose-quantity-of-product-update";
-        }
-        else {
+        } else {
             shoppingCart.updateShoppingCart(desiredProduct, quantity);
         }
         return "redirect:/product/webShop?success";
     }
 
     @PostMapping("/chooseCategory")
-    public String chooseCategory(@ModelAttribute("menu") CategoryMenu menu,
-                                 @RequestParam("categoryID") int id,
+    public String chooseCategory(@RequestParam("categoryID") int id,
                                  Model model) {
         Category category = cService.findById(id);
         model.addAttribute("category", category);

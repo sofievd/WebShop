@@ -47,6 +47,7 @@ public class OrderService {
             order.setUser(loggedInUser);
             order.setDate(LocalDateTime.now());
             order.setTotalAmount(totalPrice);
+            order.setStatus("Received");
             orderRepo.save(order);
 
             for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
@@ -70,5 +71,12 @@ public class OrderService {
 
     public List<Order> getAllOrdersOfUser(String userEmail) {
         return orderRepo.findByUserEmail(userEmail);
+    }
+    public void updateOrder(int id, String status){
+        Optional<Order> order = findOrderById(id);
+        if(order.isPresent()){
+            order.get().setStatus(status);
+            orderRepo.save(order.get());
+        }
     }
 }

@@ -1,19 +1,16 @@
 package se.iths.webshop.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import se.iths.webshop.dto.AdminMenu;
 import se.iths.webshop.dto.ProductDto;
 import se.iths.webshop.dto.UserDto;
@@ -26,6 +23,7 @@ import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Depinder Kaur
@@ -113,8 +111,8 @@ public class AdminController {
         Product desiredProduct = pService.findProductById(id);
         String category = desiredProduct.getCategory().getName();
         ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(),
-                                                desiredProduct.getPrice(), category,
-                                                desiredProduct.getDescription(), desiredProduct.getBrand());
+                desiredProduct.getPrice(), category,
+                desiredProduct.getDescription(), desiredProduct.getBrand());
 
         model.addAttribute("productDto", productDto);
         model.addAttribute("categories", categories);
@@ -167,6 +165,13 @@ public class AdminController {
         model.addAttribute("ordersList", allOrdersList);
         return "admin/all-orders";
     }
+
+    @RequestMapping("/updateOrderStatus")
+    public String updateOrderStatus(Model model, @RequestParam("orderId") int id){
+        orderService.updateOrder(id, "Shipped");
+        return "redirect:/admin/allOrders";
+    }
+
 
     // add an InitBinder ... to convert trim input strings
     // remove leading and trailing whitespace
