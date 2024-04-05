@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/css/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/user/**").hasRole("CUSTOMER")
+                                .requestMatchers("/customers/**").hasRole("CUSTOMER")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
