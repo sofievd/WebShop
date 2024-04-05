@@ -73,10 +73,7 @@ public class ShoppingCartController {
 
     @GetMapping("/remove/{productName}")
     public String showUpdatedCart(@PathVariable("productName") String productName) {
-        CartItem desiredCartItem = cartItemService.getCartItemByName(productName, cartItemService.getCartItemsList());
-        cartItemService.getCartItemsList().remove(desiredCartItem);
-        Product desiredProduct = cartService.getProductByName(productName);
-        cartService.getShoppingCart().remove(desiredProduct);
+        cartService.removeItemFromShoppingCart(productName);
         return "redirect:/cart/shoppingCart";
     }
 
