@@ -94,12 +94,16 @@ public class ShoppingCartController {
                                     Model model) {
 
         Map<Product, Integer> shoppingCart = cartService.getShoppingCart();
+        if (shoppingCart.isEmpty()) {
+            return "redirect:/product/webShop";
+        }
         List<CartItem> cartItemList = cartService.getCartItemsForCheckout();
         Order savedOrder = orderService.createOrder(shoppingCart, totalCartPrice);
 
         User currentUser = savedOrder.getUser();
 
         emailService.sendOrderConfirmation(currentUser, cartItemList, savedOrder);
+        shoppingCart.clear();
 
         LocalDateTime dateTime = savedOrder.getDate();
         String formattedDateTime = CustomDateFormatter.getFormattedDateTime(dateTime);
