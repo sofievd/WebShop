@@ -25,7 +25,7 @@ public class SecurityConfiguration {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Bean    // Password Encryption
+    @Bean    // Password Encryption (encrypterad för databasen)
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -53,13 +53,13 @@ public class SecurityConfiguration {
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
-                                .loginProcessingUrl("/authenticateTheUser")
+                                .loginProcessingUrl("/authenticateTheUser") //spring mysterium
                                 .defaultSuccessUrl("/success", true)
                                 .permitAll()
                 )
                 .logout(
                         logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // spring mysterium
                                 .permitAll()
                                 .logoutSuccessUrl("/")
                 )

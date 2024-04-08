@@ -32,11 +32,10 @@ public class ShoppingCartService {
                 if(entry.getKey().getId() == product.getId()){
                     int newQuantity = quantity+ entry.getValue();
                     updateShoppingCart(product, newQuantity);
-                    break;
                 } else {
                     shoppingCart.put(product, quantity);
-                    break;
                 }
+                break;
             }
         }else{
         shoppingCart.put(product,quantity);

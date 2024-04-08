@@ -16,6 +16,7 @@
             <th><b>Order Id</b></th>
             <th><b>Date</b></th>
             <th><b>Total Amount (in kr)</b></th>
+            <th><b>Status</b></th>
             <th><b>Order Details</b></th>
         </tr>
         </thead>
@@ -24,6 +25,7 @@
             <td th:text="${item.id}"></td>
             <td th:text="${item.date.year} + '-' + ${item.date.monthValue} + '-' + ${item.date.dayOfMonth}"></td>
             <td th:text="${item.totalAmount}"></td>
+            <td th:text="${item.status}"></td>
             <td>
                 <a th:href="@{/orders/{id}(id=${item.id})}">View</a>
             </td>

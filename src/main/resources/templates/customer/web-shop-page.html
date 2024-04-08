@@ -74,7 +74,7 @@
         <br><br>
     </div>
     <div sec:authorize="hasRole('CUSTOMER')">
-        <a th:href="@{/customer/allOrders}"><b>Order History</b></a>
+        <a th:href="@{/customers/allOrders}"><b>Order History</b></a>
         <br><br>
     </div>
     <form th:action="@{/logout}" method="POST">
