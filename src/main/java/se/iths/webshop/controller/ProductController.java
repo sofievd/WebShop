@@ -53,42 +53,6 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/chooseQuantityOfProduct")
-    public String chooseQuantityOfProduct(@RequestParam("id") int id, Model model) {
-
-        Product desiredProduct = pService.findProductById(id);
-        model.addAttribute("product", desiredProduct);
-        model.addAttribute("quantity", "1");
-
-        return "customer/choose-quantity-of-product";
-    }
-
-
-    @PostMapping("/updateQuantityOfProduct")
-    public String updateQuantityOfProduct(@RequestParam("id") int id, Model model) {
-
-        Product desiredProduct = pService.findProductById(id);
-        model.addAttribute("product", desiredProduct);
-        model.addAttribute("quantity", "1");
-
-        return "customer/choose-quantity-of-product-update";
-    }
-
-    @PostMapping("/update-basket")
-    public String updateBasket(@Valid @ModelAttribute("id") int id,
-                               @Valid @ModelAttribute("quantity") int quantity,
-                               BindingResult theBindingResult, Model model) {
-        Product desiredProduct = pService.findProductById(id);
-
-        if (theBindingResult.hasErrors()) {
-            model.addAttribute("product", desiredProduct);
-            return "customer/choose-quantity-of-product-update";
-        } else {
-            shoppingCart.updateShoppingCart(desiredProduct, quantity);
-        }
-        return "redirect:/product/webShop?success";
-    }
-
     @PostMapping("/chooseCategory")
     public String chooseCategory(@RequestParam("categoryID") int id,
                                  Model model) {
