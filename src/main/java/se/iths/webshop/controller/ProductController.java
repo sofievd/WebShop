@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import se.iths.webshop.dto.CategoryMenu;
 import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.CategoryService;
@@ -29,8 +28,6 @@ public class ProductController {
 
     @GetMapping("/webShop")
     public String CategoryList(Model m) {
-        CategoryMenu menu = new CategoryMenu();
-        m.addAttribute("menu", menu);
         m.addAttribute("categoryList", cService.getCataegories());
         return "customer/web-shop-page";
     }
