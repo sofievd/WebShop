@@ -13,6 +13,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+/**
+ * @author Sofie Van Dingenen, Depinder Kaur
+ * @version 0.1
+ * <h2> ProductService </h2></>
+ * @date 2024-04-08
+ */
+
 
 @Service
 public class ProductService {

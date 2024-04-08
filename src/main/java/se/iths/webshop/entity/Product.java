@@ -8,6 +8,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * @author Sofie Van Dingenen
+ * @version 1.0
+ * <h2> Product </h2></>
+ * @date 2024-04-08
+ */
+
+
 @Entity
 @Table(name="product")
 public class Product {

@@ -12,6 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Sofie Van Dingenen
+ * @version 1.0
+ * <h2> ShoppingCartService </h2></>
+ * @date 2024-04-08
+ * */
+
 @Service
 @SessionScope
 public class ShoppingCartService {

@@ -1,19 +1,18 @@
 package se.iths.webshop.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.entity.User;
 import se.iths.webshop.service.EmailService;
 import se.iths.webshop.service.OrderService;
+import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.ShoppingCartService;
 import se.iths.webshop.util.CustomDateFormatter;
 import se.iths.webshop.util.DecimalFormatter;
@@ -40,6 +39,9 @@ public class ShoppingCartController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private ProductService pService;
 
     @GetMapping("/shoppingCart")
     public String showShoppingCart(Model model) {
@@ -104,5 +106,59 @@ public class ShoppingCartController {
         model.addAttribute("totalCartPrice", totalCartPrice);
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
         return "customer/order-confirmation";
+    }
+
+    @PostMapping("/addProductToBasket")
+    public String addProductToBasket(@Valid @ModelAttribute("id") int id,
+                                     @RequestParam("quantity") String quantity,
+                                     BindingResult theBindingResult,
+                                     Model model) {
+
+        Product desiredProduct = pService.findProductById(id);
+
+        if (theBindingResult.hasErrors()) {
+            model.addAttribute("product", desiredProduct);
+            return "customer/choose-quantity-of-product";
+        } else {
+            int quantityInt = Integer.parseInt(quantity);
+            cartService.addToCart(desiredProduct, quantityInt);
+            return "redirect:/product/webShop?success";
+        }
+    }
+
+    @PostMapping("/chooseQuantityOfProduct")
+    public String chooseQuantityOfProduct(@RequestParam("id") int id, Model model) {
+
+        Product desiredProduct = pService.findProductById(id);
+        model.addAttribute("product", desiredProduct);
+        model.addAttribute("quantity", "1");
+
+        return "customer/choose-quantity-of-product";
+    }
+
+
+    @PostMapping("/updateQuantityOfProduct")
+    public String updateQuantityOfProduct(@RequestParam("id") int id, Model model) {
+
+        Product desiredProduct = pService.findProductById(id);
+        model.addAttribute("product", desiredProduct);
+        model.addAttribute("quantity", "1");
+
+        return "customer/choose-quantity-of-product-update";
+    }
+
+    @PostMapping("/update-basket")
+    public String updateBasket(@Valid @ModelAttribute("id") int id,
+                               @Valid @ModelAttribute("quantity") int quantity,
+                               BindingResult theBindingResult, Model model) {
+        Product desiredProduct = pService.findProductById(id);
+
+        if (theBindingResult.hasErrors()) {
+            model.addAttribute("product", desiredProduct);
+            return "customer/choose-quantity-of-product-update";
+        } else {
+            cartService.updateShoppingCart(desiredProduct, quantity);
+        }
+        return "redirect:/product/webShop?success";
     }
 }

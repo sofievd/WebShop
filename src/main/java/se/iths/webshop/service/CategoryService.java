@@ -7,12 +7,19 @@ import se.iths.webshop.repository.CategoryRepo;
 
 import java.util.List;
 
+/**
+ * @author Sofie Van Dingenen
+ * @version 0.1
+ * <h2> CategoryService </h2></>
+ * @date 2024-04-08
+ */
+
 @Service
 public class CategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
 
-    public List<Category> getCataegories(){
+    public List<Category> getCataegories() {
         return categoryRepo.findAll();
     }
 
@@ -20,7 +27,7 @@ public class CategoryService {
         return categoryRepo.findByName(name);
     }
 
-    public Category findById(int id){
+    public Category findById(int id) {
         return categoryRepo.findById(id).get();
     }
 }

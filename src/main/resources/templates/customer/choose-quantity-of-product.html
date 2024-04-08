@@ -10,7 +10,7 @@
 <body id="background">
     <h2>Add Product to Basket</h2>
     <hr>
-    <form th:action="@{/product/addProductToBasket}" th:object="${product}"  method="POST">
+    <form th:action="@{/cart/addProductToBasket}" th:object="${product}"  method="POST">
 
         <br>
         Name: <span th:text="${product.name}" ></span><br>

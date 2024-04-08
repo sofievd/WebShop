@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 import se.iths.webshop.entity.Order;
 
 import java.util.List;
+/**
+ * @author Depinder Kaur,Sofie Van Dingenen
+ * @version 1.0
+ * <h2> OrderRepo </h2></>
+ * @date 2024-04-08
+ */
 
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Integer> {

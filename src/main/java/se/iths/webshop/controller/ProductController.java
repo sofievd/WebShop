@@ -16,6 +16,14 @@ import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.List;
 
+/**
+ * @author Sofie Van Dingenen, Depinder Kaur
+ * @version 1.0
+ * <h2> ProductController </h2></>
+ * @date 2024-04-08
+ */
+
+
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -55,23 +63,6 @@ public class ProductController {
         return "customer/choose-quantity-of-product";
     }
 
-    @PostMapping("/addProductToBasket")
-    public String addProductToBasket(@Valid @ModelAttribute("id") int id,
-                                     @RequestParam("quantity") String quantity,
-                                     BindingResult theBindingResult,
-                                     Model model) {
-
-        Product desiredProduct = pService.findProductById(id);
-
-        if (theBindingResult.hasErrors()) {
-            model.addAttribute("product", desiredProduct);
-            return "customer/choose-quantity-of-product";
-        } else {
-            int quantityInt = Integer.parseInt(quantity);
-            shoppingCart.addToCart(desiredProduct, quantityInt);
-            return "redirect:/product/webShop?success";
-        }
-    }
 
     @PostMapping("/updateQuantityOfProduct")
     public String updateQuantityOfProduct(@RequestParam("id") int id, Model model) {

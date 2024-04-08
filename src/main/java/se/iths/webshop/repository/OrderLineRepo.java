@@ -6,6 +6,12 @@ import se.iths.webshop.entity.Order;
 import se.iths.webshop.entity.OrderLine;
 
 import java.util.List;
+/**
+ * @author Sofie Van Dingenen, Depinder Kaur
+ * @version 1.0
+ * <h2> OrderLineRepo </h2></>
+ * @date 2024-04-08
+ */
 
 
 @Repository

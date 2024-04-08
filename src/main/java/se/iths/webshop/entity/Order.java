@@ -10,6 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
+/**
+ * @author Sofie Van Dingenen
+ * @version 1.0
+ * <h2> Order </h2></>
+ * @date 2024-04-08
+ */
 
 @Entity
 @Table(name="orders")

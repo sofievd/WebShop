@@ -6,6 +6,12 @@ import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
 
 import java.util.List;
+/**
+ * @author Sofie Van Dingenen, Depinder Kaur
+ * @version 1.0
+ * <h2> ProductRepo </h2></>
+ * @date 2024-04-08
+ */
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {
