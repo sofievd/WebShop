@@ -2,9 +2,11 @@ package se.iths.webshop.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.Order;
@@ -160,5 +162,14 @@ public class ShoppingCartController {
             cartService.updateShoppingCart(desiredProduct, quantity);
         }
         return "redirect:/product/webShop?success";
+    }
+
+    // add an InitBinder ... to convert trim input strings
+    // remove leading and trailing whitespace
+    // resolve issue for our validation
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 }

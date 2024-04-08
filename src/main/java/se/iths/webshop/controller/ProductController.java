@@ -1,18 +1,16 @@
 package se.iths.webshop.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
 import se.iths.webshop.service.CategoryService;
 import se.iths.webshop.service.ProductService;
-import se.iths.webshop.service.ShoppingCartService;
 
 import java.util.List;
 
@@ -31,8 +29,7 @@ public class ProductController {
     private ProductService pService;
     @Autowired
     private CategoryService cService;
-    @Autowired
-    private ShoppingCartService shoppingCart;
+
 
     @GetMapping("/webShop")
     public String CategoryList(Model m) {
@@ -63,25 +60,10 @@ public class ProductController {
         return "customer/category-page";
     }
 
-    @GetMapping("/category")
-    public String category(Model m) {
-        String chosencategory = null;
-        List<Product> productList = pService.getProductByCategory(chosencategory);
-        return "customer/category-page";
-    }
-
     @GetMapping("/all-products")
     public String ProductList(Model m) {
         m.addAttribute("allproductslist", pService.getProducts());
         return "customer/show-products";
     }
 
-    // add an InitBinder ... to convert trim input strings
-    // remove leading and trailing whitespace
-    // resolve issue for our validation
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-    }
 }
