@@ -31,6 +31,14 @@ public class OrderLine {
     @Column(name = "product_quantity")
     private int amount;
 
+    public OrderLine() {
+    }
+
+    public OrderLine(int id, Product product, int amount) {
+        this.id = id;
+        this.product = product;
+        this.amount = amount;
+    }
 
     public int getId() {
         return id;
