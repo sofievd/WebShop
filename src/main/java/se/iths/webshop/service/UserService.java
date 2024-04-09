@@ -1,10 +1,17 @@
 package se.iths.webshop.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import se.iths.webshop.dto.UserDto;
+import se.iths.webshop.entity.Role;
 import se.iths.webshop.entity.User;
+import se.iths.webshop.repository.RoleRepository;
+import se.iths.webshop.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Depinder Kaur
@@ -12,11 +19,59 @@ import java.util.Optional;
  * <h2>UserService</h2>
  * @date 2024-03-20
  */
-public interface UserService {
 
-    void saveUser(UserDto userDto);
+@Service
+public class UserService {
 
-    Optional<User> findUserByEmail(String email);
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
-    List<UserDto> findAllUsers();
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void saveUser(UserDto userDto) {
+        User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        Role role = roleRepository.findByName("ROLE_CUSTOMER");
+        if (role == null) {
+            role = checkRoleExist();
+        }
+        user.setRoles(List.of(role));
+        userRepository.save(user);
+    }
+
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findById(email);
+    }
+
+    public List<UserDto> findAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map((user) -> mapToUserDto(user))
+                .collect(Collectors.toList());
+    }
+
+    private UserDto mapToUserDto(User user){
+        UserDto userDto = new UserDto();
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
+    }
+
+    private Role checkRoleExist() {
+        Role role = new Role();
+        role.setName("ROLE_CUSTOMER");
+        return roleRepository.save(role);
+    }
 }
