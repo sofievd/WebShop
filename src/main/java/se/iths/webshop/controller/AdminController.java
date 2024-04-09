@@ -113,8 +113,8 @@ public class AdminController {
         Product desiredProduct = pService.findProductById(id);
         String category = desiredProduct.getCategory().getName();
         ProductDto productDto = new ProductDto(desiredProduct.getId(), desiredProduct.getName(),
-                desiredProduct.getPrice(), category,
-                desiredProduct.getDescription(), desiredProduct.getBrand());
+                                                desiredProduct.getPrice(), category,
+                                                desiredProduct.getDescription(), desiredProduct.getBrand());
 
         model.addAttribute("productDto", productDto);
         model.addAttribute("categories", categories);
