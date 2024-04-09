@@ -1,7 +1,6 @@
 package se.iths.webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import se.iths.webshop.entity.Category;
 import se.iths.webshop.entity.Product;
@@ -11,8 +10,6 @@ import se.iths.webshop.repository.ProductRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 /**
  * @author Sofie Van Dingenen, Depinder Kaur
  * @version 0.1
@@ -20,11 +17,12 @@ import java.util.regex.Pattern;
  * @date 2024-04-08
  */
 
-
 @Service
 public class ProductService {
+
     @Autowired
     private ProductRepo productRepo;
+
     @Autowired
     private CategoryRepo categoryRepo;
 
