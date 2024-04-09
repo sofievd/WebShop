@@ -8,7 +8,6 @@ import se.iths.webshop.entity.User;
 import se.iths.webshop.repository.RoleRepository;
 import se.iths.webshop.repository.UserRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -43,6 +43,15 @@ public class Product {
         this.brand = brand;
     }
 
+    public Product(int id, String name, double price, Category category, String description, String brand) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.description = description;
+        this.brand = brand;
+    }
+
     public int getId() {
         return id;
     }
