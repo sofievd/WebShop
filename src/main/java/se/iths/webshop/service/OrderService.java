@@ -25,14 +25,19 @@ import java.util.Optional;
 
 @Service
 public class OrderService {
-    @Autowired
-    private UserServiceImpl userService;
 
-    @Autowired
+    private UserService userService;
+
     private OrderRepo orderRepo;
 
-    @Autowired
     private OrderLineService orderLineService;
+
+    @Autowired
+    public OrderService(UserService userService, OrderRepo orderRepo, OrderLineService orderLineService) {
+        this.userService = userService;
+        this.orderRepo = orderRepo;
+        this.orderLineService = orderLineService;
+    }
 
     @Transactional
     public Order createOrder(Map<Product, Integer> shoppingCart, double totalPrice) {
