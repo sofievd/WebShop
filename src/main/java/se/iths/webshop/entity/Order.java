@@ -55,6 +55,10 @@ public class Order {
         this.status = status;
     }
 
+    public Order(int id){
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
