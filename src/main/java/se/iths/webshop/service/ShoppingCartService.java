@@ -1,6 +1,5 @@
 package se.iths.webshop.service;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.webshop.dto.CartItem;
@@ -23,20 +22,21 @@ import java.util.Map;
 @SessionScope
 public class ShoppingCartService {
 
-    private HashMap<Product, Integer> shoppingCart;
+    private Map<Product, Integer> shoppingCart;
 
-    @PostConstruct
-    public void createShoppingCart(){
-        shoppingCart = new HashMap<>();
-    }
+//    @PostConstruct
+//    public void createShoppingCart(){
+//        shoppingCart = new HashMap<>();
+//    }
 
     public ShoppingCartService() {
+        this.shoppingCart = new HashMap<>();
     }
 
     public void addToCart(Product product, int quantity){
-        if(!shoppingCart.isEmpty()){
-            for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
-                if(entry.getKey().getId() == product.getId()){
+        if (!shoppingCart.isEmpty()){
+            for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
+                if (entry.getKey().getId() == product.getId()){
                     int newQuantity = quantity+ entry.getValue();
                     updateShoppingCart(product, newQuantity);
                 } else {
@@ -51,7 +51,7 @@ public class ShoppingCartService {
 
     public List<CartItem> getCartItemsForCheckout() {
         List<CartItem> cartItemList = new ArrayList<>();
-        for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
+        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             Product product = entry.getKey();
             int quantity = entry.getValue();
             double price = DecimalFormatter.formatToTwoDecimalPlaces(product.getPrice());
@@ -62,13 +62,13 @@ public class ShoppingCartService {
         return cartItemList;
     }
 
-    public HashMap<Product, Integer> getShoppingCart() {
+    public Map<Product, Integer> getShoppingCart() {
         return shoppingCart;
     }
 
     public double calculatePrice(){
         double totalPrice = 0;
-        for(Map.Entry<Product, Integer> entry : shoppingCart.entrySet()){
+        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
         return DecimalFormatter.formatToTwoDecimalPlaces(totalPrice);
