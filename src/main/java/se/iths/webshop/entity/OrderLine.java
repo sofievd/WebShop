@@ -15,7 +15,6 @@ import jakarta.persistence.Table;
  * @date 2024-04-08
  */
 
-
 @Entity
 @Table(name = "orderline")
 public class OrderLine {
@@ -38,6 +37,13 @@ public class OrderLine {
         this.id = id;
         this.product = product;
         this.amount = amount;
+    }
+
+    public OrderLine(int id, Product product, Order order, int amount){
+        this.id= id;
+        this.product = product;
+        this.amount= amount;
+        this.order = order;
     }
 
     public int getId() {
