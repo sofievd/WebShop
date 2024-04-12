@@ -26,6 +26,7 @@ import se.iths.webshop.service.OrderService;
 import se.iths.webshop.service.ProductService;
 import se.iths.webshop.service.UserService;
 
+import java.util.InputMismatchException;
 import java.util.List;
 
 /**
@@ -97,9 +98,13 @@ public class AdminController {
     @PostMapping("/addProduct/save")
     public String processAddProduct(@Valid @ModelAttribute("productDto") ProductDto productDto,
                                     BindingResult theBindingResult, Model model) {
-
+        try {
+            double price = productDto.getPrice();
+        } catch (InputMismatchException e) {
+            theBindingResult.rejectValue("price", "error.price", " invalid value");
+        }
         if (theBindingResult.hasErrors()) {
-            model.addAttribute("categories", cService.getCataegories());
+            model.addAttribute("categories", categories);
             return "admin/add-product";
         } else {
             Product product = getProductFromProductDto(productDto, new Product());
