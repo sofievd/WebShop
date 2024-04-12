@@ -44,7 +44,7 @@
         <input type="radio" name="category" th:field="*{category}"
              th:each="tempCategory : ${categories}"
              th:value="${tempCategory}"
-             th:text="${tempCategory.name}" />
+             th:text="${tempCategory}" />
 
         <!-- Add error message (if present) -->
         <span th:if="${#fields.hasErrors('category')}"
