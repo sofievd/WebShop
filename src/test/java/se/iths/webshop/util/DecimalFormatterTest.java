@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Depinder Kaur
- * @version 01.
+ * @version 0.1
  * <h2>DecimalFormatterTest</h2>
  * @date 2024-04-09
  */

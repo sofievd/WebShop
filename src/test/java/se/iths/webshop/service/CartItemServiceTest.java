@@ -2,7 +2,6 @@ package se.iths.webshop.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
 import se.iths.webshop.dto.CartItem;
 import se.iths.webshop.entity.OrderLine;
 import se.iths.webshop.entity.Product;
@@ -10,7 +9,8 @@ import se.iths.webshop.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CartItemServiceTest {
     CartItemService service;
