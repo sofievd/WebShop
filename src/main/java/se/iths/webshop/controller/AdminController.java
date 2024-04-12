@@ -103,7 +103,6 @@ public class AdminController {
             return "admin/add-product";
         } else {
             Product product = getProductFromProductDto(productDto, new Product());
-            System.out.println("Product: " + product);
             pService.saveProduct(product);
             return "redirect:/admin/addProduct?success";
         }
@@ -148,10 +147,7 @@ public class AdminController {
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
 
-        System.out.println("ProductDTO category: " + productDto.getCategory());
-
         Category category = cService.getCategoryByName(productDto.getCategory());
-        System.out.println("Category: " + category);
         product.setCategory(category);
 
         product.setDescription(productDto.getDescription());
