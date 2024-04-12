@@ -58,7 +58,7 @@ CREATE TABLE `orderline` (
   KEY `product_id_idx` (`product_id`),
   CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +67,7 @@ CREATE TABLE `orderline` (
 
 LOCK TABLES `orderline` WRITE;
 /*!40000 ALTER TABLE `orderline` DISABLE KEYS */;
+INSERT INTO `orderline` VALUES (1,3,6,1),(2,3,1,1),(3,4,6,2),(4,6,6,1),(5,6,1,1),(6,6,3,1),(7,7,6,1);
 /*!40000 ALTER TABLE `orderline` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,10 +83,12 @@ CREATE TABLE `orders` (
   `customer_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `date` datetime NOT NULL,
   `total_amount` decimal(7,2) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'Received',
   PRIMARY KEY (`id`),
   KEY `customer_email_idx` (`customer_email`),
+  KEY `order_status_idx` (`status`),
   CONSTRAINT `customer_email` FOREIGN KEY (`customer_email`) REFERENCES `user` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +97,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'bella@test.com','2024-03-27 09:34:51',29.50),(2,'bella@test.com','2024-03-27 09:35:03',29.50);
+INSERT INTO `orders` VALUES (1,'bella@test.com','2024-03-27 09:34:51',29.50,'Shipped'),(2,'bella@test.com','2024-03-27 09:35:03',29.50,'Shipped'),(3,'bella@test.com','2024-04-05 11:45:12',192.10,'Received'),(4,'bella@test.com','2024-04-05 12:16:50',313.80,'Received'),(5,'bella@test.com','2024-04-05 12:21:23',156.20,'Shipped'),(6,'bella@test.com','2024-04-05 12:26:17',203.77,'Received'),(7,'bella@test.com','2024-04-08 13:40:26',156.90,'Received');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +118,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `category_id_idx` (`category_id`),
   CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +127,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Catona',35.20,2,'2,5-3,5 mm. 50 g. gauche 26 st on 32 rows','Scheepjes'),(2,'Catania',29.50,2,'2,5-3,5. 50 g gauche 27 st on 30 rows','Schachenmayr'),(3,'test product',11.67,2,'desc1','test brand'),(4,'test product',100.99,2,'desciption','test brand'),(5,'test product',30.50,7,'desc','test brand'),(6,'Whirl',156.90,3,'3 mm hook size','Scheepjes'),(7,'test product',51.49,2,'test desc','test brand'),(8,'test product',41.70,2,'test desc','test brand'),(11,'test product 2',38.99,5,'some boring description','some unknown brand'),(12,'test product 3',55.55,6,'desc','brand');
+INSERT INTO `product` VALUES (1,'Catona',35.20,2,'2,5-3,5 mm. 50 g. gauche 26 st on 32 rows','Scheepjes'),(2,'Catania',29.50,2,'2,5-3,5. 50 g gauche 27 st on 30 rows','Schachenmayr'),(3,'Colour Crafter',23.67,4,'100 g, 4 mm hook size, gauch: 20 st x 24 rows','Scheepjes'),(4,'River Washed',34.99,3,'50 g, 3-3,5mm hook size, gaiuche: 24 st x 32 rows','Scheepjes'),(5,'Namaste',39.50,6,'100 g, 8 mm, gauche: 12 stx 13 rows','Scheepjes'),(6,'Whirl',156.90,3,'215g, 3 mm hook size, gauche: 25 st x 44 rows','Scheepjes'),(7,'Metropolis',51.49,2,'50g, 2,5-3 mm hook size, gauche: 29 st x 45 rows','Scheepjes'),(8,'Softfun',31.70,4,'50 g, 3,5-4mm hook size, gauche. 21 st x 30 rows','Scheepjes'),(11,'Maxi Sugar Rush',38.99,1,'50 g, 1,25-1,5 mm hook size, 25 st x33 rows','Scheepjes'),(12,'Chunky Monkey',45.55,5,'100 g, 5 mm hook size,  gauche: 13 st x 18 rows','Scheepjes'),(13,'Blanket Yarn',234.50,8,'300 g, 20mm hook size, gauche: 3 st x 6 rows','Hobbii'),(14,'Cosy',46.00,4,'50g, 4mm hook size, gauche: 24 st','Go Handmade'),(15,'Highland Wool',90.00,4,'50g, 3,5-4mm hook size, gauche: 22 st x 34 rows','Hobbii'),(16,'Portobello',59.70,5,'50g, 4mm hook size, gauche: 19stx 27 rows','Hobbii'),(17,'Tweed Delight',52.50,5,'50g, 5mm hook size, gauche: 17 st x 23 rows','Hobbii'),(18,'Lollipop',185.00,5,'200g, 5-6 mm hooksize, gauche: 12 st x 15 rows','Hobbii'),(19,'Molly Fine',99.00,6,'100g, 6-7 mm hook size, gauche: 14 st x18 rows','Mayflower'),(20,'alpaca Birs',98.90,6,'50 g, 66-7 mm hook size, gauche: 15 st','Viking of Norway'),(21,'Happy chunky Double',49.80,7,'50g, 6-10 mm hook size','Go Handmade'),(22,'Bungee Mini',148.90,7,'200g, 12 mm hook size, gauche: 7 st x 10 rows','Hobbii'),(23,'Friends Ribbon',150.60,7,'250g, 10 mm hook size, gauche: 7 st x9 rows','Hobbii'),(24,'Honey Bunny',226.80,8,'300 g, 10 mm hook size, gauche: 6 st x 10 rows','Hobbii'),(25,'Flora',45.60,2,'50 g, 3 mm hook size, gauche: 24 st x 32 rows','Drops'),(26,'Bead Deluxe',47.60,1,'50g, 1 mm hook size','Go Handmade'),(27,'Diablo',56.80,1,'50g, 4 mm hook size, gauche: 21 st x 28 rows','Hobbii'),(28,'Nord',56.90,2,'50 g, 3mm hook size, gauche: 24 st x 32 rows','Drops'),(29,'Belle',63.30,4,'50 g, 4 mm hook size, gauche: 21 st x 28 rows','Drops'),(30,'Lima',43.50,5,'50 g, 4 mm hook size, gauche: 21 st x 28 rows','Drops'),(31,'Air',56.70,5,'50 g, 5 mm hook size, gauche: 17 st x 22 rows','Drops'),(32,'Alpaca',34.50,3,'50 g, 3 mm hook size, gauche: 24 st x 32 rows','Drops');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-27  9:36:50
+-- Dump completed on 2024-04-12 10:52:05
