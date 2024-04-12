@@ -24,7 +24,7 @@
                 <td th:text="${item.key.name}"></td>
                 <td th:text="${item.key.price}"></td>
                 <td th:text="${item.value}"></td>
-                <td> <form th:action="@{/product/updateQuantityOfProduct}" method="POST">
+                <td> <form th:action="@{/cart/updateQuantityOfProduct}" method="POST">
                     <input type="hidden" name="id" th:value="${item.key.id}">
                     <input type="submit" value="update">
                 </form></td>

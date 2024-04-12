@@ -43,7 +43,12 @@ public class ProductService {
         List<Product> productsfound = new ArrayList<>();
         for(int i = 0; i < allProducts.size(); i++ ){
             String name = allProducts.get(i).getName().toLowerCase();
-            String searchWordBegin = searchWord.toLowerCase().substring(0,3);
+            String  searchWordBegin;
+            if(searchWord.length()>3){
+                searchWordBegin = searchWord.toLowerCase().substring(0,3);
+            }else{
+                searchWordBegin = searchWord.toLowerCase();
+            }
             if(name.contains(searchWordBegin)){
                 productsfound.add(allProducts.get(i));
             }

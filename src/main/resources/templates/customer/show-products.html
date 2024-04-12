@@ -11,12 +11,21 @@
 <dl th:each="p: ${allproductslist}">
     <dt><span th:text="${p.name}" ></span></dt>
 
+    <dd> Category: <span th:text="${p.category.name}"></span></dd>
     <dd>brand: <span th:text="${p.brand}" ></span></dd>
     <dd>description: <span th:text="${p.description}" ></span></dd>
     <dd> price: <span th:text="${p.price}" ></span> kr</dd> <br/>
 
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <form th:action="@{/admin/selectProductToUpdate}" method="POST">
+
+            <input type="hidden" name="id" th:value="${p.id}" >
+            <input type="submit" value="Select">
+        </form>
+    </div> <br>
+
     <div sec:authorize="hasRole('ROLE_CUSTOMER')">
-        <form th:action="@{/product/chooseQuantityOfProduct}" method="POST">
+        <form th:action="@{/cart/chooseQuantityOfProduct}" method="POST">
             <input type="hidden" name="id" th:value="${p.id}" >
             <input type="submit" value="Select">
         </form>
