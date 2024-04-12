@@ -23,7 +23,7 @@
         </form>
     </div>
     <div sec:authorize="hasRole('ROLE_CUSTOMER')">
-        <form th:action="@{/product/chooseQuantityOfProduct}" method="POST">
+        <form th:action="@{/cart/chooseQuantityOfProduct}" method="POST">
             <input type="hidden" name="id" th:value="${p.id}" >
             <input type="submit" value="Select">
         </form>
