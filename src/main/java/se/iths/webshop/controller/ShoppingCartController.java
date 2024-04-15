@@ -53,13 +53,7 @@ public class ShoppingCartController {
 
     @GetMapping("/shoppingCart")
     public String showShoppingCart(Model model) {
-
-        double totalPrice = 0;
-        for (Map.Entry<Product, Integer> entry : cartService.getShoppingCart().entrySet()) {
-            double productPrice = entry.getKey().getPrice() * entry.getValue();
-            totalPrice = totalPrice + productPrice;
-        }
-        totalPrice = DecimalFormatter.formatToTwoDecimalPlaces(totalPrice);
+        double totalPrice = cartService.calculatePrice();
 
         if (cartService.getShoppingCart().isEmpty()) {
             return "redirect:/product/webShop?error";
@@ -102,6 +96,7 @@ public class ShoppingCartController {
         User currentUser = savedOrder.getUser();
 
         emailService.sendOrderConfirmation(currentUser, cartItemList, savedOrder);
+        int totalNumOfArticles = cartService.getTotalItems();
         shoppingCart.clear();
 
         LocalDateTime dateTime = savedOrder.getDate();
@@ -112,7 +107,7 @@ public class ShoppingCartController {
         model.addAttribute("order", savedOrder);
         model.addAttribute("cartItemList", cartItemList);
         model.addAttribute("totalCartPrice", totalCartPrice);
-        model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
+        model.addAttribute("totalNumOfArticles", totalNumOfArticles);
         return "customer/order-confirmation";
     }
 
