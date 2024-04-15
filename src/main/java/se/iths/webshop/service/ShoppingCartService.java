@@ -24,11 +24,6 @@ public class ShoppingCartService {
 
     private Map<Product, Integer> shoppingCart;
 
-//    @PostConstruct
-//    public void createShoppingCart(){
-//        shoppingCart = new HashMap<>();
-//    }
-
     public ShoppingCartService() {
         this.shoppingCart = new HashMap<>();
     }

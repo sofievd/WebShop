@@ -98,11 +98,7 @@ public class AdminController {
     @PostMapping("/addProduct/save")
     public String processAddProduct(@Valid @ModelAttribute("productDto") ProductDto productDto,
                                     BindingResult theBindingResult, Model model) {
-        try {
-            double price = productDto.getPrice();
-        } catch (InputMismatchException e) {
-            theBindingResult.rejectValue("price", "error.price", " invalid value");
-        }
+
         if (theBindingResult.hasErrors()) {
             model.addAttribute("categories", categories);
             return "admin/add-product";
