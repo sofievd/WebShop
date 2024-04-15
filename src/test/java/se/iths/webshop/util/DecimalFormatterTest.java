@@ -2,7 +2,7 @@ package se.iths.webshop.util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Depinder Kaur
@@ -14,11 +14,11 @@ class DecimalFormatterTest {
 
     @Test
     void formatToTwoDecimalPlaces() {
-        double result1 = DecimalFormatter.formatToTwoDecimalPlaces(8.392819);
-        double result2 = DecimalFormatter.formatToTwoDecimalPlaces(108.3213908);
-        double result3 = DecimalFormatter.formatToTwoDecimalPlaces(89.658921);
-        assertEquals(8.39, result1);
-        assertEquals(108.32, result2);
-        assertEquals(89.66, result3);
+        String result1 = DecimalFormatter.formatToTwoDecimalPlaces(8.0);
+        String result2 = DecimalFormatter.formatToTwoDecimalPlaces(108.3213908);
+        String result3 = DecimalFormatter.formatToTwoDecimalPlaces(89.658921);
+        assertEquals("8.00", result1);
+        assertEquals("108.32", result2);
+        assertEquals("89.66", result3);
     }
 }

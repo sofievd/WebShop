@@ -49,8 +49,8 @@ public class ShoppingCartService {
         for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             Product product = entry.getKey();
             int quantity = entry.getValue();
-            double price = DecimalFormatter.formatToTwoDecimalPlaces(product.getPrice());
-            double totalPrice = DecimalFormatter.formatToTwoDecimalPlaces(quantity * price);
+            double price = product.getPrice();
+            double totalPrice = quantity * price;
             CartItem cartItem = new CartItem(product.getName(), price, quantity, totalPrice);
             cartItemList.add(cartItem);
         }
@@ -66,7 +66,7 @@ public class ShoppingCartService {
         for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
-        return DecimalFormatter.formatToTwoDecimalPlaces(totalPrice);
+        return totalPrice;
     }
 
     public int getTotalItems(){

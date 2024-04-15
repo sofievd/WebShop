@@ -1,7 +1,7 @@
 package se.iths.webshop.util;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @author Depinder Kaur
@@ -11,11 +11,8 @@ import java.util.Locale;
  */
 public class DecimalFormatter {
 
-    public static double formatToTwoDecimalPlaces(double input) {
-        NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-        formatter.setMaximumFractionDigits(2);
-        formatter.setMinimumFractionDigits(2);
-
-        return Double.parseDouble(formatter.format(input));
+    public static String formatToTwoDecimalPlaces(double input) {
+        BigDecimal rounded = new BigDecimal(input).setScale(2, RoundingMode.HALF_UP);
+        return rounded.toString();
     }
 }

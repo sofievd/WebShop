@@ -60,7 +60,7 @@ public class ShoppingCartController {
         }
 
         model.addAttribute("cart", cartService);
-        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalPrice", DecimalFormatter.formatToTwoDecimalPlaces(totalPrice));
         return "customer/shopping-basket";
     }
 
@@ -77,7 +77,7 @@ public class ShoppingCartController {
         double totalCartPrice = cartService.calculatePrice();
 
         model.addAttribute("cartItemList", cartItemList);
-        model.addAttribute("totalCartPrice", totalCartPrice);
+        model.addAttribute("totalCartPrice", DecimalFormatter.formatToTwoDecimalPlaces(totalCartPrice));
         model.addAttribute("totalNumOfArticles", cartService.getTotalItems());
         return "customer/checkout";
     }
@@ -106,7 +106,7 @@ public class ShoppingCartController {
         model.addAttribute("user", currentUser);
         model.addAttribute("order", savedOrder);
         model.addAttribute("cartItemList", cartItemList);
-        model.addAttribute("totalCartPrice", totalCartPrice);
+        model.addAttribute("totalCartPrice", DecimalFormatter.formatToTwoDecimalPlaces(totalCartPrice));
         model.addAttribute("totalNumOfArticles", totalNumOfArticles);
         return "customer/order-confirmation";
     }
