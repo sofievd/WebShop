@@ -1,0 +1,73 @@
+/* Author: Depinder Kaur, created on: 14-03-2024 */
+
+.homepage h2 {
+    font-size: 50px;
+    font-family: Verdana, serif;
+    align: "center"
+}
+
+#background {
+    background-color: #FFE9FC;
+}
+
+#foto {
+    width: 100%;
+    text-align: center;
+}
+
+.bluebutton {
+    background-color: #008CBA;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 80px;
+}
+
+.greenbutton {
+    background-color: #1EA238;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 80px;
+}
+
+.error {
+    font-style:italic;
+    color:red;
+}
+
+.success {color: #15CD08}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #E5E5FF;
+}
+
+tr:nth-child(even) {
+    background-color: #E5E5FF;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${category.name}"></title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+<h1><span th:text = "${category.name}"></span></h1>
+
+<dl th:each="p: ${productlist}">
+    <dt><span th:text="${p.name}" ></span></dt>
+
+    <dd>brand: <span th:text="${p.brand}" ></span></dd>
+    <dd>description: <span th:text="${p.description}" ></span></dd>
+    <dd> price: <span th:text="${p.price}" ></span> kr</dd> <br/>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <form th:action="@{/admin/selectProductToUpdate}" method="POST">
+
+            <input type="hidden" name="id" th:value="${p.id}" >
+            <input type="submit" value="Select">
+        </form>
+    </div>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <form th:action="@{/cart/chooseQuantityOfProduct}" method="POST">
+            <input type="hidden" name="id" th:value="${p.id}" >
+            <input type="submit" value="Select">
+        </form>
+    </div>
+</dl>
+<br/>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</div>
+<div sec:authorize="hasRole('ROLE_CUSTOMER')">
+    <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</div>
+
+</body>
+</html>

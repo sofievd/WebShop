@@ -1,0 +1,34 @@
+<!-- Author: Depinder Kaur, created on: 16-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Menu</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+    <h1>Admin Menu</h1>
+    <hr>
+    <h3>Choose a task from drop-down menu:</h3>
+
+    <br>
+    <form th:action="@{/admin/processAdminChoice}" th:object="${menu}" method="POST">
+    Task:
+        <select name="category" th:field="*{inputChoice}">
+            <option th:each="task : ${adminTasks}"
+                    th:value="${task}"
+                    th:text="${task}"></option>
+        </select>
+
+        <br><br>
+        <input type="submit" value="Select">
+    </form>
+    <hr>
+    <br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+
+</body>
+</html>

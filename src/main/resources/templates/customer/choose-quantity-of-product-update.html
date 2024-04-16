@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Product in Basket</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+<h2>Update Product in Basket</h2>
+<hr>
+<form th:action="@{/cart/update-basket}" th:object="${product}"  method="POST">
+
+  <br>
+  Name: <span th:text="${product.name}" ></span><br>
+  Category: <span th:text="${product.category.getName()}" ></span><br>
+  Brand: <span th:text="${product.brand}" ></span><br>
+  Price: <span th:text="${product.price}" ></span> kr<br>
+  Description: <span th:text="${product.description}" ></span>
+  <br>
+
+  Quantity: <input type="number" min="1" name="quantity" th:value="${quantity}"/>
+
+  <input type="hidden" th:field="${product.id}" th:value="${id}">
+
+  <br><br>
+  <input type="submit" value="Update Basket">
+</form>
+<br>
+<hr>
+<br>
+<a href="/product/webShop"><b>Back to Menu</b></a>
+<br><br>
+<form th:action="@{/logout}" method="POST">
+  <input type="submit" value="Logout" />
+</form>
+
+</body>
+</html>

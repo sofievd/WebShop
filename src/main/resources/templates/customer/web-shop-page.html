@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Soft Touch Yarn Co.</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <h1>Search Product to Update</h1>
+    </div>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <h1>Soft Touch Yarn Co.</h1>
+        <p> We sell yarn to keep your imagination alive!</p>
+    </div>
+
+    <p>
+        <form method="post" th:action="@{/product/search}">
+
+        <!-- Check for successful adding of product by customer or successful updating of product by admin -->
+        <div th:if="${param.success}">
+            <div class="success">
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <h3><i>!! Product successfully updated !!</i></h3>
+                </div>
+                <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+                    <h3><i>!! Product successfully added to basket !!</i></h3>
+                </div>
+            </div>
+        </div>
+        <div th:if="${param.error}">
+            <div class="error">
+                <h3><i>!!  Basket is EMPTY  !!</i></h3>
+            </div>
+        </div>
+
+        <br>
+            <input type="search" placeholder="Search Product by name" name="search">
+            <input type="submit" value="Search">
+        </form>
+    </p>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <h3>Update a product from one of the following categories</h3>
+    </div>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <h3> View products from one of the following categories:</h3>
+    </div>
+
+    <dl th:each="p: ${categoryList}">
+        <dt><h4><span th:text="${p.name}"></span></h4></dt>
+        <dd>
+            <form th:action="@{/product/chooseCategory}"  method="post">
+                <input type="hidden" name="categoryID" th:value="${p.id}">
+                <input type="submit" value="Select">
+            </form>
+        </dd>
+    </dl>
+    <br/>
+
+    <br/>
+
+    <a th:href="@{/product/all-products}"><b>Show all the products</b></a>
+
+    <br><br>
+
+    <a th:href="@{/cart/shoppingCart}"><b>View basket</b></a>
+
+    <br><br>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/showAdminMenu}"><b>Admin Menu</b></a>
+        <br><br>
+    </div>
+    <div sec:authorize="hasRole('CUSTOMER')">
+        <a th:href="@{/customers/allOrders}"><b>Order History</b></a>
+        <br><br>
+    </div>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- Author: Depinder Kaur, created on: 27-03-2024 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+    <h2>Order Confirmation</h2>
+    <hr>
+    <p>
+        Order id: <span th:text="${order.id}"/><br>
+        Customer: <span th:text="${user.firstName}"/> <span th:text="${user.lastName}"/> <br>
+        Email: <span th:text="${user.email}"/><br>
+        Date: <span th:text="${formattedDateTime}"/>
+    </p>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th><b>Product</b></th>
+            <th><b>Price (in kr/pc)</b></th>
+            <th><b>Quantity</b></th>
+            <th><b>Total Price (in kr)</b></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${cartItemList}">
+                <td th:text="${item.productName}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.totalPrice}"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><b>Total</b></td>
+                <td><b th:text="${totalNumOfArticles}"></b></td>
+                <td><b th:text="${totalCartPrice}"></b></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <hr>
+    <br>
+    <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body id="background">
+    <h2>Shopping Cart</h2>
+    <hr>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price (kr/pc)</th>
+                <th>Quantity</th>
+                <th>Update quantity</th>
+                <th>Remove item</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${cart.getShoppingCart()}" >
+                <td th:text="${item.key.name}"></td>
+                <td th:text="${item.key.price}"></td>
+                <td th:text="${item.value}"></td>
+                <td> <form th:action="@{/cart/updateQuantityOfProduct}" method="POST">
+                    <input type="hidden" name="id" th:value="${item.key.id}">
+                    <input type="submit" value="update">
+                </form></td>
+                <td>
+                    <a th:href="@{/cart/remove/{productName}(productName=${item.key.name})}"><i>Remove</i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <h3>
+    Total Price (in kr): <span th:text="${totalPrice}"></span>
+    </h3>
+    <br>
+    <div sec:authorize="hasRole('ROLE_CUSTOMER')">
+        <a th:href="@{/cart/checkout}"><b>Checkout</b></a>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <a th:href="@{/product/webShop}"><b>Back to Menu</b></a>
+    <br><br>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</body>
+</html>
