@@ -35,7 +35,7 @@ public class EmailService {
                                     item.getQuantity() + "\t\t\t\t\t" + item.getTotalPrice());
         }
         emailMessage.append("\n\nTotal price: " + order.getTotalAmount() + " kr");
-
+        emailMessage.append("\n\nThank you for placing your order!");
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
