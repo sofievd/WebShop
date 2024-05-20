@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 public class UserDto {
 
     @NotNull(message = "is required")
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+    @Pattern(regexp="^[_A-Za-z0-9]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
              message = "must be a valid email")
     private String email;
 
